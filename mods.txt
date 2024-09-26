@@ -1,0 +1,57 @@
+模组列表
+1.【高清修复】optifine 
+   【高清修复fabric兼容】optifabric
+2.【钠】sodium
+   【支持钠的光影】iris Shaders
+   【动态光源】lambdynamiclights
+   【连接材质】continuity
+   【铟】Indium
+   【WI变焦】WI Zoom
+   【钠视频界面】 Reese's Sodium Options
+   【钠扩展】Sodium Extra
+3.【箱子渲染优化】fast-chest
+4.【床渲染优化】betterbeds
+5.【锂】Lithium
+6.【星光】starlight
+7. 【磷】Phosphor
+8.【快速启动】lazydfu
+9. 【FPS减速器】FPS Reducer
+10.【平滑启动】Smooth Boot
+
+1.【推可入】Tweakeroo
+2.【物品滚轮】Item Scroller
+   【教程】BV1XC4y1H7P9
+3.【迷你HUD】MiniHUD
+4.【投影】Litematica
+   【教程】BV1yk4y1y7Cj、BV1Qp4y1x7SM
+5.【共享投影】Syncmatica
+6.【前置】Malilib
+  【MASA全家桶汉化材质包】BV1v34y127Uk
+7.【自动钓鱼】Autofish
+8.【体素地图】VoxelMap
+9. 【Xaero小地图】Xaero's Minimap
+    【Xaero世界地图】Xaero's World Map
+    【汉化材质包】https://b23.tv/aQcbJz8
+10.【村民快速交易】EasierVillagerTrading
+11.【装备耐久显示】Inventory HUD+
+12.【迷你耐久显示】microDurability（仅fabric）
+13.【一键整理Next】InventoryProfilesNext
+    【一键整理】InventoryProfiles
+14.【REI】Roughly Enough Items
+    【JEI】Just Enough Items
+   （更推荐JEI因为不需要前置）
+15.【饱和度显示】Apple Skin
+16.【血量显示】Orderly（仅fabric）
+    【血量显示1.17+】Orderly(fabric1.17+)
+   （Forge版叫做Neat）
+17.【你在看什么】Hwyla
+    【那是什么鬼】WTHIT
+18.【模组菜单】Mod Menu（仅fabric）
+19.【更好的F3】BetterF3
+20.【高亮实体】Entity Outliner
+21.【地毯】Carpet Mod
+    【教程】BV1hE411D7um
+22.【地毯扩展】Carpet Extra（仅fabric）
+23.【地毯tis扩展】Carpet TIS Addition（仅fabric）
+24.【创世神】Worldedit
+25.【创世神CUI】Worldedit CUI（仅fabric，但你可以搜到forge版）
