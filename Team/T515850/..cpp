@@ -1,4 +1,3 @@
-#include <corecrt.h>
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -89,7 +88,6 @@ void dfs(queue<Data> &q, const Data &f, int k, int i = 1, Data change = n) {
         change[i] = 1;
         dfs(q, f, k - 1, i + 1, change);
     }
-    
 }
 
 int bfs(int k) {
@@ -107,6 +105,37 @@ int bfs(int k) {
     return 0;
 }
 
+void dfs(vector<Data> &q, const Data &f, vector<int> last, int k, int i = 1, Data change = n) {
+    if (i > n || !k) {
+        Data ans = !(f[0] ? f - change : f + change);
+        if (check((f[0] ? f : ~f) - change) && st.find(ans) == st.end()) q.push_back(ans), last.push_back(st.find(ans));
+        return;
+    }
+    dfs(q, f, last, k, i + 1, change);
+    if (!f[i] ^ f[0]) {
+        change[i] = 1;
+        dfs(q, f, last, k - 1, i + 1, change);
+    }
+}
+
+auto getmake(int k) {
+    if (bfs(k)) return ;
+    vector<Data> q;
+    q.push_back({});
+    st.clear();
+    st.insert(n);
+    vector<int> last;
+    for (int i = 0; i < q.size(); i++) {
+        Data f = q[i];
+        // q.pop();
+        f.depth++;
+        if ((~f).query() <= k && !f[0]) {
+
+        }
+        dfs(q, f, k);
+    }
+}
+
 int main() {
     cin >> n >> m;
     to.assign(n + 1, vector<int>());
@@ -119,7 +148,7 @@ int main() {
         e[u][v] = e[v][u] = 1;
     }
     // cout << bfs(2);
-    int l, r;
+    int l = 0, r = n;
     while (l < r) {
         int mid = ((l + r) >> 1);
         if (bfs(mid)) {
