@@ -1,13 +1,16 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <queue>
 #include <set>
+#include <map>
 
 using std::cin;
 using std::cout;
 using std::vector;
 using std::queue;
 using std::set;
+using std::map;
 
 vector<vector<int>> to, e;
 int n, m;
@@ -76,6 +79,8 @@ bool check(Data a) {
 }
 
 set<Data> st;
+vector<Data> ST;
+vector<bool> vis;
 
 void dfs(queue<Data> &q, const Data &f, int k, int i = 1, Data change = n) {
     if (i > n || !k) {
@@ -105,10 +110,18 @@ int bfs(int k) {
     return 0;
 }
 
-void dfs(vector<Data> &q, const Data &f, vector<int> last, int k, int i = 1, Data change = n) {
+using it = std::set<Data>::iterator;
+
+int find(Data x) {
+    return std::lower_bound(ST.begin(), ST.end(), x) - ST.begin();
+}
+
+void dfs(vector<Data> &q, const Data &f, vector<int> &last, int k, int i = 1, Data change = n) {
     if (i > n || !k) {
         Data ans = !(f[0] ? f - change : f + change);
-        if (check((f[0] ? f : ~f) - change) && st.find(ans) == st.end()) q.push_back(ans), last.push_back(st.find(ans));
+        if (check((f[0] ? f : ~f) - change) &&
+            st.find(ans) != st.end() && !vis[find(ans)]) 
+                q.push_back(ans), last[find(ans)] = find(f), vis[find(ans)] = true;
         return;
     }
     dfs(q, f, last, k, i + 1, change);
@@ -119,20 +132,35 @@ void dfs(vector<Data> &q, const Data &f, vector<int> last, int k, int i = 1, Dat
 }
 
 auto getmake(int k) {
-    if (bfs(k)) return ;
+    if (!bfs(k)) return ;
     vector<Data> q;
     q.push_back({});
-    st.clear();
-    st.insert(n);
-    vector<int> last;
+    // st.clear();
+    // st.insert(n);
+    vector<int> last(st.size());
+    vis.assign(st.size(), 0);
+    ST.clear();
+    for (Data i : st) {
+        ST.push_back(i);
+    }
     for (int i = 0; i < q.size(); i++) {
         Data f = q[i];
         // q.pop();
         f.depth++;
         if ((~f).query() <= k && !f[0]) {
-
+            vector<int> ans;
+            for (int t = find(f); t; t = last[t]) {
+                ans.push_back(t);
+            }
+            for (int j = ans.size() - 1; j >= 0; j--) {
+                for (int t : ST[ans[j]].a) {
+                    cout << t << " ";
+                }
+                cout << "\n";
+            }
+            return;
         }
-        dfs(q, f, k);
+        dfs(q, f, last, k);
     }
 }
 
@@ -157,5 +185,8 @@ int main() {
             l = mid + 1;
         }
     }
-    cout << l << " " << bfs(l);
+    cout << l << " " << bfs(l) << "\n";
+    getmake(l);
+    // cout << bfs(7) << "\n";
+    // getmake(7);
 }
