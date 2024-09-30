@@ -58,19 +58,20 @@ int solve() {
         f[i][1] = s[0][i];
     }
     for (int i = 1; i < n; i++) {
-        for (int k = 2; k <= min(m, i); k++) {
+        for (int k = 2; k <= min(m, i + 1); k++) {
             int ans = 0;
-            for (int j = k - 2; j < i; j++) {
+            for (int j = i - 1; j; j--) {
                 ans = max(ans, f[j][k - 1] + s[j + 1][i]);
+                if (s[j + 1][i] == 10) break;
             }
             f[i][k] = ans;
         }
     }
 
-    for (vector<int> i : f) {
-        for (int j : i) cout << j << " ";
-        cout << "\n";
-    }
+    // for (vector<int> i : f) {
+    //     for (int j : i) cout << j << " ";
+    //     cout << "\n";
+    // }
 
     return f[n - 1][m];
 }
