@@ -19,6 +19,13 @@ vector<int> operator+(const vector<int> &a, const vector<int> &b) {
     return ans;
 }
 
+<<<<<<< HEAD
+=======
+vector<int> operator+=(vector<int> &a, const vector<int> &b) {
+    return a = a + b;
+}
+
+>>>>>>> parent of b1206e3 (master)
 int query(const vector<int> &a) {
     int ans = 0;
     for (int i : a) {
@@ -60,7 +67,11 @@ int solve() {
     for (int i = 1; i < n; i++) {
         for (int k = 2; k <= min(m, i + 1); k++) {
             int ans = 0;
+<<<<<<< HEAD
             for (int j = i - 1; j; j--) {
+=======
+            for (int j = i - 1; j >= 0; j--) {
+>>>>>>> parent of b1206e3 (master)
                 ans = max(ans, f[j][k - 1] + s[j + 1][i]);
                 if (s[j + 1][i] == 10) break;
             }
