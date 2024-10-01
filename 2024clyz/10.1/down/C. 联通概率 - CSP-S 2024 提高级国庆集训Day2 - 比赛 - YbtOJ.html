@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://noip.ybtoj.com.cn/contest/960/problem/3 -->
+<html lang="zh-CN" style="position: fixed; width: 100%; overflow: hidden; "><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style data-merge-styles="true"></style>
+    
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=1200">
+    <title>C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ</title>
+    
+    <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/semantic.min.css" rel="stylesheet">
+    <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/syntect-tomorrow.css" rel="stylesheet">
+    <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/style.css" rel="stylesheet">
+    <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/morris.css" rel="stylesheet">
+    
+      <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/fira-mono.css" rel="stylesheet">
+      <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/lato.css" rel="stylesheet">
+      <link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/open-sans.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" data-name="vs/editor/editor.main" href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/editor.main.css"><link href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/exo-2.css" rel="stylesheet">
+    
+    <script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/jquery.min.js.下载"></script>
+    <script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/dayjs.min.js.下载"></script>
+    
+<script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/editor.main.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/editor.main.nls.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/monaco-tokenizer.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/c_cpp.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/csharp.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/haskell.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/java.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/javascript.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/pascal.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/python.js.下载"></script><script async="async" type="text/javascript" src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/ruby.js.下载"></script><style type="text/css" media="screen" class="monaco-colors">.monaco-editor .minimap-slider, .monaco-editor .minimap-slider .minimap-slider-horizontal { background: rgba(100, 100, 100, 0.2); }
+.monaco-editor .minimap-slider:hover, .monaco-editor .minimap-slider:hover .minimap-slider-horizontal { background: rgba(100, 100, 100, 0.35); }
+.monaco-editor .minimap-slider.active, .monaco-editor .minimap-slider.active .minimap-slider-horizontal { background: rgba(0, 0, 0, 0.3); }
+.monaco-editor .minimap-shadow-visible { box-shadow: #dddddd -6px 0 6px -6px inset; }
+.monaco-editor .scroll-decoration { box-shadow: #dddddd 0 6px 6px -6px inset; }
+.monaco-editor .focused .selected-text { background-color: #d6d6d6; }
+.monaco-editor .selected-text { background-color: #e5ebf1; }
+.monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input { background-color: #ffffff; }
+.monaco-editor, .monaco-editor .inputarea.ime-input { color: #4d4d4c; }
+.monaco-editor .margin { background-color: #ffffff; }
+.monaco-editor .rangeHighlight { background-color: rgba(253, 255, 0, 0.2); }
+.vs-whitespace { color: #d1d1d1 !important; }
+.monaco-editor .view-overlays .current-line { background-color: #efefef; }
+.monaco-editor .margin-view-overlays .current-line-margin { background-color: #efefef; border: none; }
+.monaco-editor .lines-content .cigr { box-shadow: 1px 0 0 0 #d3d3d3 inset; }
+.monaco-editor .lines-content .cigra { box-shadow: 1px 0 0 0 #939393 inset; }
+.monaco-editor .line-numbers { color: #237893; }
+.monaco-editor .current-line ~ .line-numbers { color: #0b216f; }
+.monaco-editor .view-ruler { box-shadow: 1px 0 0 0 #d3d3d3 inset; }
+.monaco-editor .cursor { background-color: #aeafad; border-color: #aeafad; color: #515052; }
+.monaco-editor .squiggly-error { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23d60a0a'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+.monaco-editor .squiggly-warning { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23117711'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+.monaco-editor .squiggly-info { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23008000'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+.monaco-editor .squiggly-hint { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%223%22%20width%3D%2212%22%3E%3Cg%20fill%3D%22%236c6c6c%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat bottom left; }
+.showUnused .monaco-editor .squiggly-inline-unnecessary { opacity: 0.467; }
+.monaco-editor.vs .valueSetReplacement { outline: solid 2px #b9b9b9; }
+.monaco-diff-editor .diff-review-line-number { color: #237893; }
+.monaco-diff-editor .diff-review-shadow { box-shadow: #dddddd 0 -6px 6px -6px inset; }
+.monaco-editor .line-insert, .monaco-editor .char-insert { background-color: rgba(155, 185, 85, 0.2); }
+.monaco-diff-editor .line-insert, .monaco-diff-editor .char-insert { background-color: rgba(155, 185, 85, 0.2); }
+.monaco-editor .inline-added-margin-view-zone { background-color: rgba(155, 185, 85, 0.2); }
+.monaco-editor .line-delete, .monaco-editor .char-delete { background-color: rgba(255, 0, 0, 0.2); }
+.monaco-diff-editor .line-delete, .monaco-diff-editor .char-delete { background-color: rgba(255, 0, 0, 0.2); }
+.monaco-editor .inline-deleted-margin-view-zone { background-color: rgba(255, 0, 0, 0.2); }
+.monaco-diff-editor.side-by-side .editor.modified { box-shadow: -6px 0 5px -5px #dddddd; }
+.monaco-editor .bracket-match { background-color: rgba(0, 100, 0, 0.1); }
+.monaco-editor .bracket-match { border: 1px solid #b9b9b9; }
+.monaco-editor .codelens-decoration { color: #999999; }
+.monaco-editor .codelens-decoration > a:hover { color: #0000ff !important; }
+.monaco-editor .findOptionsWidget { background-color: #f3f3f3; }
+.monaco-editor .findOptionsWidget { box-shadow: 0 2px 8px #a8a8a8; }
+.monaco-editor .findMatch { background-color: rgba(234, 92, 0, 0.33); }
+.monaco-editor .currentFindMatch { background-color: #a8ac94; }
+.monaco-editor .findScope { background-color: rgba(180, 180, 180, 0.3); }
+.monaco-editor .find-widget { background-color: #f3f3f3; }
+.monaco-editor .find-widget { box-shadow: 0 2px 8px #a8a8a8; }
+.monaco-editor .find-widget.no-results .matchesCount { color: #a1260d; }
+.monaco-editor .find-widget .monaco-sash { background-color: #c8c8c8; width: 3px !important; margin-left: -4px;}
+.monaco-editor .find-widget .monaco-checkbox .checkbox:checked + .label { border: 1px solid #007acc; }
+.monaco-editor .detected-link-active { color: #0000ff !important; }
+.monaco-editor .monaco-editor-overlaymessage .anchor { border-top-color: #007acc; }
+.monaco-editor .monaco-editor-overlaymessage .message { border: 1px solid #007acc; }
+.monaco-editor .monaco-editor-overlaymessage .message { background-color: #d6ecf2; }
+.monaco-editor .parameter-hints-widget { border: 1px solid #c8c8c8; }
+.monaco-editor .parameter-hints-widget.multiple .body { border-left: 1px solid rgba(200, 200, 200, 0.5); }
+.monaco-editor .parameter-hints-widget .signature.has-docs { border-bottom: 1px solid rgba(200, 200, 200, 0.5); }
+.monaco-editor .parameter-hints-widget { background-color: #f3f3f3; }
+.monaco-editor .parameter-hints-widget a { color: #006ab1; }
+.monaco-editor .parameter-hints-widget code { background-color: rgba(220, 220, 220, 0.4); }
+.monaco-editor .snippet-placeholder { background-color: rgba(10, 50, 100, 0.2); outline-color: transparent; }
+.monaco-editor .finish-snippet-placeholder { background-color: transparent; outline-color: rgba(10, 50, 100, 0.5); }
+.monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-highlighted-label .highlight { color: #0066bf; }
+.monaco-editor .suggest-widget { color: #4d4d4c; }
+.monaco-editor .suggest-widget a { color: #006ab1; }
+.monaco-editor .suggest-widget code { background-color: rgba(220, 220, 220, 0.4); }
+.monaco-editor .focused .selectionHighlight { background-color: rgba(173, 214, 255, 0.3); }
+.monaco-editor .selectionHighlight { background-color: rgba(173, 214, 255, 0.15); }
+.monaco-editor .wordHighlight { background-color: rgba(87, 87, 87, 0.25); }
+.monaco-editor .wordHighlightStrong { background-color: rgba(14, 99, 156, 0.25); }
+.monaco-editor .accessibilityHelpWidget { background-color: #f3f3f3; }
+.monaco-editor .accessibilityHelpWidget { box-shadow: 0 2px 8px #a8a8a8; }
+.monaco-editor .tokens-inspect-widget { border: 1px solid #c8c8c8; }
+.monaco-editor .tokens-inspect-widget .tokens-inspect-separator { background-color: #c8c8c8; }
+.monaco-editor .tokens-inspect-widget { background-color: #f3f3f3; }
+.monaco-editor .reference-zone-widget .ref-tree .referenceMatch { background-color: rgba(234, 92, 0, 0.3); }
+.monaco-editor .reference-zone-widget .preview .reference-decoration { background-color: rgba(245, 216, 2, 0.87); }
+.monaco-editor .reference-zone-widget .ref-tree { background-color: #f3f3f3; }
+.monaco-editor .reference-zone-widget .ref-tree { color: #646465; }
+.monaco-editor .reference-zone-widget .ref-tree .reference-file { color: #1e1e1e; }
+.monaco-editor .reference-zone-widget .ref-tree .monaco-list:focus .monaco-list-rows > .monaco-list-row.selected:not(.highlighted) { background-color: rgba(51, 153, 255, 0.2); }
+.monaco-editor .reference-zone-widget .ref-tree .monaco-list:focus .monaco-list-rows > .monaco-list-row.selected:not(.highlighted) { color: #6c6c6c !important; }
+.monaco-editor .reference-zone-widget .preview .monaco-editor .monaco-editor-background,.monaco-editor .reference-zone-widget .preview .monaco-editor .inputarea.ime-input {	background-color: #f2f8fc;}
+.monaco-editor .reference-zone-widget .preview .monaco-editor .margin {	background-color: #f2f8fc;}
+.monaco-editor .marker-widget a { color: #006ab1; }
+.monaco-editor .hoverHighlight { background-color: rgba(173, 214, 255, 0.15); }
+.monaco-editor .monaco-editor-hover { background-color: #f3f3f3; }
+.monaco-editor .monaco-editor-hover { border: 1px solid #c8c8c8; }
+.monaco-editor .monaco-editor-hover .hover-row:not(:first-child):not(:empty) { border-top: 1px solid rgba(200, 200, 200, 0.5); }
+.monaco-editor .monaco-editor-hover hr { border-top: 1px solid rgba(200, 200, 200, 0.5); }
+.monaco-editor .monaco-editor-hover hr { border-bottom: 0px solid rgba(200, 200, 200, 0.5); }
+.monaco-editor .monaco-editor-hover a { color: #006ab1; }
+.monaco-editor .monaco-editor-hover .hover-row .actions { background-color: #e7e7e7; }
+.monaco-editor .monaco-editor-hover code { background-color: rgba(220, 220, 220, 0.4); }
+.monaco-editor .goto-definition-link { color: #0000ff !important; }
+
+.mtk1 { color: #000000; }
+.mtk2 { color: #fffffe; }
+.mtk3 { color: #808080; }
+.mtk4 { color: #ff0000; }
+.mtk5 { color: #0451a5; }
+.mtk6 { color: #0000ff; }
+.mtk7 { color: #09885a; }
+.mtk8 { color: #008000; }
+.mtk9 { color: #8e908c; }
+.mtk10 { color: #dd0000; }
+.mtk11 { color: #f5871f; }
+.mtk12 { color: #666969; }
+.mtk13 { color: #3e999f; }
+.mtk14 { color: #718c00; }
+.mtk15 { color: #c82829; }
+.mtk16 { color: #383838; }
+.mtk17 { color: #c99e00; }
+.mtk18 { color: #4271ae; }
+.mtk19 { color: #cd3131; }
+.mtk20 { color: #863b00; }
+.mtk21 { color: #8959a8; }
+.mtk22 { color: #af00db; }
+.mtk23 { color: #800000; }
+.mtk24 { color: #373b41; }
+.mtk25 { color: #e0e0e0; }
+.mtk26 { color: #e00000; }
+.mtk27 { color: #3030c0; }
+.mtk28 { color: #666666; }
+.mtk29 { color: #778899; }
+.mtk30 { color: #ff00ff; }
+.mtk31 { color: #a31515; }
+.mtk32 { color: #4f76ac; }
+.mtk33 { color: #008080; }
+.mtk34 { color: #001188; }
+.mtk35 { color: #4864aa; }
+.mtki { font-style: italic; }
+.mtkb { font-weight: bold; }
+.mtku { text-decoration: underline; text-underline-position: under; }</style><style type="text/css" media="screen"></style></head><fatkun-drop-panel style="display: none;"><template shadowrootmode="open">
+    <style>
+        .fatkun-drop-area {
+            user-select: none;
+            font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "å¾®è½¯é›…é»‘", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
+            font-weight: 400;
+            z-index: 2147483647;
+            position: fixed;
+            top: -999999px;
+            left: -999999px;
+            width: 400px;
+            text-align: center;
+            transition: background 0.1s ease-in-out, opacity 0.1s ease-in-out, transform 0.2s ease-in-out, border 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+            opacity: 0;
+            padding: 0;
+            transform: translateY(10px);
+            border-radius: 10px;
+            box-sizing: border-box;
+            opacity: 1;
+            background: #fff;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.20);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+        }
+
+        .fatkun-drop-area.show {
+            transition: transform 50ms ease;
+            transform: translateY(0px);
+        }
+
+        #fatkun-drop-area-overlay {
+            z-index: 1147483646;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            background: rgba(33, 33, 33, 0.5);
+            user-select: none;
+            pointer-events: none;
+            transition: opacity 50ms ease;
+        }
+
+        #fatkun-drop-area-overlay.show {
+            opacity: 1;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content {
+            display: flex;
+            text-align: left;
+            flex-direction: row;
+            flex-shrink: initial;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel {
+            position: relative;
+            min-width: 200px;
+            width: 200px;
+            min-height: 200px;
+            align-items: center;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item {
+            text-align: center;
+            display: flex;
+            flex-shrink: initial;
+            flex-direction: row;
+            align-items: center;
+            background-color: #f1f2f4;
+            border-radius: 0;
+            padding: 0 16px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: auto !important;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item.dragenter {
+            background-color: #e1e2e4;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item .title {
+            font-size: 14px !important;
+            overflow: initial !important;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-right-panel {
+            padding: 5px;
+            flex: 1;
+            max-width: calc(100% - 200px);
+        }
+
+        .fatkun-drop-area.old-version {
+            width: 200px;
+        }
+
+        .fatkun-drop-area.old-version .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item {
+            right: 0;
+        }
+
+        .fatkun-drop-area.old-version .fatkun-drop-area-content .fatkun-right-panel {
+            display: none;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-drop-area-item {
+            height: 32px;
+            display: flex !important;
+            align-items: center !important;
+            border-radius: 5px;
+            padding: 0 12px;
+            transition: all 80ms ease;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-right-panel .fatkun-drop-area-item .title {
+            align-self: flex-start !important;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-drop-area-item.all {
+            /*padding: 20px 12px;*/
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-drop-area-item.dragenter {
+            background-color: #f1f2f4;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .fatkun-drop-area-item * {
+            pointer-events: none;
+            flex-shrink: initial;
+            max-width: 100%;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content hr {
+            border: 0 !important;
+            height: 1px !important;
+            margin: 5px 0 !important;
+            background-color: #e9e9e9 !important;
+            display: block !important;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .icon {
+            height: 32px;
+            width: 32px;
+            line-height: 32px;
+            text-align: center;
+            margin: 0 auto 20px !important;
+            background: rgba(128, 128, 128, 0.20);
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .icon .fake-svg {
+            -webkit-mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxM3B4IiBoZWlnaHQ9IjE1cHgiIHZpZXdCb3g9IjAgMCAxMyAxNSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4gICAgICAgIDx0aXRsZT5pY19kb3dubG9hZF9ub3JtYWw8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0i5paw54mI5pys5ouW5ou95qaC5b+1LS0t5ouW5ou96Kem5Y+RIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtODE0LjAwMDAwMCwgLTM2Mi4wMDAwMDApIiBmaWxsPSIjMzMzMzMzIj4gICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzA5LjAwMDAwMCwgMjg5LjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtNyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUuMDAwMDAwLCA2MS4wMDAwMDApIj4gICAgICAgICAgICAgICAgICAgIDxnIGlkPSJHcm91cC02IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2Ny40NTAwMDAsIDAuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGcgaWQ9ImFycm93LWRvd24iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLjM1MDAwMCwgMTIuMzUwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJpY19kb3dubG9hZF9ub3JtYWwiIHBvaW50cz0iNi42NSAxMy43NzUgMC40NzUgNy42IDMuOCA3LjYgMy44IDAgOS41IDAgOS41IDcuNiAxMi44MjUgNy42Ij48L3BvbHlnb24+ICAgICAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICA8L2c+ICAgICAgICAgICAgPC9nPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+) no-repeat center center;
+            /*background: #333;*/
+            height: 32px;
+            width: 32px;
+            background: #666;
+            transition: all 0.3s ease-in-out;
+            animation: icon-jump 1.5s ease 0s infinite normal;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .title {
+            font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "å¾®è½¯é›…é»‘", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            line-height: 32px !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            color: #111 !important;
+            margin: 0 !important;
+            display: block !important;
+            transition: all 0.3s ease-in-out;
+            max-width: 100%;
+        }
+
+        .fatkun-drop-area .fatkun-drop-area-content .description {
+            font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "å¾®è½¯é›…é»‘", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            margin-top: 12px !important;
+            margin-bottom: 0 !important;
+            line-height: 1.5 !important;
+            color: #111 !important;
+            opacity: 0.6;
+            transition: all 0.3s ease-in-out;
+            max-width: 100%;
+        }
+
+        .fatkun-drop-area.dragover {
+            opacity: 1;
+        }
+
+        @media (prefers-color-scheme: dark) {
+
+            .fatkun-drop-area {
+                background: rgba(37, 37, 40, 0.98);
+                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.20);
+                border: none;
+            }
+
+            #fatkun-drop-area-overlay {
+                background: rgba(72, 72, 72, 0.3);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .fatkun-right-panel {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .fatkun-right-panel .fatkun-drop-area-item.dragenter {
+                background-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .fatkun-left-panel .fatkun-drop-area-item.dragenter {
+                background-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content hr {
+                background-color: rgba(255, 255, 255, 0.1) !important;
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .title {
+                color: #fff !important;
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .description {
+                color: #fff !important;
+                opacity: 0.7;
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .icon {
+                background: rgba(255, 255, 255, 0.10);
+            }
+
+            .fatkun-drop-area .fatkun-drop-area-content .icon .fake-svg {
+                background: #fff;
+            }
+
+        }
+
+        @keyframes icon-jump {
+            0% {
+                transform: translateY(0);
+            }
+
+            20% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            50% {
+                transform: translateY(0);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
+
+            80% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .fatkun-drop-bottom-area {
+            font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "å¾®è½¯é›…é»‘", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
+            font-weight: 400;
+            z-index: 2147483647;
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            height: 120px;
+            text-align: center;
+            transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out, border 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
+            -webkit-perspective: 1000;
+            transform: translateY(100%);
+            background: #303034;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            box-sizing: border-box;
+        }
+
+        .fatkun-drop-bottom-area .fatkun-drop-area-content {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fatkun-drop-bottom-area .fatkun-drop-area-content .icon {
+            height: 44px;
+            width: 44px;
+            line-height: 44px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.20);
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            margin-right: 24px;
+        }
+
+        .fatkun-drop-bottom-area .fatkun-drop-area-content .icon .fake-svg {
+            -webkit-mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxM3B4IiBoZWlnaHQ9IjE1cHgiIHZpZXdCb3g9IjAgMCAxMyAxNSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4gICAgICAgIDx0aXRsZT5pY19kb3dubG9hZF9ub3JtYWw8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8ZyBpZD0i5paw54mI5pys5ouW5ou95qaC5b+1LS0t5ouW5ou96Kem5Y+RIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtODE0LjAwMDAwMCwgLTM2Mi4wMDAwMDApIiBmaWxsPSIjMzMzMzMzIj4gICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzA5LjAwMDAwMCwgMjg5LjAwMDAwMCkiPiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtNyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUuMDAwMDAwLCA2MS4wMDAwMDApIj4gICAgICAgICAgICAgICAgICAgIDxnIGlkPSJHcm91cC02IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2Ny40NTAwMDAsIDAuMDAwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGcgaWQ9ImFycm93LWRvd24iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLjM1MDAwMCwgMTIuMzUwMDAwKSI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJpY19kb3dubG9hZF9ub3JtYWwiIHBvaW50cz0iNi42NSAxMy43NzUgMC40NzUgNy42IDMuOCA3LjYgMy44IDAgOS41IDAgOS41IDcuNiAxMi44MjUgNy42Ij48L3BvbHlnb24+ICAgICAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICAgICAgPC9nPiAgICAgICAgICAgICAgICA8L2c+ICAgICAgICAgICAgPC9nPiAgICAgICAgPC9nPiAgICA8L2c+PC9zdmc+) no-repeat center center;
+            height: 44px;
+            width: 44px;
+            background: #fff;
+            transition: all 0.3s ease-in-out;
+            animation: icon-jump 1s ease 0s infinite normal;
+        }
+
+        .fatkun-drop-bottom-area .fatkun-drop-area-content .title {
+            font-family: "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", "å¾®è½¯é›…é»‘", "Helvetica Neue", Helvetica, Arial, Arial, sans-serif;
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            color: #fff !important;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .fatkun-drop-bottom-area.show {
+            opacity: 0.8;
+            transform: translateY(0) scale3d(1, 1, 1);
+        }
+
+        .fatkun-drop-bottom-area.dragover {
+            opacity: 0.95;
+        }
+        #fatkun-drop-panel-close-btn{
+            z-index: 1;
+            display: block;
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            font-size: 24px;
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            line-height: 24px;
+        }
+    </style>
+
+    <div id="fatkun-drop-area" class="fatkun-drop-area old-version" style="left: 7px;top: 0;">
+        <div id="fatkun-drop-panel-close-btn">×</div>
+        <div class="fatkun-drop-area-content">
+            <div class="fatkun-left-panel">
+                <div class="fatkun-drop-area-item" folder-id="">
+                    <div>
+                        <div class="icon">
+                            <div class="fake-svg"></div>
+                        </div>
+                        <div class="title">Drag and drop</div>
+                        <div class="description">The image dropped here will be downloaded by Fatkun</div>
+                    </div>
+                </div>
+            </div>
+            <div class="fatkun-right-panel">
+                <div id="fatkun-drop-area-folders">
+                </div>
+                <div class="fatkun-drop-area-item" folder-id="choose">
+                    <div class="title">Choose folder...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fatkun-drop-area-overlay" class="" style="
+    opacity: 1;
+"></div>
+</template></fatkun-drop-panel><script src="chrome-extension://bcjkohpafljnigdmnlaghjhaaleonlac/scriptMain.bundle.js"></script>
+<img class="safum-vpn-status" id="ncpkioolbefiinmbflfglojjabaipegg-img" src="chrome-extension://ncpkioolbefiinmbflfglojjabaipegg/web_accessible_resources/status_on.png" alt="status"><body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay; " inmaintabuse="1"> 
+  <div class="ui fixed borderless menu" style="position: fixed; height: 49px; ">  
+    <div class="ui container">
+            
+            <a class="header item" href="http://noip.ybtoj.com.cn/"><span style="font-family: &#39;Exo 2&#39;; font-size: 1.5em; font-weight: 600; ">YbtOJ</span></a>
+            
+            
+            <a class="item" href="http://noip.ybtoj.com.cn/problems"><i class="list icon"></i> 题库</a>
+            <a class="item active" href="http://noip.ybtoj.com.cn/contests"><i class="calendar icon"></i> 比赛</a>
+            <a class="item" href="http://noip.ybtoj.com.cn/submissions"><i class="tasks icon"></i> 评测</a>
+            
+            
+              <a id="back_to_contest" class="item" href="http://noip.ybtoj.com.cn/contest/960"><i class="arrow left icon"></i>
+                返回比赛
+              </a>
+            
+            <div class="right menu">
+              
+              <a href="http://noip.ybtoj.com.cn/user/3845" style="color: inherit; ">
+              </a><div class="ui simple dropdown item"><a href="http://noip.ybtoj.com.cn/user/3845" style="color: inherit; ">
+                ljyzyxh <i class="dropdown icon"></i>
+                </a><div class="menu"><a href="http://noip.ybtoj.com.cn/user/3845" style="color: inherit; ">
+                  </a><a class="item" href="http://noip.ybtoj.com.cn/user/3845/edit"><i class="edit icon"></i>修改资料</a>
+                  
+                  
+                  <a class="item" href-post="/logout?url=%2Fcontest%2F960%2Fproblem%2F3"><i class="power icon"></i>注销</a>
+                </div>
+              </div>
+              
+                
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 28px; ">
+    <div class="ui main container">
+
+<style>
+#languages-menu::-webkit-scrollbar, #testcase-menu::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+#languages-menu .item::after, #testcase-menu .item::after {
+    display: none;
+}
+</style>
+
+<script>
+  window.pathLib = "/cdnjs/";
+  window.pathSelfLib = "/self/";
+  
+  var originalConsoleWarn = console.warn;
+  console.warn = function (message) {
+    if (message.startsWith('Duplicate definition of module')) return;
+    originalConsoleWarn.apply(console, arguments);
+  };
+</script>
+
+<!-- Load monaco-editor -->
+<script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/loader.js.下载"></script>
+<script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/monaco-editor.js.下载"></script>
+<link rel="stylesheet" href="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/monaco-editor.css">
+
+
+
+
+<div class="ui center aligned grid">
+    <div class="row">
+      <h1 class="ui header">
+        
+          C. 联通概率
+        
+      </h1>
+    </div>
+    
+      <div class="row" style="margin-top: -15px">
+          <span class="ui label">内存限制：512 MiB</span>
+          <span class="ui label">时间限制：1000 ms</span>
+          
+            <span class="ui label">输入文件：select.in</span>
+            <span class="ui label">输出文件：select.out</span>
+          
+      </div>
+    
+    
+      <div class="row" style="margin-top: -23px">
+          <span class="ui label">题目类型：传统</span>
+          <span class="ui label">评测方式：文本比较</span>
+      </div>
+    
+    
+</div>
+<div class="ui grid">
+  <div class="row">
+    <div class="column">
+      <div class="ui buttons">
+        
+        
+        
+          
+            <a class="small ui primary button" href="http://noip.ybtoj.com.cn/contest/960/problem/3#submit_code">
+              
+                提交
+              
+          </a>
+          
+          <a class="small ui positive button" href="http://noip.ybtoj.com.cn/contest/960/submissions?problem_id=3">提交记录</a>
+          
+          <a href="http://noip.ybtoj.com.cn/contest/960" class="ui orange button">
+            
+            返回比赛
+            
+          </a>
+        
+      </div>
+      
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="column">
+      <h4 class="ui top attached block header">题目描述</h4>
+      <div class="ui bottom attached segment font-content"><div style="position: relative; overflow: hidden; "><p>小可可又在造数据，只不过这次是一个联通图。</p>
+<p>小可可要造一个 <svg style="vertical-align: -0.025ex" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-1-TEX-I-1D45B"></use></g></g></g></svg> 个点的联通图，由于她非常懒，于是决定每次在 <svg style="vertical-align: -0.566ex" xmlns="http://www.w3.org/2000/svg" width="4.753ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2100.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-N-5B" d="M118 -250V750H255V710H158V-210H255V-250H118Z"></path><path id="MJX-2-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-2-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-2-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-N-5D" d="M22 710V750H159V-250H22V-210H119V710H22Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="5B" xlink:href="#MJX-2-TEX-N-5B"></use></g><g data-mml-node="mn" transform="translate(278,0)"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(778,0)"><use data-c="2C" xlink:href="#MJX-2-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(1222.7,0)"><use data-c="1D45B" xlink:href="#MJX-2-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(1822.7,0)"><use data-c="5D" xlink:href="#MJX-2-TEX-N-5D"></use></g></g></g></svg> 中独立地等概率随机两个点 <svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="3.397ex" height="1.441ex" role="img" focusable="false" viewBox="0 -443 1501.7 637" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-3-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-3-TEX-I-1D463" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-3-TEX-I-1D462"></use></g><g data-mml-node="mo" transform="translate(572,0)"><use data-c="2C" xlink:href="#MJX-3-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(1016.7,0)"><use data-c="1D463" xlink:href="#MJX-3-TEX-I-1D463"></use></g></g></g></svg>（可以相同），然后将 <svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="3.397ex" height="1.441ex" role="img" focusable="false" viewBox="0 -443 1501.7 637" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-4-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-4-TEX-I-1D463" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-4-TEX-I-1D462"></use></g><g data-mml-node="mo" transform="translate(572,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(1016.7,0)"><use data-c="1D463" xlink:href="#MJX-4-TEX-I-1D463"></use></g></g></g></svg> 之间连一条边。</p>
+<p>小可可发现要等到整张图联通需要不少时间，于是问你期望连多少次边后整张图联通，答案对一个质数 <svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="1.138ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 503 636" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45D" xlink:href="#MJX-5-TEX-I-1D45D"></use></g></g></g></svg> 取模。</p>
+</div></div>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="column">
+        <h4 class="ui top attached block header">输入格式</h4>
+        <div class="ui bottom attached segment font-content"><div style="position: relative; overflow: hidden; "><p>从 <code>select.in</code> 读入数据。</p>
+<p>一行两个正整数 <svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="3.502ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 1547.7 636" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-I-1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-1-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(600,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(1044.7,0)"><use data-c="1D45D" xlink:href="#MJX-1-TEX-I-1D45D"></use></g></g></g></svg>，表示图的节点个数和模数。</p>
+</div></div>
+    </div>
+  </div>
+  
+  
+    <div class="row">
+        <div class="column">
+          <h4 class="ui top attached block header">输出格式</h4>
+          <div class="ui bottom attached segment font-content"><div style="position: relative; overflow: hidden; "><p>输出数据到 <code>select.out</code> 。</p>
+<p>输出一个整数，表示期望连边次数对 <svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="1.138ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 503 636" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45D" xlink:href="#MJX-1-TEX-I-1D45D"></use></g></g></g></svg> 取模的结果。</p>
+</div></div>
+        </div>
+    </div>
+  
+  
+    <div class="row">
+        <div class="column">
+          <h4 class="ui top attached block header">样例</h4>
+          <div class="ui bottom attached segment font-content"><div style="position: relative; overflow: hidden; "><h4>样例输入1</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">2 998244353
+</span></code></pre></div>
+<h4>样例输出1</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code>2
+</code></pre></div>
+<h4>样例输入2</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">3 998244353
+</span></code></pre></div>
+<h4>样例输出2</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">249561092
+</span></code></pre></div>
+<h4>样例输入3</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">4 998244353
+</span></code></pre></div>
+<h4>样例输出3</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">66549629
+</span></code></pre></div>
+<h4>样例输入4</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">5 998244353
+</span></code></pre></div>
+<h4>样例输出4</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">130722482
+</span></code></pre></div>
+<h4>样例输入5</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">10 998244353
+</span></code></pre></div>
+<h4>样例输出5</h4>
+<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code><span class="hl-text hl-plain">935808122
+</span></code></pre></div>
+</div></div>
+        </div>
+    </div>
+  
+  
+    <div class="row">
+        <div class="column">
+          <h4 class="ui top attached block header">数据范围与提示</h4>
+          <div class="ui bottom attached segment font-content"><div style="position: relative; overflow: hidden; "><p>对于 <svg style="vertical-align: -0.127ex" xmlns="http://www.w3.org/2000/svg" width="4.147ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1833 806" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-1-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-1-TEX-N-25" d="M465 605Q428 605 394 614T340 632T319 641Q332 608 332 548Q332 458 293 403T202 347Q145 347 101 402T56 548Q56 637 101 693T202 750Q241 750 272 719Q359 642 464 642Q580 642 650 732Q662 748 668 749Q670 750 673 750Q682 750 688 743T693 726Q178 -47 170 -52Q166 -56 160 -56Q147 -56 142 -45Q137 -36 142 -27Q143 -24 363 304Q469 462 525 546T581 630Q528 605 465 605ZM207 385Q235 385 263 427T292 548Q292 617 267 664T200 712Q193 712 186 709T167 698T147 668T134 615Q132 595 132 548V527Q132 436 165 403Q183 385 203 385H207ZM500 146Q500 234 544 290T647 347Q699 347 737 292T776 146T737 0T646 -56Q590 -56 545 0T500 146ZM651 -18Q679 -18 707 24T736 146Q736 215 711 262T644 309Q637 309 630 306T611 295T591 265T578 212Q577 200 577 146V124Q577 -18 647 -18H651Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use><use data-c="30" xlink:href="#MJX-1-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mi" transform="translate(1000,0)"><use data-c="25" xlink:href="#MJX-1-TEX-N-25"></use></g></g></g></svg> 的数据，<svg style="vertical-align: -0.312ex" xmlns="http://www.w3.org/2000/svg" width="5.506ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 2433.6 804" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-2-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-2-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(877.8,0)"><use data-c="2264" xlink:href="#MJX-2-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(1933.6,0)"><use data-c="35" xlink:href="#MJX-2-TEX-N-35"></use></g></g></g></svg>；</p>
+<p>对于 <svg style="vertical-align: -0.127ex" xmlns="http://www.w3.org/2000/svg" width="4.147ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1833 806" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-3-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-3-TEX-N-25" d="M465 605Q428 605 394 614T340 632T319 641Q332 608 332 548Q332 458 293 403T202 347Q145 347 101 402T56 548Q56 637 101 693T202 750Q241 750 272 719Q359 642 464 642Q580 642 650 732Q662 748 668 749Q670 750 673 750Q682 750 688 743T693 726Q178 -47 170 -52Q166 -56 160 -56Q147 -56 142 -45Q137 -36 142 -27Q143 -24 363 304Q469 462 525 546T581 630Q528 605 465 605ZM207 385Q235 385 263 427T292 548Q292 617 267 664T200 712Q193 712 186 709T167 698T147 668T134 615Q132 595 132 548V527Q132 436 165 403Q183 385 203 385H207ZM500 146Q500 234 544 290T647 347Q699 347 737 292T776 146T737 0T646 -56Q590 -56 545 0T500 146ZM651 -18Q679 -18 707 24T736 146Q736 215 711 262T644 309Q637 309 630 306T611 295T591 265T578 212Q577 200 577 146V124Q577 -18 647 -18H651Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="34" xlink:href="#MJX-3-TEX-N-34"></use><use data-c="30" xlink:href="#MJX-3-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mi" transform="translate(1000,0)"><use data-c="25" xlink:href="#MJX-3-TEX-N-25"></use></g></g></g></svg> 的数据，<svg style="vertical-align: -0.312ex" xmlns="http://www.w3.org/2000/svg" width="6.637ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 2933.6 804" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-4-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-4-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(877.8,0)"><use data-c="2264" xlink:href="#MJX-4-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(1933.6,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use><use data-c="30" xlink:href="#MJX-4-TEX-N-30" transform="translate(500,0)"></use></g></g></g></svg>；</p>
+<p>对于 <svg style="vertical-align: -0.127ex" xmlns="http://www.w3.org/2000/svg" width="4.147ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1833 806" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-5-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-5-TEX-N-25" d="M465 605Q428 605 394 614T340 632T319 641Q332 608 332 548Q332 458 293 403T202 347Q145 347 101 402T56 548Q56 637 101 693T202 750Q241 750 272 719Q359 642 464 642Q580 642 650 732Q662 748 668 749Q670 750 673 750Q682 750 688 743T693 726Q178 -47 170 -52Q166 -56 160 -56Q147 -56 142 -45Q137 -36 142 -27Q143 -24 363 304Q469 462 525 546T581 630Q528 605 465 605ZM207 385Q235 385 263 427T292 548Q292 617 267 664T200 712Q193 712 186 709T167 698T147 668T134 615Q132 595 132 548V527Q132 436 165 403Q183 385 203 385H207ZM500 146Q500 234 544 290T647 347Q699 347 737 292T776 146T737 0T646 -56Q590 -56 545 0T500 146ZM651 -18Q679 -18 707 24T736 146Q736 215 711 262T644 309Q637 309 630 306T611 295T591 265T578 212Q577 200 577 146V124Q577 -18 647 -18H651Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="36" xlink:href="#MJX-5-TEX-N-36"></use><use data-c="30" xlink:href="#MJX-5-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mi" transform="translate(1000,0)"><use data-c="25" xlink:href="#MJX-5-TEX-N-25"></use></g></g></g></svg> 的数据，<svg style="vertical-align: -0.312ex" xmlns="http://www.w3.org/2000/svg" width="6.637ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 2933.6 804" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-6-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-6-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-6-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45B" xlink:href="#MJX-6-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(877.8,0)"><use data-c="2264" xlink:href="#MJX-6-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(1933.6,0)"><use data-c="35" xlink:href="#MJX-6-TEX-N-35"></use><use data-c="30" xlink:href="#MJX-6-TEX-N-30" transform="translate(500,0)"></use></g></g></g></svg>；</p>
+<p>对于 <svg style="vertical-align: -0.127ex" xmlns="http://www.w3.org/2000/svg" width="5.278ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2333 806" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-7-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-7-TEX-N-25" d="M465 605Q428 605 394 614T340 632T319 641Q332 608 332 548Q332 458 293 403T202 347Q145 347 101 402T56 548Q56 637 101 693T202 750Q241 750 272 719Q359 642 464 642Q580 642 650 732Q662 748 668 749Q670 750 673 750Q682 750 688 743T693 726Q178 -47 170 -52Q166 -56 160 -56Q147 -56 142 -45Q137 -36 142 -27Q143 -24 363 304Q469 462 525 546T581 630Q528 605 465 605ZM207 385Q235 385 263 427T292 548Q292 617 267 664T200 712Q193 712 186 709T167 698T147 668T134 615Q132 595 132 548V527Q132 436 165 403Q183 385 203 385H207ZM500 146Q500 234 544 290T647 347Q699 347 737 292T776 146T737 0T646 -56Q590 -56 545 0T500 146ZM651 -18Q679 -18 707 24T736 146Q736 215 711 262T644 309Q637 309 630 306T611 295T591 265T578 212Q577 200 577 146V124Q577 -18 647 -18H651Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-7-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-7-TEX-N-30" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-7-TEX-N-30" transform="translate(1000,0)"></use></g><g data-mml-node="mi" transform="translate(1500,0)"><use data-c="25" xlink:href="#MJX-7-TEX-N-25"></use></g></g></g></svg> 的数据，<svg style="vertical-align: -0.439ex" xmlns="http://www.w3.org/2000/svg" width="30.492ex" height="2.394ex" role="img" focusable="false" viewBox="0 -864 13477.4 1058" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-8-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-8-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-8-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-8-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-8-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-8-TEX-I-1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path><path id="MJX-8-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-8-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(777.8,0)"><use data-c="2264" xlink:href="#MJX-8-TEX-N-2264"></use></g><g data-mml-node="mi" transform="translate(1833.6,0)"><use data-c="1D45B" xlink:href="#MJX-8-TEX-I-1D45B"></use></g><g data-mml-node="mo" transform="translate(2711.3,0)"><use data-c="2264" xlink:href="#MJX-8-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(3767.1,0)"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(1000,0)"></use></g><g data-mml-node="mo" transform="translate(5267.1,0)"><use data-c="2C" xlink:href="#MJX-8-TEX-N-2C"></use></g><g data-mml-node="msup" transform="translate(5711.8,0)"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mn" transform="translate(1033,393.1) scale(0.707)"><use data-c="38" xlink:href="#MJX-8-TEX-N-38"></use></g></g><g data-mml-node="mo" transform="translate(7426.1,0)"><use data-c="2264" xlink:href="#MJX-8-TEX-N-2264"></use></g><g data-mml-node="mi" transform="translate(8481.9,0)"><use data-c="1D45D" xlink:href="#MJX-8-TEX-I-1D45D"></use></g><g data-mml-node="mo" transform="translate(9262.7,0)"><use data-c="2264" xlink:href="#MJX-8-TEX-N-2264"></use></g><g data-mml-node="msup" transform="translate(10318.4,0)"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mn" transform="translate(1033,393.1) scale(0.707)"><use data-c="39" xlink:href="#MJX-8-TEX-N-39"></use></g></g><g data-mml-node="mo" transform="translate(11977.2,0)"><use data-c="2B" xlink:href="#MJX-8-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(12977.4,0)"><use data-c="39" xlink:href="#MJX-8-TEX-N-39"></use></g></g></g></svg>。</p>
+</div></div>
+        </div>
+    </div>
+  
+  
+    
+    <div class="row">
+        <div class="column">
+          
+          <form action="http://noip.ybtoj.com.cn/problem/24257/submit?contest_id=960" method="post" onsubmit="return submit_code()" id="submit_code" enctype="multipart/form-data">
+            
+              <input name="language" type="hidden" id="form">
+              <input name="code" type="hidden">
+              <div class="ui grid">
+                <div class="four wide column" style="margin-right: -25px; ">
+                  <div class="ui attached vertical fluid pointing menu" id="languages-menu" style="height: 370px; overflow-y: scroll; overflow-x: hidden; ">
+                    
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp" data-mode="cpp">
+                        C++
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 10.2.0</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp11" data-mode="cpp">
+                        C++ 11
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 10.2.0</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item active" data-value="cpp17" data-mode="cpp">
+                        C++ 17
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 10.2.0</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp-noilinux" data-mode="cpp">
+                        C++ (NOI)
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 4.8.4 (NOILinux 1.4.1)</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp11-noilinux" data-mode="cpp">
+                        C++ 11 (NOI)
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 4.8.4 (NOILinux 1.4.1)</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp11-clang" data-mode="cpp">
+                        C++ 11 (Clang)
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">Clang 12.0.1</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="cpp17-clang" data-mode="cpp">
+                        C++ 17 (Clang)
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">Clang 12.0.1</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="c" data-mode="c">
+                        C
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">Clang 12.0.1</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="c-noilinux" data-mode="c">
+                        C (NOI)
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GCC 4.8.4 (NOILinux 1.4.1)</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="csharp" data-mode="csharp">
+                        C#
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">Mono 6.12.0.122</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="java" data-mode="java">
+                        Java
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">OpenJDK 11.0.11</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="pascal" data-mode="pascal">
+                        Pascal
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">Free Pascal 3.0.4</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="python2" data-mode="python">
+                        Python 2
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">PyPy 7.3.4 (Python 2.7.18)</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="python3" data-mode="python">
+                        Python 3
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">PyPy 7.3.4 (Python 3.7.10)</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="nodejs" data-mode="javascript">
+                        Node.js
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">16.1.0</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="ruby" data-mode="ruby">
+                        Ruby
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">2.7.0</div>
+                      </a>
+                    
+                      <a style="border-radius: 0; " class="item" data-value="haskell" data-mode="haskell">
+                        Haskell
+                        <div class="ui right floated" style="opacity: 0.4; margin-top: 8px; font-size: 0.7em; ">GHC 8.10.4</div>
+                      </a>
+                    
+                  </div>
+                </div>
+                <div class="twelve wide stretched column" style="position: relative; padding-left: 0; margin-left: calc(-1rem - 1px); width: calc(75% + 1rem + 13px) !important; ">
+                  <div id="editor" style="position: absolute; width: 100%; height: calc(100% - 28px); border: 1px solid #D4D4D5; overflow: hidden; " class="editor" data-keybinding-context="1" data-mode-id="cpp"><div class="monaco-editor no-user-select  vs" data-uri="inmemory://model/1" style="width: 891px; height: 368px;"><div data-mprt="3" class="overflow-guard" style="width: 891px; height: 368px;"><div class="margin" role="presentation" aria-hidden="true" style="position: absolute; will-change: transform; top: 0px; height: 368px; width: 60px;"><div class="glyph-margin" style="left: 0px; width: 0px; height: 368px;"></div><div class="margin-view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div><div class="margin-view-overlays" role="presentation" aria-hidden="true" style="position: absolute; width: 60px; font-family: &quot;Fira Mono&quot;, &quot;Bitstream Vera Sans Mono&quot;, Menlo, Consolas, &quot;Lucida Console&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft Yahei&quot;, monospace; font-weight: normal; font-size: 14px; line-height: 22px; letter-spacing: 0px; height: 368px;"><div style="position:absolute;top:0px;width:100%;height:22px;"><div class="current-line" style="width:60px; height:22px;"></div><div class="line-numbers" style="left:0px;width:34px;">1</div></div></div></div><div class="monaco-scrollable-element editor-scrollable vs" role="presentation" data-mprt="5" style="position: absolute; overflow: hidden; left: 60px; width: 831px; height: 368px;"><div class="lines-content monaco-editor-background" style="position: absolute; overflow: hidden; width: 1e+06px; height: 1e+06px; will-change: transform; top: 0px; left: 0px;"><div class="view-overlays" role="presentation" aria-hidden="true" style="position: absolute; height: 0px; width: 743px;"><div style="position:absolute;top:0px;width:100%;height:22px;"><div class="current-line" style="width:743px; height:22px;"></div></div></div><div role="presentation" aria-hidden="true" class="view-rulers"></div><div class="view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div><div class="view-lines" role="presentation" aria-hidden="true" data-mprt="7" style="position: absolute; font-family: &quot;Fira Mono&quot;, &quot;Bitstream Vera Sans Mono&quot;, Menlo, Consolas, &quot;Lucida Console&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft Yahei&quot;, monospace; font-weight: normal; font-size: 14px; line-height: 22px; letter-spacing: 0px; width: 743px; height: 368px;"><div style="top:0px;height:22px;" class="view-line"><span><span>&nbsp;</span></span></div></div><div data-mprt="1" class="contentWidgets" style="position: absolute; top: 0px;"><div class="lightbulb-glyph" title="Show Fixes (Ctrl+.)" widgetid="LightBulbWidget" style="position: absolute; visibility: hidden; max-width: 743px;"></div></div><div role="presentation" aria-hidden="true" class="cursors-layer cursor-line-style cursor-solid"><div class="cursor " style="height: 22px; top: 0px; left: 0px; font-family: &quot;Fira Mono&quot;, &quot;Bitstream Vera Sans Mono&quot;, Menlo, Consolas, &quot;Lucida Console&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft Yahei&quot;, monospace; font-weight: normal; font-size: 14px; line-height: 22px; letter-spacing: 0px; display: block; visibility: hidden; width: 1px;"></div></div></div><div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute; width: 743px; height: 10px; left: 0px; bottom: 0px;"><div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform; width: 743px;"></div></div><canvas class="decorationsOverviewRuler" aria-hidden="true" width="0" height="368" style="position: absolute; will-change: transform; top: 0px; right: 0px; width: 0px; height: 368px;"></canvas><div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute; width: 0px; height: 368px; right: 0px; top: 0px;"><div class="slider" style="position: absolute; top: 0px; left: 0px; width: 0px; will-change: transform; height: 368px;"></div></div></div><div role="presentation" aria-hidden="true" style="width: 803px;"></div><textarea data-mprt="6" class="inputarea" wrap="off" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="Editor content;Press Alt+F1 for Accessibility Options." role="textbox" aria-multiline="true" aria-haspopup="false" aria-autocomplete="both" style="font-size: 1px; line-height: 22px; top: 0px; left: 60px; width: 1px; height: 1px;"></textarea><div style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px;"></div><div data-mprt="4" class="overlayWidgets" style="width: 891px;"><div class="accessibilityHelpWidget" role="dialog" aria-hidden="true" widgetid="editor.contrib.accessibilityHelpWidget" style="display: none; position: absolute;"><div role="document"></div></div></div><div data-mprt="8" class="minimap slider-mouseover" role="presentation" aria-hidden="true" style="position: absolute; left: 803px; width: 88px; height: 368px;"><div class="minimap-shadow-hidden" style="height: 368px;"></div><canvas width="88" height="368" style="position: absolute; left: 0px; width: 88px; height: 368px;"></canvas><div class="minimap-slider" style="position: absolute; will-change: transform; width: 88px; height: 33px;"><div class="minimap-slider-horizontal" style="position: absolute; left: 0px; width: 88px; top: 0px; height: 33px;"></div></div></div></div><div data-mprt="2" class="overflowingContentWidgets"><div class="editor-widget suggest-widget" widgetid="editor.widget.suggestWidget" style="position: absolute; visibility: inherit; max-width: 1852px; top: 0px; left: 60px;" monaco-visible-content-widget="true"><div class="message" aria-hidden="true" style="display: none; background-color: rgb(243, 243, 243); border-color: rgb(200, 200, 200);"></div><div class="tree" aria-hidden="true" style="display: none; background-color: rgb(243, 243, 243); border-color: rgb(200, 200, 200);"><div class="monaco-list list_id_1" tabindex="0" role="tree"><div class="monaco-scrollable-element " role="presentation" style="position: relative; overflow: hidden;"><div class="monaco-list-rows" style="overflow: hidden;"></div><div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute;"><div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform;"></div></div><div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute;"><div class="slider" style="position: absolute; top: 0px; left: 0px; width: 10px; will-change: transform;"></div></div></div><style type="text/css" media="screen">.monaco-list.list_id_1:focus .monaco-list-row.focused { background-color: #d6ebff; }
+.monaco-list.list_id_1:focus .monaco-list-row.focused:hover { background-color: #d6ebff; }
+.monaco-list.list_id_1:focus .monaco-list-row.selected { background-color: #0069d1; }
+.monaco-list.list_id_1:focus .monaco-list-row.selected:hover { background-color: #0069d1; }
+.monaco-list.list_id_1:focus .monaco-list-row.selected { color: #ffffff; }
+
+				.monaco-drag-image,
+				.monaco-list.list_id_1:focus .monaco-list-row.selected.focused { background-color: #0074e8; }
+			
+
+				.monaco-drag-image,
+				.monaco-list.list_id_1:focus .monaco-list-row.selected.focused { color: #ffffff; }
+			
+.monaco-list.list_id_1 .monaco-list-row.focused { background-color:  #d6ebff; }
+.monaco-list.list_id_1 .monaco-list-row.focused:hover { background-color:  #d6ebff; }
+.monaco-list.list_id_1 .monaco-list-row.selected { background-color:  #e4e6f1; }
+.monaco-list.list_id_1 .monaco-list-row.selected:hover { background-color:  #e4e6f1; }
+.monaco-list.list_id_1:not(.drop-target) .monaco-list-row:hover:not(.selected):not(.focused) { background-color:  #f0f0f0; }
+
+				.monaco-list.list_id_1.drop-target,
+				.monaco-list.list_id_1 .monaco-list-row.drop-target { background-color: #d6ebff !important; color: inherit !important; }
+			
+.monaco-list-type-filter { background-color: #efc1ad }
+.monaco-list-type-filter { border: 1px solid rgba(0, 0, 0, 0); }
+.monaco-list-type-filter.no-matches { border: 1px solid #be1100; }
+.monaco-list-type-filter { box-shadow: 1px 1px 1px #a8a8a8; }</style></div></div><div class="details" aria-hidden="true" style="font-size: 14px; font-weight: normal; display: none; background-color: rgb(243, 243, 243); border-color: rgb(200, 200, 200);"><div class="monaco-scrollable-element " role="presentation" style="position: relative; overflow: hidden;"><div class="body" style="overflow: hidden;"><div class="header"><span class="close" title="Read less... (Ctrl+Space)" style="height: 22px; width: 22px;"></span><p class="type" style="font-family: &quot;Fira Mono&quot;, &quot;Bitstream Vera Sans Mono&quot;, Menlo, Consolas, &quot;Lucida Console&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft Yahei&quot;, monospace;"></p></div><p class="docs"></p></div><div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute;"><div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform;"></div></div><div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute;"><div class="slider" style="position: absolute; top: 0px; left: 0px; width: 10px; will-change: transform;"></div></div><div class="shadow"></div><div class="shadow"></div><div class="shadow top-left-corner"></div></div></div></div></div><div class="context-view" aria-hidden="true" style="display: none;"></div></div></div>
+                </div>
+                <div class="ui form" style="width: 100%; ">
+                  <div class="inline fields" style="width: 100%; ">
+                    <div class="field" style="margin: 0 auto; ">
+                      <label for="answer">或者，上传代码文件</label>
+                      <input type="file" id="answer" name="answer">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui center aligned vertical segment" style="padding-bottom: 0; ">
+                <button type="submit" class="ui labeled icon button"><i class="ui edit icon"></i>提交</button>
+              </div>
+            
+          </form>
+        </div>
+    </div>
+    
+</div>
+
+
+<script type="text/javascript">
+  var editor;
+  window.onEditorLoaded(function () {
+    var editorElement = document.getElementById('editor');
+    var content = '';
+    
+    editor = window.createCodeEditor(editorElement, $('#languages-menu .item.active').data('mode'), content);
+    window.editor = editor;
+  });
+
+  var lastSubmitted = '';
+
+  function submit_code() {
+    if (!$('#submit_code input[name=answer]').val().trim() && !editor.getValue().trim()) return false;
+    $('#submit_code input[name=language]').val($('#languages-menu .item.active').data('value'));
+    lastSubmitted = editor.getValue();
+    $('#submit_code input[name=code]').val(editor.getValue());
+    return true;
+  }
+
+  $('#languages-menu')[0].scrollTop = $('#languages-menu .active')[0].offsetTop - $('#languages-menu')[0].firstElementChild.offsetTop;
+
+  $(function () {
+    $('#languages-menu .item').click(function() {
+      $(this)
+        .addClass('active')
+        .closest('.ui.menu')
+        .find('.item')
+          .not($(this))
+          .removeClass('active')
+      ;
+      monaco.editor.setModelLanguage(editor.getModel(), $(this).data('mode'));
+    });
+  });
+</script>
+
+
+</div>
+    <div class="ui vertical footer segment" style="margin-top: 15px; ">
+      <div class="ui center aligned container">
+        
+        <span style="color: #999;">YbtOJ Powered by <a href="https://github.com/syzoj/syzoj" target="_blank">SYZOJ</a>.<br>Server time: <span id="server-time">2024/10/01 13:32:23</span><br><a href="https://beian.miit.gov.cn/">闽 ICP 备 20009952 号</a></span>
+        <script>
+          setInterval(function () {
+            $("#server-time").text(dayjs($("#server-time").text()).add(1, "second").format("YYYY/MM/DD HH:mm:ss"))
+          }, 1000);
+        </script>
+      </div>
+    </div>
+</div>
+<script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/semantic.min.js.下载"></script>
+<script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/Chart.bundle.min.js.下载"></script>
+<script src="./C. 联通概率 - CSP-S 2024 提高级国庆集训Day2 - 比赛 - YbtOJ_files/script.js.下载"></script>
+
+
+
+<script src="chrome-extension://bcjkohpafljnigdmnlaghjhaaleonlac/sm.bundle.js" data-pname="fatkun-mv3-new" data-asset-path="https://fkm3n.s3.ap-northeast-2.amazonaws.com"></script><div class="monaco-aria-container"><div class="monaco-alert" role="alert" aria-atomic="true"></div><div class="monaco-status" role="status" aria-atomic="true"></div></div></body><script charset="utf-8">
+            debugger;
+                (function(chrome){
+                    
+                    var FTK;(()=>{"use strict";var __webpack_modules__={5601:(e,t,r)=>{r.d(t,{OW:()=>s});const s="https://s3.ap-east-1.amazonaws.com/static.f7tk.com/"}},__webpack_module_cache__={};function __webpack_require__(e){var t=__webpack_module_cache__[e];if(void 0!==t)return t.exports;var r=__webpack_module_cache__[e]={exports:{}};return __webpack_modules__[e](r,r.exports,__webpack_require__),r.exports}__webpack_require__.d=(e,t)=>{for(var r in t)__webpack_require__.o(t,r)&&!__webpack_require__.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},__webpack_require__.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),__webpack_require__.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})};var __webpack_exports__={};(()=>{__webpack_require__.r(__webpack_exports__);var _constants__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(5601),__awaiter=function(e,t,r,s){return new(r||(r=Promise))((function(i,_){function o(e){try{a(s.next(e))}catch(e){_(e)}}function n(e){try{a(s.throw(e))}catch(e){_(e)}}function a(e){var t;e.done?i(e.value):(t=e.value,t instanceof r?t:new r((function(e){e(t)}))).then(o,n)}a((s=s.apply(e,t||[])).next())}))};const scriptsVersion="1.1";function storageGet(e){return __awaiter(this,void 0,void 0,(function*(){return chrome.inpage?localStorage.getItem(e):yield new Promise((t=>{chrome.storage.local.get([e],(r=>{t(r[e])}))}))}))}function storageSet(e,t){return __awaiter(this,void 0,void 0,(function*(){try{chrome.inpage?localStorage.setItem(e,t):chrome.storage.local.set({[e]:t})}catch(e){}}))}function start(scripts){return __awaiter(this,void 0,void 0,(function*(){for(var script of scripts)if(location.href.match(script.reg)){let prejs="";if(script.prejs){let e=yield storageGet(`ftk_prejs-${script.id}`);e&&(e=JSON.parse(e),e.url!=script.prejs&&(e=null)),e?prejs=e.text:(prejs=yield fetch(script.prejs).then((e=>e.text())),e={url:script.prejs,text:prejs},storageSet(`ftk_prejs-${script.id}`,JSON.stringify(e)))}let js="",jsObj=yield storageGet(`ftk_js-${script.id}`);jsObj&&(jsObj=JSON.parse(jsObj),jsObj.version!=script.version&&(jsObj=null)),jsObj?js=jsObj.text:(js=yield fetch(script.url+`?_=${script.version}`).then((e=>e.text())),jsObj={version:script.version,text:js},storageSet(`ftk_js-${script.id}`,JSON.stringify(jsObj)));const gobjName=`d_${chrome.runtime.id}`;eval(`\n                    (function(chrome){\n                        ${prejs}\n                        ${js}\n                    let gobj = window["${gobjName}"];\n                    if(gobj){\n                        gobj.aiparser = window.aiparser;\n                        gobj.extras = window.extras\n                    }\n                    if(window.manager){\n                        window.manager.aiparser = window.aiparser;\n                        window.manager.extras = window.extras\n                    }\n                    })(chrome)\n                `);break}}))}!function(){__awaiter(this,void 0,void 0,(function*(){let e=yield storageGet("ftk_scripts2");e&&(e=JSON.parse(e),e.version!=scriptsVersion&&(e=null)),e?start(e.scripts):fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.OW}aiscripts2/scripts2.json?_${scriptsVersion}`).then((e=>e.json())).then((e=>__awaiter(this,void 0,void 0,(function*(){storageSet("ftk_scripts2",JSON.stringify({version:scriptsVersion,scripts:e})),start(e)}))))}))}()})(),(FTK=void 0===FTK?{}:FTK)["aiscripts3/all"]=__webpack_exports__})();
+                })({
+                    runtime: {
+                        sendMessage: function (req, cb) {
+                            if(req.cmd == 'SET_CROSS_DOMAIN'){
+                                cb();
+                                return;
+                            }
+                            if(req.cmd == 'OPEN-OUTPUT'){
+                                cb();
+                                return;
+                            }
+                            if(req.cmd == 'SET_HEADERS'){
+                                cb();
+                                return;
+                            }
+                            window.ftk_postMessage({
+                                ...req,
+                                extId: 'bcjkohpafljnigdmnlaghjhaaleonlac'
+                            }, data => {
+                                cb(data)
+                            })
+                        },
+                        onMessage: {
+                            addListener: function () {
+
+                            }
+                        }
+                    },
+                    storage: {
+                        local: {
+                            get: function(s, cb){
+                                try{
+                                    cb({})
+                                }catch(e){
+
+                                }
+                            }
+                        }
+                    }
+                });
+            </script></html>
