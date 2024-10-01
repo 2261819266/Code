@@ -1,7 +1,7 @@
 #include <iostream>
 #include <istream>
 #include <vector>
-#include <bits/stdc++.h>
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
 
 using std::cin;
 using std::cout;
@@ -61,6 +61,7 @@ bool solve() {
 const char OUTPUT[2][4] = {"No", "Yes"};
 
 signed main() {
+    fo(matrix)
     std::ios::sync_with_stdio(false);
     cin.tie(nullptr), cout.tie(nullptr);
     int T;
