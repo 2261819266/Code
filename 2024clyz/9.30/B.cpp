@@ -2,20 +2,16 @@
 #include <vector>
 #define int long long
 
-#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
-
 const int M = 998244353;
 using std::cin;
 using std::cout;
 using std::vector;
 
 int pow(int x, int n) {
-    if (n == 0)
-        return 1;
+    if (n == 0) return 1;
     int y = pow(x, n / 2);
     y *= y;
-    if (n % 2)
-        y = y % M * x;
+    if (n % 2) y = y % M * x;
     return y % M;
 }
 
@@ -25,8 +21,7 @@ int solve(int n) {
     for (int i = 1; i <= n; i++) {
         f[i][i] = (f[i - 1][i - 1] + f[i - 1][i]) % M;
         for (int j = i + 1; j <= n; j++) {
-            if (i == 1)
-                f[i][j] = 1;
+            if (i == 1) f[i][j] = 1;
             else {
                 f[i][j] = (f[i - 1][j] + f[i][j - 1]) % M;
             }
@@ -40,8 +35,7 @@ int solve(int n) {
 }
 
 signed main() {
-    fo(after)
     int n;
     cin >> n;
-    cout << solve(n) << "\n";
+    cout <<solve(n) << "\n";
 }
