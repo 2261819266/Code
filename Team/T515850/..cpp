@@ -165,6 +165,9 @@ auto getmake(int k) {
 }
 
 int main() {
+#ifndef LOCAL
+    fo(problem)
+#endif
     cin >> n >> m;
     to.assign(n + 1, vector<int>());
     e.assign(n + 1, vector<int>(n + 1, 0));

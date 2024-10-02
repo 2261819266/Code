@@ -28,7 +28,7 @@ struct Matrix {
         return a[x];
     }
 
-    vector<int> operator[](int x) const {
+    const vector<int> &operator[](int x) const {
         return a[x];
     }
 
