@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #define int long long
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
+#define int long long
 
 using std::cin;
 using std::cout;
@@ -47,6 +49,19 @@ int qmi(int a, int b, int mod) {
     return res;
 }
 
+vector<int> a;
+
+int dfs(int n, int m, int s = 0, int i = 0) {
+    if (i == n) {
+        return (s % m) > 0;
+    }
+    int ans = 0;
+    for (int j = 1; j < m; j++) {
+        (ans += dfs(n, m, s + j, i + 1)) %= M;
+    }
+    return ans;
+}
+
 signed main() {
 #ifndef LOCAL
     fo(paper)
@@ -60,5 +75,9 @@ signed main() {
             (ans += C(n, i)) %= M;
         }
         cout << ((pow(2, n) - ans) % M + M) % M << "\n";
+        // cout << dfs(n, m) << "\n";
+    } else {
+        a.assign(n, 0);
+        cout << dfs(n, m) << "\n";
     }
 }
