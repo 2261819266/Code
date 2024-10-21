@@ -31,6 +31,7 @@ struct Type {
 	};
 
     vector<Data> a;
+	// unordered_map<string, Data*> md;
 
     Type(int x = 0) : SIZE(x), align(x), is_struct(false) {}
 
@@ -39,6 +40,7 @@ struct Type {
         for (Data &i : a) {
             int x = i.type->size(), y = i.type->align;
 			if (SIZE % y) SIZE = (SIZE / y + 1) * y;
+			i.addr = SIZE;
 			SIZE += x;
 			if (y > align) align = y;
         }
@@ -48,9 +50,15 @@ struct Type {
 	void add(Type *type, string name) {
 		a.push_back({name, type});
 	}
+
+	// Data *find(const string s) {
+	// 	return md[s];
+	// }
 };
 
 Type _byte(1), _short(2), _int(4), _long(8);
+
+const int maxn = 101;
 
 unordered_map<string, Type*> mt = {
     {"byte", &_byte},
@@ -58,7 +66,8 @@ unordered_map<string, Type*> mt = {
     {"int", &_int},
     {"long", &_long},
 };
-vector<Type> types;
+vector<Type> types(maxn);
+int cnt_types;
 
 int addrcnt;
 struct Node {
@@ -96,14 +105,39 @@ void solve() {
 				newt.add(mt[t], s);
 			}
 			newt.size();
-			types.push_back(newt);
-			mt[name] = &types[types.size() - 1];
-			// cout << newt.size() << " " << newt.align << endl;
+			types[cnt_types] = newt;
+			mt[name] = &types[cnt_types++];
+			cout << newt.size() << " " << newt.align << endl;
 		} else if (op == 2) {
 			string t, s;
 			cin >> t >> s;
 			a.push_back({mt[t], s});
-			cout << a.back().addr << endl << addrcnt << endl;
+			ma[s] = &a[a.size() - 1];
+			cout << a.back().addr << endl;
+		} else if (op == 3) {
+			string s;
+			cin >> s;
+			vector<string> v;
+			string t;
+			for (int j : s) {
+				if (j == '.') v.push_back(t), t.clear();
+				else t += j;
+			}
+			v.push_back(t);
+			// for (string i : v) cout << i << endl;
+			int ans = ma[v.front()]->addr;
+			Type *p = ma[v.front()]->type;
+			for (int j = 1; j < v.size(); j++) {
+				Type::Data q;
+ 				for (auto k : p->a) {
+		 			if (k.name == v[j]) q = k;
+				}
+				ans += q.addr;
+				p = q.type;
+			}
+			cout << ans << endl;
+		} else if (op == 4) {
+			
 		}
     }
 }
