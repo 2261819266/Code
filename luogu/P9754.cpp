@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 #include <string>
 #include <unordered_map>
@@ -44,6 +45,8 @@ struct Type {
 			SIZE += x;
 			if (y > align) align = y;
         }
+		if (SIZE % align) SIZE = (SIZE / align + 1) * align;
+		is_struct = true;
         return SIZE;
     }
 
@@ -75,6 +78,8 @@ struct Node {
 	string name;
 	int addr;
 
+	Node() {}
+
 	Node(Type *t, string s) {
 		type = t;
 		name = s;
@@ -83,10 +88,19 @@ struct Node {
 		addr = addrcnt;
 		addrcnt += x; 
 	}
+
+	bool operator<(const Node &node) const {
+		return addr < node.addr;
+	}
+
+	bool operator<(int _addr) const {
+		return addr < _addr;
+	}
 };
 
 unordered_map<string, Node*> ma;
-vector<Node> a;
+vector<Node> a(maxn);
+int cnt_a;
 
 void solve() {
     int n;
@@ -111,9 +125,9 @@ void solve() {
 		} else if (op == 2) {
 			string t, s;
 			cin >> t >> s;
-			a.push_back({mt[t], s});
-			ma[s] = &a[a.size() - 1];
-			cout << a.back().addr << endl;
+			a[cnt_a] = {mt[t], s};
+			ma[s] = &a[cnt_a];
+			cout << a[cnt_a++].addr << endl;
 		} else if (op == 3) {
 			string s;
 			cin >> s;
@@ -129,7 +143,7 @@ void solve() {
 			Type *p = ma[v.front()]->type;
 			for (int j = 1; j < v.size(); j++) {
 				Type::Data q;
- 				for (auto k : p->a) {
+ 				for (const auto &k : p->a) {
 		 			if (k.name == v[j]) q = k;
 				}
 				ans += q.addr;
@@ -137,7 +151,32 @@ void solve() {
 			}
 			cout << ans << endl;
 		} else if (op == 4) {
-			
+			int x;
+			cin >> x;
+			// Node *node ;
+			Node *node = &*lower_bound(a.begin(), a.end(), x);
+			Type *p = node->type;
+			string ans = node->name + ".";
+			int addr = x - node->addr;
+			while (x) {
+				Type *q = 0;
+				for (const auto &t : p->a) {
+					if (addr >= t.addr && addr < t.addr + t.type->SIZE) {
+						q = t.type, ans += t.name + ".";
+						addr -= t.addr;
+						break;
+					}
+				}
+				if (!q) {
+					cout << "ERR" << endl;
+					break;
+				}
+				if (!q->is_struct) {
+					cout << ans;
+					break;
+				}
+				p = q;
+			}
 		}
     }
 }
