@@ -67,11 +67,15 @@ void solve() {
 			Type newt;
 			string name;
 			int c;
-			for (int i = 0; i < c; i++) {
+			cin >> name >> c;
+			for (int j = 0; j < c; j++) {
 				string t, s;
 				cin >> t >> s;
 				newt.add(mp[t], s);
 			}
+			newt.size();
+			types.push_back(newt);
+			cout << newt.size();
 		}
     }
 }
