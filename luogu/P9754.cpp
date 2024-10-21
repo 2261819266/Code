@@ -13,16 +13,18 @@ using namespace std;
 
 namespace Struct {
 #define int long long
+#define endl "\n"
 
 struct Type {
     int SIZE = 0;
+	int align = 0;
     bool is_struct;
 	struct Data {
 		string name;
 		Type *type;
-		int add;
+		int addr;
 		int operator=(int x) {
-			return add = x;
+			return addr = x;
 		}
 
 		Data(const string &_name = "", Type *_type = {}) : name(_name), type(_type) {}
@@ -30,14 +32,15 @@ struct Type {
 
     vector<Data> a;
 
-    Type(int x = 0) : SIZE(x), is_struct(false) {}
+    Type(int x = 0) : SIZE(x), align(x), is_struct(false) {}
 
     int size() {
         if (SIZE) return SIZE;
         for (Data &i : a) {
-            int x = i.type->size();
-			if (SIZE % x) SIZE = (SIZE / x + 1) * x;
+            int x = i.type->size(), y = i.type->align;
+			if (SIZE % y) SIZE = (SIZE / y + 1) * y;
 			SIZE += x;
+			if (y > align) align = y;
         }
         return SIZE;
     }
@@ -49,13 +52,32 @@ struct Type {
 
 Type _byte(1), _short(2), _int(4), _long(8);
 
-unordered_map<string, Type*> mp = {
+unordered_map<string, Type*> mt = {
     {"byte", &_byte},
     {"short", &_short},
     {"int", &_int},
     {"long", &_long},
 };
 vector<Type> types;
+
+int addrcnt;
+struct Node {
+	Type *type;
+	string name;
+	int addr;
+
+	Node(Type *t, string s) {
+		type = t;
+		name = s;
+		int x = t->SIZE, y = t->align;
+		if (addrcnt % y) (((addrcnt /= y) += 1) *= y);
+		addr = addrcnt;
+		addrcnt += x; 
+	}
+};
+
+unordered_map<string, Node*> ma;
+vector<Node> a;
 
 void solve() {
     int n;
@@ -71,11 +93,17 @@ void solve() {
 			for (int j = 0; j < c; j++) {
 				string t, s;
 				cin >> t >> s;
-				newt.add(mp[t], s);
+				newt.add(mt[t], s);
 			}
 			newt.size();
 			types.push_back(newt);
-			cout << newt.size();
+			mt[name] = &types[types.size() - 1];
+			// cout << newt.size() << " " << newt.align << endl;
+		} else if (op == 2) {
+			string t, s;
+			cin >> t >> s;
+			a.push_back({mt[t], s});
+			cout << a.back().addr << endl << addrcnt << endl;
 		}
     }
 }
