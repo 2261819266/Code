@@ -87,4 +87,5 @@ signed main() {
 }
 
 signed main() {
+	return Struct::main();
 }
