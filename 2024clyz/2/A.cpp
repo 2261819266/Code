@@ -45,23 +45,49 @@ struct Matrix {
         return ans;
     }
 
+    vector<int> operator*(const vector<int> &b) const {
+        int n = a.size();
+        vector<int> ans(n, 0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                (ans[i] += a[i][j] * b[j]) %= M;
+            }
+        }
+        return ans;
+    }
+
     bool operator==(const Matrix &b) const {
         return a == b.a;
     }
 };
+
+vector<int> get_random_vector(int n, int m) {
+    vector<int> a(n, 0);
+    for (int &i : a) i = rand() % m;
+    return a;
+}
 
 bool solve() {
     int n, m;
     cin >> m >> n;
     Matrix a(n, m), b(n, m), c(n, m);
     cin >> a >> b >> c;
-    return a * b == c;
+    bool ans = true;
+    int k = 6;
+    while (k--) {
+        vector<int> r = get_random_vector(n, m);
+        ans &= a * (b * r) == c * r;
+    }
+    return ans;
 }
 
 const char OUTPUT[2][4] = {"No", "Yes"};
 
 signed main() {
+#ifndef LOCAL
     fo(matrix)
+#endif
+    srand(time(0));
     std::ios::sync_with_stdio(false);
     cin.tie(nullptr), cout.tie(nullptr);
     int T;
