@@ -154,15 +154,25 @@ void solve() {
 			int x;
 			cin >> x;
 			// Node *node ;
-			Node *node = &*lower_bound(a.begin(), a.end(), x);
+			int y = lower_bound(a.begin(), a.begin() + cnt_a, x) - a.begin();
+			if (y >= cnt_a || a[y].addr > x) y--;
+			if (!cnt_a || a[y].addr + a[y].type->SIZE <= x) {
+				cout << "ERR" << endl;
+				continue;
+			}
+			Node *node = &a[y];
 			Type *p = node->type;
-			string ans = node->name + ".";
+			string ans = node->name;
 			int addr = x - node->addr;
+			if (!p->is_struct) {
+				cout << ans << endl;
+				continue;
+			}
 			while (x) {
 				Type *q = 0;
 				for (const auto &t : p->a) {
 					if (addr >= t.addr && addr < t.addr + t.type->SIZE) {
-						q = t.type, ans += t.name + ".";
+						q = t.type, ans += "." + t.name;
 						addr -= t.addr;
 						break;
 					}
@@ -172,7 +182,7 @@ void solve() {
 					break;
 				}
 				if (!q->is_struct) {
-					cout << ans;
+					cout << ans << endl;
 					break;
 				}
 				p = q;
