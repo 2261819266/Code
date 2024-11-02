@@ -24,7 +24,7 @@ ostream &operator<<(ostream &out, __int128 x) {
 #define endl "\n"
 
 
-struct SegTree{
+struct SegTree {
 #define ls (k << 1)
 #define rs (ls | 1)
 #define mid ((l + r) >> 1)
