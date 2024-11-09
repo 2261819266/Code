@@ -91,8 +91,9 @@ struct ArrayTree2 {
 
 	void add(int L, int R, int X) {
 		a.add(L, X);
-		a.add(R + 1, -X);
 		b.add(L, X * L);
+		if (R == n) return;
+		a.add(R + 1, -X);
 		b.add(R + 1, -X * (R + 1));
 	}
 
