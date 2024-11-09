@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 #define int long long
-#define Problem P1126
+#define Problem candy
 #define endl "\n"
 #define space " "
 #define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
@@ -29,27 +29,16 @@ const char print[3][10] = {"Alice", "Bob", "wow"};
 void main() {
     int n;
     cin >> n;
-    vector<int> A(n), a[2];
-    cin >> A;
-    sort(A.begin(), A.end(), [](int x, int y) { return x > y; });
-    for (int i : A) {
-        a[i % 2].push_back(i);
-    }
-    int x = min(a[0].size(), a[1].size());
-    int y = max(a[0].size(), a[1].size());
-    int ans = 0;
-    for (int i = 0; i < x; i++) {
-        ans += a[0][i] - a[1][i];
-    }
-    int p = a[0].size() > a[1].size() ? 0 : 1;
-    int f = 1;
-    for (int i = x; i < y; i++) {
-        ans += f * (a[p][i]) * (a[p][i] % 2 == (f == -1));
+    vector<int> a(n);
+    cin >> a;
+    sort(a.begin(), a.end(), [](int x, int y) { return x > y; });
+    int ans = 0, f = 1;
+    for (int i : a) {
+        ans += i * f * (i % 2 == (f == -1));
         f = -f;
-        // p ^= 1;
     }
-
     cout << print[ans > 0 ? 0 : ans < 0 ? 1 : 2] << endl;;
+
 }
 }
 
