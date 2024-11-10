@@ -98,6 +98,12 @@ void main() {
     cin >> x;
     q.push({s, mp[x], 0});
     VIS(q.front()) = 1;
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= m; j++) {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
     while (!q.empty()) {
         state u = q.front();
         q.pop();

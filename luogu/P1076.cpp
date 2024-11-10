@@ -34,9 +34,6 @@ void P1076() {
 }
 
 int main() {
-#ifdef LOCAL
-    LOCALfo
-#endif
     P1076();
     return 0;
 }
