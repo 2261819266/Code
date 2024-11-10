@@ -8,6 +8,11 @@
 using namespace std;
 
 namespace Problem {
+template <typename P, typename Q> 
+ostream &operator<<(ostream &out, const pair<P, Q> &p) {
+    return out << p.first << " " << p.second;
+}
+
 template <typename t>
 ostream &operator<<(ostream &out, const vector<t> &A) {
     for (const t &i : A) out << i << spc;
@@ -46,6 +51,11 @@ void scan(vector<t> &A, int l = 0, int r = 0) {
 }
 
 int sqr(int x) { return x * x; }
+#define ceil(x, y) ((x) / (y) + (bool)((x) % (y)))
+
+using PII = pair<int, int>;
+
+const PII NONE = {0, -1};
 
 struct Car {
     int d, v, a;
@@ -54,20 +64,35 @@ struct Car {
     } 
 
     bool check(const vector<int> &p, int V) const {
+        if (p.back() < d) return false;
         if (a == 0) return v > V;
         if (a < 0) {
+            if (v <= V) return false;
             int nxt = lower_bound(p.begin(), p.end(), d) - p.begin();
             int D = p[nxt] - d;
             return sqr(v) + 2 * a * D > sqr(V);
         }
-        if (a > 0) {
-            int D = p.back() - d;
-            return sqr(v) + 2 * a * D > sqr(V);
-        }
-        return 0;
+        int D = p.back() - d;
+        return sqr(v) + 2 * a * D > sqr(V);
     }
 
-    
+    PII get(const vector<int> &p, int V) const {
+        int l = lower_bound(p.begin(), p.end(), d) - p.begin(), r = p.size() - 1;
+        if (a == 0) {
+            if (v > V) return {l, r};
+            else return NONE;
+        } 
+        if (a > 0) {
+            int s = d + 1 + (sqr(V) - sqr(v)) / (2 * a);
+            if (s > p.back()) return NONE;
+            int L = lower_bound(p.begin(), p.end(), s) - p.begin();
+            return {L, r};
+        }
+        if (v <= V) return NONE;
+        int s = d - 1 + ceil(sqr(V) - sqr(v), 2 * a);
+        int R = upper_bound(p.begin(), p.end(), s) - p.begin() - 1;
+        return {l, R};
+    }
 };
 
 void solve() {
@@ -82,7 +107,29 @@ void solve() {
     for (const Car &i : car) num += i.check(p, V);
     // cout << num << endl;
 
+    vector<PII> c;
+    for (const Car &i : car) {
+        PII q = i.get(p, V);
+        if (q.first <= q.second) c.push_back(q);
+        // cout << q << endl;
+    }
 
+    sort(c.begin(), c.end(), [](const PII &X, const PII &Y) { return Y.second < X.second; });
+    // for (PII i : c) cout << i << endl;
+
+    int ans = 1;
+    if (!c.size()) {
+        cout << num << spc << m << endl;
+        return;
+    }
+    int r = c.front().second, l = c.front().first;
+    for (int i = 1; i < c.size(); i++) {
+        if (c[i].second < l) {
+            ans++;
+            l = c[i].first;
+        } else if (c[i].first > l) l = c[i].first;
+    }
+    cout << num << spc << m - ans << endl;
 }
 
 void main() {
