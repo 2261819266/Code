@@ -122,7 +122,7 @@ void solve() {
         cout << num << spc << m << endl;
         return;
     }
-    int r = c.front().second, l = c.front().first;
+    int l = c.front().first;
     for (int i = 1; i < c.size(); i++) {
         if (c[i].second < l) {
             ans++;
