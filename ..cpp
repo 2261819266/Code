@@ -45,11 +45,31 @@ void scan(vector<t> &A, int l = 0, int r = 0) {
 	}
 }
 
+template<typename it>
+void assign(vector<int> &a, it p) {
+	a.assign(*p, 0);
+}
+
+template<typename T, typename it>
+void assign(vector<T> &a, it p) {
+	T t;
+	assign(t, p + 1);
+	a.assign(*p, t);
+}
+
+template<typename T>
+void assign(vector<T> &a, const vector<int> &p) {
+	assign(a, p.begin());
+}
+
+
 void main() {
 }
 }
 
 signed main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
 	Problem::main();
 	return 0;
 }

@@ -130,6 +130,8 @@ void solve() {
         } else if (c[i].first > l) l = c[i].first;
     }
     cout << num << spc << m - ans << endl;
+    PII P, Q;
+    P < Q;
 }
 
 void main() {
