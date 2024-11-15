@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 #define int long long
 #define endl "\n"
@@ -65,6 +64,7 @@ void assign(vector<T> &a, const vector<int> &p) {
 
 
 void main() {
+	
 }
 }
 
