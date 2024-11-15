@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstring>
 
-const int maxn = 1e5 + 8;
+const int maxn = 5;
 
 struct Node {
 	int a, b;
@@ -63,9 +63,6 @@ void solve() {
 }
 
 int main(int argc, char const *argv[]) {
-#ifdef LOCAL
-	LOCALfo
-#endif
 	scanf("%d%d%d", &n, m, m + 1);
 	for (int i = 0; i < 2; i++) {
 		for (int j = 1; j <= m[i]; j++) {
