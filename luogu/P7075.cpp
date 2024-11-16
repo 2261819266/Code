@@ -62,7 +62,7 @@ void assign(vector<T> &a, const vector<int> &p) {
     assign(a, p.begin());
 }
 
-const int zero = 1721424, y4 = 365 * 4 + 1, y0 = 4713, rrr = 578098 + zero, y400 = y4 * 100 - 3, y99 = 25 * y4 - 366, d1601 = zero + y4 * 400 - 10;
+const int zero = 1721424, y4 = 365 * 4 + 1, y0 = 4713, rrr = 577737 + zero, y400 = y4 * 100 - 3, y99 = 25 * y4 - 366, d1601 = zero + y4 * 400 - 10;
 const int md[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 int smd[13];
 
@@ -115,7 +115,7 @@ Day f(int x) {
 		return RRR(x - zero);
 	} 
     if (x < d1601) {
-        return RRR(x - 10);
+        return RRR(x + 10 - zero);
     } else {
         x -= d1601;
         if (!x) return {1601, 1, 1};
@@ -151,8 +151,8 @@ void main() {
 }
 
 signed main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+    // ios::sync_with_stdio(0);
+    // cin.tie(0); cout.tie(0);
     Problem::main();
     return 0;
 }
