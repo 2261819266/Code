@@ -1,155 +1,118 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#define int long long
-#define endl "\n"
-#define spc " " 
-#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
-#define Problem learn
-#define fop fo(learn)
 
 using namespace std;
+#define int long long
+const int inf = 0x3f3f3f3f3f3f3f3f;
+struct File {
+    int s, t, id;
+    bool operator<(const File &b) const { return t < b.t; }
+};
+struct Printer {
+    int wt = inf, id = inf;
+    inline void shake() { wt = max(wt, 0ll); }
+    bool operator<(const Printer &b) const {
+        return wt == b.wt ? id < b.id : wt < b.wt;
+    }
+    void operator+=(int p) { wt += p; }
+};
+inline Printer &min(Printer &a, Printer &b) { return a < b ? a : b; }
+class SegmentTree {
+#define mid ((l + r) >> 1)
+#define ls p << 1
+#define rs p << 1 | 1
+    int n;
+    vector<Printer> tree;
+    vector<int> lazy;
+    inline void pushup(int p) {
+        tree[ls].shake(), tree[rs].shake();
+        tree[p] = min(tree[ls], tree[rs]);
+        tree[p].shake();
+    }
+    inline void pushdown(int p, int l, int r) {
+        tree[ls] += lazy[p];
+        tree[rs] += lazy[p];
+        tree[ls].shake(), tree[rs].shake();
+        lazy[ls] += lazy[p], lazy[rs] += lazy[p];
+        lazy[p] = 0;
+    }
+    void modify(int p, int l, int r, int L, int R, int v) {
+        if (l > R || r < L) return;
+        if (L <= l && r <= R) {
+            lazy[p] += v;
+            tree[p] += v;
+            tree[p].shake();
+            return;
+        }
+        pushdown(p, l, r);
+        modify(ls, l, mid, L, R, v);
+        modify(rs, mid + 1, r, L, R, v);
+        pushup(p);
+    }
+    Printer query(int p, int l, int r, int L, int R, bool flag = 0) {
+        if (l > R || r < L) {
+            return Printer();
+        }
+        if (flag == 1 && L <= l && r <= R) {
+            tree[p].shake();
+            return tree[p];
+        }
+        if (l == r) {
+            tree[p].shake();
+            return tree[p];
+        }
+        pushdown(p, l, r);
+        auto res = tree[ls].wt;
+        return min(query(ls, l, mid, L, R, res > 0), query(rs, mid + 1, r, L, R, res <= 0));
+    }
 
-namespace Problem {
-template <typename t>
-ostream &operator<<(ostream &out, const vector<t> &A) {
-	for (const t &i : A) out << i << spc;
-	return out;
-}
+    void build(int p, int l, int r) {
+        if (l == r) {
+            tree[p].wt = 0;
+            tree[p].id = l;
+            return;
+        }
+        build(ls, l, mid), build(rs, mid + 1, r);
+        pushup(p);
+    }
 
-template <typename t>
-void print(const t &x, int l = 0, int r = 0) {
-	cout << x << spc;
-}
-
-template <typename t>
-void print(const vector<t> &A, int l = 0, int r = 0) {
-	for (int i = l; i < r; i++) {
-	print(A[i], l, r);
-	}
-	cout << endl;
-}
-
-template <typename t>
-istream &operator>>(istream &in, vector<t> &A) {
-	for (t &i : A) in >> i;
-	return in;
-}
-
-template<typename t>
-void scan(t &x, int l = 0, int r = 0) {
-	cin >> x;
-}
-
-template<typename t>
-void scan(vector<t> &A, int l = 0, int r = 0) {
-	for (int i = l; i < r; i++) {
-	scan(A[i], l, r);
-	}
-}
-
-template<typename it>
-void assign(vector<int> &a, it p) {
-	a.assign(*p, 0);
-}
-
-template<typename T, typename it>
-void assign(vector<T> &a, it p) {
-	T t;
-	assign(t, p + 1);
-	a.assign(*p, t);
-}
-
-template<typename T>
-void assign(vector<T> &a, const vector<int> &p) {
-	assign(a, p.begin());
-}
-
-using PII = pair<int, int>;
-
-istream &operator>>(istream &in, PII &a) {
-    return in >> a.first >> a.second;
-}
-
-ostream &operator<<(ostream &out, const PII &a) {
-	return out << a.first << spc << a.second << spc;
-}
-
-int f(int x) {
-	return 2 * x * x - 2 * x + 1;
-}
-
-const int maxn = 2e9 + 5;
-
-template<typename P = int, typename Q = int>
-P lower_bound(Q (*F)(P), Q X, P l = 0, P r = maxn, P e = 1) {
-	while (r - l > e) {
-		P mid = (l + r) / 2;
-		Q M = F(mid);
-		if (M <= X) l = mid;
-		else r = mid;
-	}
-	return l;
-}
-
-PII solve(int x) {
-	int layer = lower_bound(f, x);
-	int s = x - f(layer);
-	if (s == 0) return {layer, 0};
-	if (s < 2 * layer) {
-		int k = s % 2 ? 1 : -1;
-		int t = (s + 1) / 2;
-		return {layer - t, t * k};
-	}
-	int t = s % layer + 1;
-	if (s < 3 * layer) {
-		return {- t, layer - t};
-	}
-	return {t - layer, -t};
-}
-
-int solve(const PII &p) {
-	if (p == (PII){0, 0}) return 0;
-	int x = p.first, y = p.second;
-	int layer = abs(x) + abs(y);
-	if (x == layer && !y) return f(layer);
-	if (x == 0 && y == -layer) return f(layer + 1) - 1;
-	if (x >= 0) {
-		return f(layer) + abs(y) * 2 + (y < 0) - 1;
-	}
-	if (y >= 0) {
-		return f(layer) - 1 + 2 * layer - x;
-	}
-	return f(layer + 1) - 1 + x;
-}
-
-void main() {
-	int n, m;
-	cin >> n >> m;
-	while (n--) {
-		PII x;
-		cin >> x;
-		cout << solve(x) << endl;
-	}
-	while (m--) {
-		int x;
-		cin >> x;
-		cout << solve(x) << endl;
-	}
-	// for (int i = 3; i >= -3; i--) {
-	// 	for (int j = -3; j <= 3; j++) {
-	// 		cout << solve({i, j}) << "\t";
-	// 	}
-	// 	cout << endl;
-	// }
-}
-}
+  public:
+    SegmentTree(int n_) : n(n_) {
+        tree.resize(n << 2);
+        lazy.resize(n << 2);
+        build(1, 1, n);
+    }
+    inline void modify(int x, int v) { modify(1, 1, n, x, x, v); }
+    inline void modify(int l, int r, int v) { modify(1, 1, n, l, r, v); }
+    inline Printer query(int l, int r) { return query(1, 1, n, l, r); }
+};
 
 signed main() {
-#ifndef LOCAL
-	fop
-#endif
-	ios::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
-	Problem::main();
-	return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr), cout.tie(nullptr);
+    int n, m;
+    cin >> n >> m;
+    vector<File> file(n + 1);
+    for (int i = 1; i <= n; ++i) {
+        cin >> file[i].s >> file[i].t;
+        file[i].id = i;
+    }
+    sort(file.begin() + 1, file.end());
+    SegmentTree sgt(m);
+    vector<vector<int>> out(m + 1);
+    for (int i = 1; i <= n; ++i) {
+        sgt.modify(1, m, -(file[i].t - file[i - 1].t));
+        auto [wt, id] = sgt.query(1, m);
+        out[id].push_back(file[i].id);
+        sgt.modify(id, file[i].s);
+    }
+    for (int i = 1; i <= m; ++i) {
+        cout << out[i].size() << " ";
+        sort(out[i].begin(), out[i].end());
+        for (auto v : out[i]) {
+            cout << v << " ";
+        }
+        cout << "\n";
+    }
+    cerr << clock();
+    return 0;
 }

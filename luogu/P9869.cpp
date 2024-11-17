@@ -80,7 +80,8 @@ int solve() {
     cin >> n >> m;
     vector<vector<PII>> e(n + 1);
     vector<int> p(n + 1), val(n + 1); // TFU 123
-    for (int i = 1; i <= n; i++) p[i] = i;
+    vector<int> S(n + 1);
+    for (int i = 1; i <= n; i++) p[i] = i, S[i]=i;
     auto addedge = [&](int u, int v, int w) -> void {
         e[u].push_back({v, w});
         e[v].push_back({u, w});
@@ -90,6 +91,7 @@ int solve() {
         p[u] = e.size();
         e.push_back(vector<PII>());
         val.push_back(0);
+        S.push_back(u);
         return p[u];
     };
 
@@ -103,15 +105,19 @@ int solve() {
             addedge(u, p[v], c == '-');
         } else {
             val[u] = (c == 'T' ? 1 : c == 'F' ? 2 : 3);
+            // if (val[u] == 3) adde
         }
     }
     for (int i = 1; i <= n; i++) addedge(i, p[i], 0);
-    vector<int> f(e.size(), -1), g(e.size(), 0), vis(e.size());
+    vector<int> f(e.size(), -1), g(e.size(), -1), vis(e.size());
     int ans = 0;
 
     auto bfs = [&](int s) -> bool {
+        if (val[s] == 3) return f[s] = true;
         queue<int> q;
         q.push(s);
+        vis[s] = 1;
+        g[s] = 0;
         while (!q.empty()) {
             int u = q.front();
             q.pop();
@@ -122,10 +128,11 @@ int solve() {
                 if (!vis[v]) {
                     vis[v] = true;
                     g[v] = g[u] ^ w;
-                } else if (g[v] ^ g[u] ^ w) return true;
+                    q.push(v);
+                } else if (g[v] ^ g[u] ^ w || val[S[v]] == 3) f[s] = true;
             }
         }
-        return false;
+        return f[s] == true;
     };
 
     vector<int> updvis(e.size());
@@ -135,20 +142,31 @@ int solve() {
         q.push(s);
         while (!q.empty()) {
             int u = q.front();
+            updvis[u] = true;
             q.pop();
             for (PII to : e[u]) {
                 int v = to.first;
+                if (updvis[v]) continue;
                 f[v] = f[s];
+                q.push(v);
             }
         }
     };
+
+    for (int i = 1; i < S.size(); i++) {
+        if (val[i] == 3) {
+            f[i] = bfs(i) | 1;
+            update(i);
+        }
+    }
 
     for (int i = 1; i <= n; i++) {
         if (f[i] >= 0) {
             ans += f[i];
             continue;
         }
-        ans += f[i] = bfs(i);
+        if (val[p[i]] == 3) ans += f[i] = 1;
+        else ans += f[i] = bfs(i);
         if (f[i] >= 0) update(i);
     }
     return ans;
