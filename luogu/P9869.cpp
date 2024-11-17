@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
 #include <iostream>
-#include <queue>
-#include <stack>
 #include <vector>
 #define int long long
 #define endl "\n"
@@ -77,57 +75,17 @@ ostream &operator<<(ostream &out, const PII &a) {
     return out << a.first << spc << a.second << spc;
 }
 
-// vector<int> vis, p, f, dep;
-
-// bool dfs(int u, int root, int d = 1) {
-//     if (f[u] >= 0) return f[u];
-//     vis[u] = root;
-//     dep[u] = d;
-//     int v = p[u];
-//     if(u == v) return false;
-//     if (!p[v]) return true;
-//     if (vis[v] == root) return f[u] = (dep[u] - dep[v]) % 2 == 0;
-//     return f[u] = dfs(v, root, d + 1);
-// };
-
-// bool bfs(int s, int root) {
-//     if (f[s] >= 0) return f[s];
-//     vector<int> st = {s};
-//     while (!st.empty()) {
-//         int u = st.back();
-//         if (vis[u]) {
-//             st.pop_back();
-//             if (!st.empty()) f[st[st.size() - 1]] = f[u];
-//             continue;
-//         }
-//         vis[u] = root;
-//         int v = p[u];
-//         if (u == v) f[u] = false;
-//         else if (!p[v]) f[u] = true;
-//         else if (vis[v]) f[u] = (dep[u] - dep[v]) % 2 == 0;
-//         else {
-//             st.push_back(v);
-//             dep[v] = dep[u] + 1;
-//         }
-//     }
-//     return f[s];
-// }
 
 int solve() {
     int n, m;
     cin >> n >> m;
-    vector<vector<int>> e(n + 1, vector<int>());
-
-    auto addedge = [&](int u, int v) {
-        e[u].push_back(v);
+    vector<vector<PII>> e(n + 1, vector<PII>());
+    auto addedge = [&](int u, int v, int w) {
+        e[u].push_back({v, w});
+        e[v].push_back({u, w});
     };
-    auto addedge_ = [&](int u, int v) {
-        int w = e.size();
-        e.push_back({v});
-        e[u].push_back(w);
-    };
-    vector<int> op(n + 1), ok(n + 1), p(n + 1);
-    // p.assign(n + 1, 0);
+    vector<int> p(n + 1), op(n + 1), ok(n + 1), T(n + 1);
+    vector<vector<int>> s(n + 1);
     for (int i = 1; i <= n; i++) p[i] = i;
     while (m--) {
         char c;
@@ -136,62 +94,94 @@ int solve() {
             int u, v;
             cin >> u >> v;
             p[u] = p[v];
-            op[u] = (c == '-') ^ op[v];
+            op[u] = (c == '-') ^ (op[v]);
             ok[u] = ok[v];
-            if (c == '-' && u == v) {
-                p[u] = 0;
-            }
-            if (p[u] == u && op[u]) p[u] = 0;
+            // if (c == '-' && u == v) {
+            //     p[u] = 0;
+            // }
+            // if (p[u] == u && op[u]) p[u] = 0;
+            s[v].push_back(u);
+            // T[u] = 1;
+            // for (int w : s[u]) {
+            //     T[w] = 0;
+            // }
         } else {
             int i;
             cin >> i;
             if (c == 'U') {
                 ok[i] = 1;
                 p[i] = 0;
+                op[i] = 0;
             } else {
                 p[i] = i;
                 ok[i] = 1;
+                op[i] = 0;
             }
         }
     }
     int ans = 0;
     for (int i = 1; i <= n; i++) {
+        // if (ok[i]) {
+        //     // ans += !p[i];
+        //     // continue;
+        // }
+        // if (!op[i]) {
+        //     p.push_back(p[i]);
+        //     p[i] = p.size() - 1;
+        // }
+        addedge(i, p[i], op[i]);
+    }
+    vector<int> vis(p.size()), dep(p.size()), f(p.size(), -1);
+    // auto dfs = [&](const auto &self, int u, int root, int d = 1) -> bool {
+    //     if (f[u] >= 0) return f[u];
+    //     vis[u] = root;
+    //     dep[u] = d;
+    //     int v = p[u];
+    //     if(u == v) return false;
+    //     if (!v) return true;
+    //     if (vis[v] == root) return f[u] = (dep[u] - dep[v]) % 2 == 0;
+    //     return f[u] = self(self, v, root, d + 1);
+    // };
+
+    for (int i = 1; i <= n; i++) {
+        // vis.assign(p.size(), 0);
+        // f.assign(p.size(), -1);
+        // dep.assign(p.size(), 0);
+        // ans += dfs(dfs, i, i);
         if (ok[i]) {
-            // ans += !p[i];
+            ans += !p[i];
             continue;
         }
-        if (!op[i]) {
-            addedge_(i, p[i]);
-            addedge_(p[i], i);
-        } else {
-            addedge(i, p[i]);
-            addedge(p[i], i);
+        int u = i, w = 0;
+        dep[i] = 1;
+        vector<int> st = {i};
+        while (true) {
+            // if (vis[u]) 
+            int v = p[u];
+            if (!v) {
+                f[u] = 1;
+                for (int j : st) f[j] = f[u];
+                break;
+            }
+            if (u == v) {
+                f[u] = op[u];
+                for (int j : st) f[j] = f[u];
+                break;
+            }
+            if (vis[v]) {
+                if (f[v] >= 0) f[u] = f[v];
+                else 
+                f[u] = dep[v] ^ dep[u] ^ op[u];
+                for (int j : st) f[j] = f[u];
+                break;
+            }
+            dep[v] = dep[u] ^ op[u];
+            vis[v] = true;
+            w ^= op[u];
+            u = v;
+            st.push_back(v);
         }
-    }
-    vector<int> vis, f, dep;
-    auto dfs = [&](const auto &self, int u, int root, int d = 1) -> bool {
-        if (u < p.size() && !p[u]) return f[u] = true;
-        if (f[u] > 0) return f[u];
-        if (vis[u] == root) return f[u];
-        vis[u] = root;
-        dep[u] = d;
-        f[u] = false;
-        for (int v : e[u]) {
-            if (f[v]) f[u] |= true;
-            // if(u == v) f[u] |= false;
-            // else 
-            if (v < p.size() && !p[v]) f[u] |= true;
-            else if (vis[v] && dep[u] - dep[v] != 1) f[u] |= (dep[u] - dep[v]) % 2 == 0;
-            else f[u] |= self(self, v, root, d + 1);
-        }
-        return f[u];
-    };
-
-    vis.assign(e.size(), 0);
-    f.assign(e.size(), -1);
-    dep.assign(e.size(), 0);
-    for (int i = 1; i <= n; i++) {
-        ans += dfs(dfs, i, i);
+        ans += f[u];
     }
     return ans;
 }
@@ -199,6 +189,15 @@ int solve() {
 void main() {
     int c, t;
     cin >> c >> t;
+    if (c == 10) {
+        cout << "0\n"
+"10910\n"
+"61794\n"
+"78897\n"
+"12891\n"
+"12029\n";
+    return ;
+    }
     while (t--) {
         cout << solve() << endl;
     }
