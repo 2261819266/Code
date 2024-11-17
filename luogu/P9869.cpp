@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 #include <iostream>
+#include <queue>
+#include <stack>
 #include <vector>
 #define int long long
 #define endl "\n"
@@ -75,10 +77,47 @@ ostream &operator<<(ostream &out, const PII &a) {
     return out << a.first << spc << a.second << spc;
 }
 
+// vector<int> vis, p, f, dep;
+
+// bool dfs(int u, int root, int d = 1) {
+//     if (f[u] >= 0) return f[u];
+//     vis[u] = root;
+//     dep[u] = d;
+//     int v = p[u];
+//     if(u == v) return false;
+//     if (!p[v]) return true;
+//     if (vis[v] == root) return f[u] = (dep[u] - dep[v]) % 2 == 0;
+//     return f[u] = dfs(v, root, d + 1);
+// };
+
+// bool bfs(int s, int root) {
+//     if (f[s] >= 0) return f[s];
+//     vector<int> st = {s};
+//     while (!st.empty()) {
+//         int u = st.back();
+//         if (vis[u]) {
+//             st.pop_back();
+//             if (!st.empty()) f[st[st.size() - 1]] = f[u];
+//             continue;
+//         }
+//         vis[u] = root;
+//         int v = p[u];
+//         if (u == v) f[u] = false;
+//         else if (!p[v]) f[u] = true;
+//         else if (vis[v]) f[u] = (dep[u] - dep[v]) % 2 == 0;
+//         else {
+//             st.push_back(v);
+//             dep[v] = dep[u] + 1;
+//         }
+//     }
+//     return f[s];
+// }
+
 int solve() {
     int n, m;
     cin >> n >> m;
     vector<vector<int>> e(n + 1, vector<int>());
+
     auto addedge = [&](int u, int v) {
         e[u].push_back(v);
     };
@@ -87,7 +126,8 @@ int solve() {
         e.push_back({v});
         e[u].push_back(w);
     };
-    vector<int> p(n + 1), op(n + 1), ok(n + 1);
+    vector<int> op(n + 1), ok(n + 1), p(n + 1);
+    // p.assign(n + 1, 0);
     for (int i = 1; i <= n; i++) p[i] = i;
     while (m--) {
         char c;
@@ -121,26 +161,36 @@ int solve() {
             continue;
         }
         if (!op[i]) {
-            p.push_back(p[i]);
-            p[i] = p.size() - 1;
+            addedge_(i, p[i]);
+            addedge_(p[i], i);
+        } else {
+            addedge(i, p[i]);
+            addedge(p[i], i);
         }
     }
-    vector<int> vis(p.size()), dep(p.size()), f(p.size(), -1);
+    vector<int> vis, f, dep;
     auto dfs = [&](const auto &self, int u, int root, int d = 1) -> bool {
-        if (f[u] >= 0) return f[u];
+        if (u < p.size() && !p[u]) return f[u] = true;
+        if (f[u] > 0) return f[u];
+        if (vis[u] == root) return f[u];
         vis[u] = root;
         dep[u] = d;
-        int v = p[u];
-        if(u == v) return false;
-        if (!p[v]) return true;
-        if (vis[v] == root) return f[u] = (dep[u] - dep[v]) % 2 == 0;
-        return f[u] = self(self, v, root, d + 1);
+        f[u] = false;
+        for (int v : e[u]) {
+            if (f[v]) f[u] |= true;
+            // if(u == v) f[u] |= false;
+            // else 
+            if (v < p.size() && !p[v]) f[u] |= true;
+            else if (vis[v] && dep[u] - dep[v] != 1) f[u] |= (dep[u] - dep[v]) % 2 == 0;
+            else f[u] |= self(self, v, root, d + 1);
+        }
+        return f[u];
     };
 
+    vis.assign(e.size(), 0);
+    f.assign(e.size(), -1);
+    dep.assign(e.size(), 0);
     for (int i = 1; i <= n; i++) {
-        // vis.assign(p.size(), 0);
-        // f.assign(p.size(), -1);
-        // dep.assign(p.size(), 0);
         ans += dfs(dfs, i, i);
     }
     return ans;
