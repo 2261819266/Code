@@ -100,7 +100,7 @@ int solve() {
         u = newnode(u);
         if (c == '-' || c == '+') {
             cin >> v;
-            addedge(u, v, c == '-');
+            addedge(u, p[v], c == '-');
         } else {
             val[u] = (c == 'T' ? 1 : c == 'F' ? 2 : 3);
         }
@@ -149,7 +149,7 @@ int solve() {
             continue;
         }
         ans += f[i] = bfs(i);
-        if (f[i]) update(i);
+        if (f[i] >= 0) update(i);
     }
     return ans;
 }
