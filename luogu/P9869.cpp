@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include <iostream>
+#include <queue>
 #include <vector>
 #define int long long
 #define endl "\n"
@@ -75,132 +75,92 @@ ostream &operator<<(ostream &out, const PII &a) {
     return out << a.first << spc << a.second << spc;
 }
 
-
 int solve() {
     int n, m;
     cin >> n >> m;
-    vector<vector<PII>> e(n + 1, vector<PII>());
-    auto addedge = [&](int u, int v, int w) {
+    vector<vector<PII>> e(n + 1);
+    vector<int> p(n + 1), val(n + 1); // TFU 123
+    for (int i = 1; i <= n; i++) p[i] = i;
+    auto addedge = [&](int u, int v, int w) -> void {
         e[u].push_back({v, w});
         e[v].push_back({u, w});
     };
-    vector<int> p(n + 1), op(n + 1), ok(n + 1), T(n + 1);
-    vector<vector<int>> s(n + 1);
-    for (int i = 1; i <= n; i++) p[i] = i;
+
+    auto newnode = [&](int u) -> int {
+        p[u] = e.size();
+        e.push_back(vector<PII>());
+        val.push_back(0);
+        return p[u];
+    };
+
     while (m--) {
         char c;
-        cin >> c;
-        if (c == '+' || c == '-') {
-            int u, v;
-            cin >> u >> v;
-            p[u] = p[v];
-            op[u] = (c == '-') ^ (op[v]);
-            ok[u] = ok[v];
-            // if (c == '-' && u == v) {
-            //     p[u] = 0;
-            // }
-            // if (p[u] == u && op[u]) p[u] = 0;
-            s[v].push_back(u);
-            // T[u] = 1;
-            // for (int w : s[u]) {
-            //     T[w] = 0;
-            // }
+        int u, v;
+        cin >> c >> u;
+        u = newnode(u);
+        if (c == '-' || c == '+') {
+            cin >> v;
+            addedge(u, v, c == '-');
         } else {
-            int i;
-            cin >> i;
-            if (c == 'U') {
-                ok[i] = 1;
-                p[i] = 0;
-                op[i] = 0;
-            } else {
-                p[i] = i;
-                ok[i] = 1;
-                op[i] = 0;
-            }
+            val[u] = (c == 'T' ? 1 : c == 'F' ? 2 : 3);
         }
     }
+    for (int i = 1; i <= n; i++) addedge(i, p[i], 0);
+    vector<int> f(e.size(), -1), g(e.size(), 0), vis(e.size());
     int ans = 0;
-    for (int i = 1; i <= n; i++) {
-        // if (ok[i]) {
-        //     // ans += !p[i];
-        //     // continue;
-        // }
-        // if (!op[i]) {
-        //     p.push_back(p[i]);
-        //     p[i] = p.size() - 1;
-        // }
-        addedge(i, p[i], op[i]);
-    }
-    vector<int> vis(p.size()), dep(p.size()), f(p.size(), -1);
-    // auto dfs = [&](const auto &self, int u, int root, int d = 1) -> bool {
-    //     if (f[u] >= 0) return f[u];
-    //     vis[u] = root;
-    //     dep[u] = d;
-    //     int v = p[u];
-    //     if(u == v) return false;
-    //     if (!v) return true;
-    //     if (vis[v] == root) return f[u] = (dep[u] - dep[v]) % 2 == 0;
-    //     return f[u] = self(self, v, root, d + 1);
-    // };
+
+    auto bfs = [&](int s) -> bool {
+        queue<int> q;
+        q.push(s);
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            // if (vis[u]) continue;
+            // vis[u] = true;
+            for (PII to : e[u]) {
+                int v = to.first, w = to.second;
+                if (!vis[v]) {
+                    vis[v] = true;
+                    g[v] = g[u] ^ w;
+                } else if (g[v] ^ g[u] ^ w) return true;
+            }
+        }
+        return false;
+    };
+
+    vector<int> updvis(e.size());
+
+    auto update = [&](int s) -> void {
+        queue<int> q;
+        q.push(s);
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+            for (PII to : e[u]) {
+                int v = to.first;
+                f[v] = f[s];
+            }
+        }
+    };
 
     for (int i = 1; i <= n; i++) {
-        // vis.assign(p.size(), 0);
-        // f.assign(p.size(), -1);
-        // dep.assign(p.size(), 0);
-        // ans += dfs(dfs, i, i);
-        if (ok[i]) {
-            ans += !p[i];
+        if (f[i] >= 0) {
+            ans += f[i];
             continue;
         }
-        int u = i, w = 0;
-        dep[i] = 1;
-        vector<int> st = {i};
-        while (true) {
-            // if (vis[u]) 
-            int v = p[u];
-            if (!v) {
-                f[u] = 1;
-                for (int j : st) f[j] = f[u];
-                break;
-            }
-            if (u == v) {
-                f[u] = op[u];
-                for (int j : st) f[j] = f[u];
-                break;
-            }
-            if (vis[v]) {
-                if (f[v] >= 0) f[u] = f[v];
-                else 
-                f[u] = dep[v] ^ dep[u] ^ op[u];
-                for (int j : st) f[j] = f[u];
-                break;
-            }
-            dep[v] = dep[u] ^ op[u];
-            vis[v] = true;
-            w ^= op[u];
-            u = v;
-            st.push_back(v);
-        }
-        ans += f[u];
+        ans += f[i] = bfs(i);
+        if (f[i]) update(i);
     }
     return ans;
 }
 
 void main() {
-    int c, t;
-    cin >> c >> t;
-    if (c == 10) {
-        cout << "0\n"
-"10910\n"
-"61794\n"
-"78897\n"
-"12891\n"
-"12029\n";
-    return ;
-    }
-    while (t--) {
+    int c, T;
+    cin >> c >> T;
+    while (T--) {
         cout << solve() << endl;
     }
+    return;
 }
 }
 
