@@ -145,6 +145,10 @@ class BigInt {
         for (int i = 0, d = 0; i <= n; i++) ans [i] -= MOD * (d = (ans[i] += (i < m ? b[i] : 0) + d) / MOD);
         return ans.update_zero();
     }
+    template<typename T>
+    BigInt operator+(const T &b) const { return *this + (BigInt)b; }
+    template<typename T>
+    BigInt operator+=(const T &b) { return *this = *this + b; }
 
     BigInt operator-(const BigInt &b) const {
         if (!*this && !b) return 0;
@@ -157,6 +161,10 @@ class BigInt {
         for (int i = 0, d = 1; i < n; i++) ans[i] -= MOD * (d = (ans[i] += MOD + d - 1 - (i < m ? b[i] : 0)) / MOD);
         return ans.update_zero();
     }
+    template<typename T>
+    BigInt operator-(const T &b) const { return *this - (BigInt)b; }
+    template<typename T>
+    BigInt operator-=(const T &b) { return *this = *this - b; }
 
   private:
     static const int BASE = 8;
@@ -172,6 +180,7 @@ class BigInt {
 signed main() {
     using namespace std;
     BigInt a, b;
-    cin >> a >> b;
-    cout << (a - b);
+    int x;
+    cin >> a >> x;
+    cout << (a + (x));
 }
