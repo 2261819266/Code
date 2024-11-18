@@ -137,7 +137,7 @@ class BigInt {
         if (!*this && !b) return 0;
         if (!*this) return b;
         if (!b) return *this;
-        if (sig != b.sig) return *this - -b;
+        if (sig != b.sig) return *this - (-b);
         if (*this < b) return b + *this;
         BigInt ans(*this);
         int n = a.size(), m = b.size();
@@ -154,8 +154,7 @@ class BigInt {
         if (abs() < b.abs()) return -(b - *this);
         BigInt ans = *this;
         int n = a.size(), m = b.size();
-        for (int i = 0, d = 1; i < n; i++) 
-            ans[i] -= MOD * (d = (ans[i] += MOD + d - 1 - (i < m ? b[i] : 0)) / MOD);
+        for (int i = 0, d = 1; i < n; i++) ans[i] -= MOD * (d = (ans[i] += MOD + d - 1 - (i < m ? b[i] : 0)) / MOD);
         return ans.update_zero();
     }
 
