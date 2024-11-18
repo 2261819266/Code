@@ -106,6 +106,7 @@ class BigInt {
     bool operator!() const { return a.empty(); }
 
     bool operator<(const BigInt &b) const {
+        if (*this == b) return false;
         bool ans;
         if (a.empty() && b.empty()) return false;
         if (a.empty()) return !b.sig;
@@ -128,25 +129,34 @@ class BigInt {
     bool operator>=(const BigInt &b) const { return !(*this < b); }
     bool operator>(const BigInt &b) const { return b < *this; }
 
-    BigInt operator-() const { return {a, !sig}; }
+    BigInt operator-() const { return {a, !*this ? 0 : !sig}; }
+
+    BigInt abs() const { return sig ? -*this : *this; }
 
     BigInt operator+(const BigInt &b) const {
         if (!*this && !b) return 0;
+        if (!*this) return b;
+        if (!b) return *this;
         if (sig != b.sig) return *this - -b;
         if (*this < b) return b + *this;
-        BigInt ans(a, sig);
+        BigInt ans(*this);
         int n = a.size(), m = b.size();
         ans.a.push_back(0);
-        for (int i = 0, d = 0; i <= n; i++) {
-            ans[i] += (i < m ? b[i] : 0) + d;
-            d = ans[i] / MOD;
-            ans[i] %= MOD;
-        }
+        for (int i = 0, d = 0; i <= n; i++) ans [i] -= MOD * (d = (ans[i] += (i < m ? b[i] : 0) + d) / MOD);
         return ans.update_zero();
     }
 
     BigInt operator-(const BigInt &b) const {
-
+        if (!*this && !b) return 0;
+        if (!*this) return -b;
+        if (!b) return *this;
+        if (sig != b.sig) return *this + (-b);
+        if (abs() < b.abs()) return -(b - *this);
+        BigInt ans = *this;
+        int n = a.size(), m = b.size();
+        for (int i = 0, d = 1; i < n; i++) 
+            ans[i] -= MOD * (d = (ans[i] += MOD + d - 1 - (i < m ? b[i] : 0)) / MOD);
+        return ans.update_zero();
     }
 
   private:
@@ -164,5 +174,5 @@ signed main() {
     using namespace std;
     BigInt a, b;
     cin >> a >> b;
-    cout << (a + b);
+    cout << (a - b);
 }
