@@ -1,5 +1,6 @@
 #ifndef __BigInt__
 #define __BigInt__
+#include <functional>
 #include <string>
 #include <cmath>
 #include <vector>
@@ -72,7 +73,7 @@ class BigInt {
     }
     BigInt &operator=(const char *s) { return *this = s; }
 
-    friend ostream &operator<<(ostream &out, const BigInt &x) { string s = x; return out << s; }
+    friend ostream &operator<<(ostream &out, const BigInt &x) { return out << string(x); }
     friend istream &operator>>(istream &in, BigInt &x) {
         string s;
         in >> s;
@@ -173,6 +174,13 @@ class BigInt {
     bool sig;
 };
 
+namespace std {
+    template<> struct hash<BigInt> {
+        int operator()(const BigInt &x) const {
+            return std::hash<std::string>{} (std::string(x));
+        }
+    };
+}
 #undef int
 #endif
 
@@ -182,5 +190,5 @@ signed main() {
     BigInt a, b;
     int x;
     cin >> a >> x;
-    cout << (a + (x));
+    cout << (a += (x));
 }
