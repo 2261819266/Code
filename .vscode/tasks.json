@@ -10,7 +10,8 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-Wshadow",
-                "-DLOCAL"
+                "-DLOCAL",
+                "-Wall"
             ],
             "options": {
                 "cwd": "${fileDirname}"
