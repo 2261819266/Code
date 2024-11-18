@@ -55,10 +55,8 @@ class BigInt {
         len = s.size();
         if (!len) return clear();
         int y = len % BASE;
-        for (int i = x = 0; i < y; i++) {
-            (x *= 10) += s[i] - '0';
-            // if (i == y - 1) a.push_back(x);
-        }
+        if (!y) y = BASE;
+        for (int i = x = 0; i < y; i++) (x *= 10) += s[i] - '0';
         for (int i = y, j = BASE; ; i++, j++) {
             if (j == BASE) {
                 j = 0;
@@ -73,7 +71,7 @@ class BigInt {
     }
     BigInt &operator=(const char *s) { return *this = s; }
 
-    friend ostream &operator<<(ostream &out, const BigInt &x) { return out << string(x); }
+    friend ostream &operator<<(ostream &out, const BigInt &x) { string s = x; return out << s; }
     friend istream &operator>>(istream &in, BigInt &x) {
         string s;
         in >> s;
@@ -88,7 +86,7 @@ class BigInt {
     operator T() const {
         T x = 0;
         for (const T &i : a) (x *= MOD) += i;
-        return x * (sig ? -1 : 1);
+        return x * (1 - 2 * sig);
     }
     operator string() const {
         if (a.empty()) return "0";
@@ -102,7 +100,6 @@ class BigInt {
         }
         return S;
     }
-
     operator bool() const { return !a.empty(); }
     bool operator!() const { return a.empty(); }
 
@@ -167,14 +164,17 @@ class BigInt {
     template<typename T>
     BigInt &operator-=(const T &b) { return *this = *this - b; }
 
-    template<typename T>
-    BigInt operator*(const T &b) const {
+    BigInt operator*(const signed &b) const {
         if (!*this || !b) return 0;
         int n = size();
-        for (int i = 0, d = 0; i < n || d; i++) {
-            // ans -= (d = ()) % MOD
-        } 
+        BigInt ans = *this;
+        ans.a.resize(n + 2);
+        for (int i = 0, d = 0; i < n || d; i++) 
+            ans[i] -= (d = ((ans[i] *= b) += d) / MOD) * MOD; 
+        return ans.update_zero();
     }
+
+
 
   private:
     static const int BASE = 8;
@@ -186,7 +186,8 @@ class BigInt {
 
 template<> struct std::hash<BigInt> {
     int operator()(const BigInt &x) const {
-        return hash<string>{} (string(x));
+        string s = x;
+        return hash<string>{} (s);
     }
 };
 
@@ -197,7 +198,8 @@ template<> struct std::hash<BigInt> {
 signed main() {
     using namespace std;
     BigInt a, b;
-    int x;
-    cin >> a >> x;
-    cout << (a += (x));
+    // signed x;
+    cin >> a;
+    cout << a;
+    // cout << (a * x);
 }

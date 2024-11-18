@@ -11,7 +11,8 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-Wshadow",
                 "-DLOCAL",
-                "-Wall"
+                "-Wall",
+                "-std=c++14"
             ],
             "options": {
                 "cwd": "${fileDirname}"
