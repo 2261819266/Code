@@ -16,8 +16,17 @@ class BigInt {
     using string = std::string;
     using istream = std::istream;
     using ostream = std::ostream;
+    // using std::vector;
 
-    void update_zero() { while (!a.back()) a.pop_back(); }
+    BigInt update_zero() { while (!a.back()) a.pop_back(); return *this; }
+
+    BigInt(std::vector<int> A, int SIG) : a(A), sig(SIG) {}
+
+    int size() const { return a.size(); }
+
+    int operator[](int x) const { return a[x]; }
+    int &operator[](int x) { return a[x]; }
+    bool empty() const { return a.empty(); }
 
   public:
     template<typename T> BigInt(const T &x) { *this = x; }
@@ -35,15 +44,15 @@ class BigInt {
         return *this;
     }
     BigInt &operator=(const string &_s) {
-        string s;
+        string s = _s;
         if (_s.front() == '-') sig = 1, s = string(_s, 1);
         a.clear();
         int len = _s.size(), x = 0;
         int k;
-        for (k = 0; k < len && _s[k] == '0'; k++);
-        s = string(_s, k);
+        for (k = 0; k < len && s[k] == '0'; k++);
+        s = string(s, k);
         len = s.size();
-        if (!len) return *this;
+        if (!len) return clear();
         int y = len % BASE;
         for (int i = x = 0; i < y; i++) {
             (x *= 10) += s[i] - '0';
@@ -71,7 +80,8 @@ class BigInt {
         return in;
     }
 
-    void clear() { sig = 0, a.clear(); }
+    BigInt &clear() { sig = 0, a.clear(); return *this; }
+
 
     template<typename T>
     operator T() const {
@@ -92,7 +102,52 @@ class BigInt {
         return S;
     }
 
+    operator bool() const { return !a.empty(); }
+    bool operator!() const { return a.empty(); }
 
+    bool operator<(const BigInt &b) const {
+        bool ans;
+        if (a.empty() && b.empty()) return false;
+        if (a.empty()) return !b.sig;
+        if (b.empty()) return sig;
+        if (sig != b.sig && (!!*this || !!b)) return b.sig < sig;
+        else if (a.size() != b.size()) ans = a.size() < b.size();
+        else {
+            int n = a.size();
+            for (int i = n - 1; i >= 0; i--) {
+                if (a[i] != b.a[i]) {
+                    ans = a[i] < b.a[i];
+                }
+            }
+        }
+        return ans ^ sig;
+    }
+    bool operator==(const BigInt &b) const { return sig == b.sig && a == b.a; }
+    bool operator!=(const BigInt &b) const { return !(*this == b); }
+    bool operator<=(const BigInt &b) const { return !(b < *this); }
+    bool operator>=(const BigInt &b) const { return !(*this < b); }
+    bool operator>(const BigInt &b) const { return b < *this; }
+
+    BigInt operator-() const { return {a, !sig}; }
+
+    BigInt operator+(const BigInt &b) const {
+        if (!*this && !b) return 0;
+        if (sig != b.sig) return *this - -b;
+        if (*this < b) return b + *this;
+        BigInt ans(a, sig);
+        int n = a.size(), m = b.size();
+        ans.a.push_back(0);
+        for (int i = 0, d = 0; i <= n; i++) {
+            ans[i] += (i < m ? b[i] : 0) + d;
+            d = ans[i] / MOD;
+            ans[i] %= MOD;
+        }
+        return ans.update_zero();
+    }
+
+    BigInt operator-(const BigInt &b) const {
+
+    }
 
   private:
     static const int BASE = 8;
@@ -107,7 +162,7 @@ class BigInt {
 #include <iostream>
 signed main() {
     using namespace std;
-    BigInt x;
-    cin >> x;
-    cout << x;
+    BigInt a, b;
+    cin >> a >> b;
+    cout << (a + b);
 }
