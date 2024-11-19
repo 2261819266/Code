@@ -9,31 +9,23 @@
 
 #define int long long
 
-// using namespace std;
-
 class BigInt {
   private:
 
     using string = std::string;
     using istream = std::istream;
     using ostream = std::ostream;
-    // using std::vector;
-
-    BigInt update_zero() { while (!a.back()) a.pop_back(); return *this; }
-
-    BigInt(std::vector<int> A, int SIG) : a(A), sig(SIG) {}
-
-    size_t size() const { return a.size(); }
 
     int operator[](int x) const { return a[x]; }
     int &operator[](int x) { return a[x]; }
     bool empty() const { return a.empty(); }
+    size_t size() const { return a.size(); }
+    BigInt update_zero() { while (!a.back()) a.pop_back(); return *this; }
+    BigInt(std::vector<int> A, int SIG) : a(A), sig(SIG) {}
 
     template<typename T>
     string to_string(const T &x) const { return std::to_string(x); }
-
     int stoi(const string &s) { return stoi(s, 0, s.size()); }
-
     int stoi(const string &s, int l, int r) { return std::stoi(string(s, l, r - l)); }
 
   public:
@@ -131,9 +123,8 @@ class BigInt {
     BigInt abs() const { return sig ? -*this : *this; }
 
     BigInt operator+(const BigInt &b) const {
-        if (!*this && !b) return 0;
-        if (!*this) return b;
         if (!b) return *this;
+        if (!*this) return b;
         if (sig != b.sig) return *this - (-b);
         if (*this < b) return b + *this;
         BigInt ans(*this);
@@ -148,9 +139,8 @@ class BigInt {
     BigInt &operator+=(const T &b) { return *this = *this + b; }
 
     BigInt operator-(const BigInt &b) const {
-        if (!*this && !b) return 0;
-        if (!*this) return -b;
         if (!b) return *this;
+        if (!*this) return -b;
         if (sig != b.sig) return *this + (-b);
         if (abs() < b.abs()) return -(b - *this);
         BigInt ans = *this;
