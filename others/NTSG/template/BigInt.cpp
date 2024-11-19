@@ -1,12 +1,10 @@
 #ifndef __BigInt__
 #define __BigInt__
-#include <corecrt.h>
-#include <functional>
-#include <string>
-#include <cmath>
-#include <vector>
-#include <ostream>
 #include <algorithm>
+#include <cmath>
+#include <ostream>
+#include <string>
+#include <vector>
 
 #define int long long
 
