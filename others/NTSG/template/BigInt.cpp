@@ -1,5 +1,6 @@
 #ifndef __BigInt__
 #define __BigInt__
+#include <corecrt.h>
 #include <functional>
 #include <string>
 #include <cmath>
@@ -15,18 +16,29 @@ class BigInt {
     using string = std::string;
     using istream = std::istream;
     using ostream = std::ostream;
+    using vector = std::vector<int>;
 
     int operator[](int x) const { return a[x]; }
     int &operator[](int x) { return a[x]; }
     bool empty() const { return a.empty(); }
     size_t size() const { return a.size(); }
     BigInt update_zero() { while (!a.back()) a.pop_back(); return *this; }
-    BigInt(std::vector<int> A, int SIG) : a(A), sig(SIG) {}
+    BigInt(vector A, int SIG) : a(A), sig(SIG) {}
 
-    template<typename T>
-    string to_string(const T &x) const { return std::to_string(x); }
+    template<typename T> string to_string(const T &x) const { return std::to_string(x); }
     int stoi(const string &s) { return stoi(s, 0, s.size()); }
     int stoi(const string &s, int l, int r) { return std::stoi(string(s, l, r - l)); }
+
+  public:
+    template<typename T> BigInt &operator<<=(T x) { return *this = *this << x; }
+    template<typename T> BigInt operator<<(T x) const {
+        BigInt ans(vector(x, 0), sig);
+        for (const int &i : a) ans.a.push_back(i);
+        return ans;
+    }
+
+    template<typename T> BigInt &operator>>=(T x) { return *this = *this >> x; }
+    template<typename T> BigInt operator>>(T x) const { return {vector(a.begin() + x, a.end()), sig}; }
 
   public:
     BigInt(void) : a(), sig(false) {}
@@ -71,7 +83,6 @@ class BigInt {
     }
 
     BigInt &clear() { sig = 0, a.clear(); return *this; }
-
 
     template<typename T>
     operator T() const {
@@ -122,6 +133,8 @@ class BigInt {
 
     BigInt abs() const { return sig ? -*this : *this; }
 
+    template<typename T> BigInt operator+(const T &b) const { return *this + (BigInt)b; }
+    template<typename T> BigInt &operator+=(const T &b) { return *this = *this + b; }
     BigInt operator+(const BigInt &b) const {
         if (!b) return *this;
         if (!*this) return b;
@@ -133,11 +146,9 @@ class BigInt {
         for (int i = 0, d = 0; i <= n; i++) ans [i] -= MOD * (d = (ans[i] += (i < m ? b[i] : 0) + d) / MOD);
         return ans.update_zero();
     }
-    template<typename T>
-    BigInt operator+(const T &b) const { return *this + (BigInt)b; }
-    template<typename T>
-    BigInt &operator+=(const T &b) { return *this = *this + b; }
 
+    template<typename T> BigInt operator-(const T &b) const { return *this - (BigInt)b; }
+    template<typename T> BigInt &operator-=(const T &b) { return *this = *this - b; }
     BigInt operator-(const BigInt &b) const {
         if (!b) return *this;
         if (!*this) return -b;
@@ -148,10 +159,6 @@ class BigInt {
         for (int i = 0, d = 1; i < n; i++) ans[i] -= MOD * (d = (ans[i] += MOD + d - 1 - (i < m ? b[i] : 0)) / MOD);
         return ans.update_zero();
     }
-    template<typename T>
-    BigInt operator-(const T &b) const { return *this - (BigInt)b; }
-    template<typename T>
-    BigInt &operator-=(const T &b) { return *this = *this - b; }
 
     BigInt operator*(const signed &b) const {
         if (!*this || !b) return 0;
@@ -162,13 +169,10 @@ class BigInt {
             ans[i] -= (d = ((ans[i] *= b) += d) / MOD) * MOD; 
         return ans.update_zero();
     }
-
-
-
   private:
     static const int BASE = 8;
     static const int MOD = 1e8;
-    std::vector<int> a;
+    vector a;
     bool sig;
 
 };
@@ -187,8 +191,6 @@ template<> struct std::hash<BigInt> {
 signed main() {
     using namespace std;
     BigInt a, b;
-    // signed x;
-    cin >> a >> b;
-    // cout << a;
-    cout << (a * b);
+    cin >> a;
+    cout << (a << 2);
 }
