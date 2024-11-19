@@ -2,9 +2,9 @@
 #define __BigInt__
 #include <algorithm>
 #include <cmath>
-#include <ostream>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #define int long long
 
@@ -29,6 +29,7 @@ class BigInt {
 
     template<typename T> BigInt &operator<<=(T x) { return *this = *this << x; }
     template<typename T> BigInt operator<<(T x) const {
+        if (!*this) return 0;
         BigInt ans(vector(x, 0), sig);
         for (const int &i : a) ans.a.push_back(i);
         return ans.update_zero();
@@ -115,6 +116,7 @@ class BigInt {
             for (int i = n - 1; i >= 0; i--) {
                 if (a[i] != b.a[i]) {
                     ans = a[i] < b.a[i];
+                    break;
                 }
             }
         }
@@ -174,8 +176,20 @@ class BigInt {
         BigInt ans = 0;
         int n = b.size();
         for (int i = n - 1; i >= 0; i--) (ans <<= 1) += *this * (signed)b[i];
-        return ans;
+        ans.sig = sig ^ b.sig;
+        return ans.update_zero();
     }
+
+    BigInt operator/(const signed &b) const {
+        if (!b) { std::cerr << "MATH ERROR!\n"; exit(-1); }
+        if (!*this) return 0;
+        if (b < 0) return -*this / (-b);
+        BigInt ans = 0;
+        int n = size();
+        for (int i = n - 1, d = 0; i >= 0; i--) (ans <<= 1) += (a[i] + d * MOD) / b, d = (a[i] + d * MOD) % b;
+        ans.sig = sig;
+        return ans.update_zero();
+	}
 
   private:
     static const int BASE = 8;
@@ -199,6 +213,9 @@ template<> struct std::hash<BigInt> {
 signed main() {
     using namespace std;
     BigInt a, b;
-    cin >> a >> b;
-    cout << (a * b);
+    cin >> a;
+    // cin >> a >> b;
+    int x;
+    cin >> x;
+    cout << a / x;
 }
