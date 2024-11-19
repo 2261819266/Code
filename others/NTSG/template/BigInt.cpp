@@ -172,7 +172,8 @@ class BigInt {
     BigInt operator*(const BigInt &b) const {
         if (!*this || !b) return 0;
         BigInt ans = 0;
-        for (const int &i : b.a) (ans <<= 1) += *this * (signed)i;
+        int n = b.size();
+        for (int i = n - 1; i >= 0; i--) (ans <<= 1) += *this * (signed)b[i];
         return ans;
     }
 
