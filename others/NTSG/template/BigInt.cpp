@@ -29,16 +29,15 @@ class BigInt {
     int stoi(const string &s) { return stoi(s, 0, s.size()); }
     int stoi(const string &s, int l, int r) { return std::stoi(string(s, l, r - l)); }
 
-  public:
     template<typename T> BigInt &operator<<=(T x) { return *this = *this << x; }
     template<typename T> BigInt operator<<(T x) const {
         BigInt ans(vector(x, 0), sig);
         for (const int &i : a) ans.a.push_back(i);
-        return ans;
+        return ans.update_zero();
     }
 
     template<typename T> BigInt &operator>>=(T x) { return *this = *this >> x; }
-    template<typename T> BigInt operator>>(T x) const { return {vector(a.begin() + x, a.end()), sig}; }
+    template<typename T> BigInt operator>>(T x) const { return x < size() ? (BigInt){vector(a.begin() + x, a.end()), sig}.update_zero() : (BigInt)0; }
 
   public:
     BigInt(void) : a(), sig(false) {}
@@ -160,8 +159,11 @@ class BigInt {
         return ans.update_zero();
     }
 
+    template<typename T> BigInt operator*(const T &b) const { return *this * (BigInt)b; }
+    template<typename T> BigInt &operator*=(const T &b) { return *this = *this * b; }
     BigInt operator*(const signed &b) const {
         if (!*this || !b) return 0;
+        if (b < 0) return -(*this * (-b)); 
         int n = size();
         BigInt ans = *this;
         ans.a.resize(n + 2);
@@ -169,6 +171,13 @@ class BigInt {
             ans[i] -= (d = ((ans[i] *= b) += d) / MOD) * MOD; 
         return ans.update_zero();
     }
+    BigInt operator*(const BigInt &b) const {
+        if (!*this || !b) return 0;
+        BigInt ans = 0;
+        for (const int &i : b.a) (ans <<= 1) += *this * (signed)i;
+        return ans;
+    }
+
   private:
     static const int BASE = 8;
     static const int MOD = 1e8;
@@ -191,6 +200,6 @@ template<> struct std::hash<BigInt> {
 signed main() {
     using namespace std;
     BigInt a, b;
-    cin >> a;
-    cout << (a << 2);
+    cin >> a >> b;
+    cout << (a * b);
 }
