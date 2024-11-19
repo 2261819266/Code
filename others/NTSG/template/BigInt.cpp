@@ -29,6 +29,13 @@ class BigInt {
     int &operator[](int x) { return a[x]; }
     bool empty() const { return a.empty(); }
 
+    template<typename T>
+    string to_string(const T &x) const { return std::to_string(x); }
+
+    int stoi(const string &s) { return stoi(s, 0, s.size()); }
+
+    int stoi(const string &s, int l, int r) { return std::stoi(string(s, l, r - l)); }
+
   public:
     BigInt(void) : a(), sig(false) {}
     template<typename T> BigInt(const T &x) { *this = x; }
@@ -48,7 +55,7 @@ class BigInt {
         string s = _s;
         if (_s.front() == '-') sig = 1, s = string(_s, 1);
         a.clear();
-        int len = _s.size(), x = 0;
+        int len = _s.size();
         int k;
         for (k = 0; k < len && s[k] == '0'; k++);
         s = string(s, k);
@@ -56,16 +63,8 @@ class BigInt {
         if (!len) return clear();
         int y = len % BASE;
         if (!y) y = BASE;
-        for (int i = x = 0; i < y; i++) (x *= 10) += s[i] - '0';
-        for (int i = y, j = BASE; ; i++, j++) {
-            if (j == BASE) {
-                j = 0;
-                a.push_back(x);
-                x = 0;
-            }
-            if (i == len) break;
-            (x *= 10) += s[i] - '0';
-        }
+        a.push_back(stoi(s, 0, y));
+        for (int x = y; x < len; x += BASE) a.push_back(stoi(s, x, x + BASE));
         std::reverse(a.begin(), a.end());
         return *this;
     }
@@ -94,7 +93,7 @@ class BigInt {
         if (sig) S = "-";
         int len = a.size();
         for(int i = len - 1; i >= 0; i--) {
-            string s = std::to_string(a[i]);
+            string s = to_string(a[i]);
             for (int j = s.size(); j < BASE && i < len - 1; j++) S += '0';
             S += s;
         }
@@ -199,7 +198,7 @@ signed main() {
     using namespace std;
     BigInt a, b;
     // signed x;
-    cin >> a;
-    cout << a;
-    // cout << (a * x);
+    cin >> a >> b;
+    // cout << a;
+    cout << (a * b);
 }
