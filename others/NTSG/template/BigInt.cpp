@@ -20,7 +20,7 @@ class BigInt {
     int &operator[](int x) { return data[x]; }
     bool empty() const { return data.empty(); }
     size_t size() const { return data.size(); }
-    BigInt update_zero() { while (!data.back()) data.pop_back(); return *this; }
+    BigInt update_zero() { while (!data.empty() && !data.back()) data.pop_back(); return *this; }
     BigInt(vector A, int SIG) : data(A), sig(SIG) {}
 
     template<typename T> string to_string(const T &x) const { return std::to_string(x); }
@@ -51,7 +51,7 @@ class BigInt {
         do {
             data.push_back(x % MOD);
         } while (x /= MOD);
-        return *this;
+        return *this = this->update_zero();
     }
     BigInt &operator=(const string &_s) {
         string s = _s;
@@ -198,23 +198,19 @@ class BigInt {
         // if (b.size() <= 1) return *this / (signed)b;
         if (sig & b.sig) return (-*this) / (-b);
         if (sig ^ b.sig) return -(abs() / b.abs());
-        BigInt ans, d = b, a = *this;
-        int e = (size() - b.size() + 1);
-        ans.data.assign(e + 1, 0);
-        d <<= e;
-        while (true) {
-            while (a >= d) {
-                int x = a.data.back() / (d.data.back() + 1);
-                a -= d * x;
-                ans[e] += x;
-            }
-            while (a >= b * d) a -= d;
-            if (a < b) break;
-            e--;
-            d >>= 1;
+        if (*this < b) return 0;
+        BigInt ans, d = BigInt(1) << (size() - b.size() + 1), a = *this;
+        while (a >= b) {
+            BigInt e = d * b;
+            while (a >= e) a -= e, ans += d;
+            d /= 10;
         }
-        return ans.update_zero();
+        return ans;
     }
+
+    template<typename T> BigInt operator%(const T &x) const { return *this - *this / x 
+    * x; }
+    template<typename T> BigInt operator%=(const T &x) { return *this -= *this / x * x; }
 
   private:
     static const int BASE = 8;
@@ -238,9 +234,7 @@ template<> struct std::hash<BigInt> {
 signed main() {
     using namespace std;
     BigInt a, b;
-    cin >> a;
-    // cin >> a >> b;
-    int x;
-    cin >> x;
-    cout << a / x;
+    cin >> a >> b;
+    // cout << a - BigInt(0) * b;
+    cout << a + b << endl << a - b << endl << a * b << endl << a / b << endl << a % b;
 }
