@@ -10,7 +10,6 @@
 
 class BigInt {
   private:
-
     using string = std::string;
     using istream = std::istream;
     using ostream = std::ostream;
@@ -38,6 +37,14 @@ class BigInt {
     template<typename T> BigInt &operator>>=(T x) { return *this = *this >> x; }
     template<typename T> BigInt operator>>(T x) const { return (size_t)x < size() ? (BigInt){vector(data.begin() + x, data.end()), sig}.update_zero() : (BigInt)0; }
 
+    BigInt solve(const BigInt &b) {
+        int x;
+        while ((x = b.data.back() / (data.back() + 1))) {
+            *this -= b * x;
+        }
+        while (*this >= b) *this -= b;
+        return *this;
+    }
   public:
     BigInt(void) : data(), sig(false) {}
     template<typename T> BigInt(const T &x) { *this = x; }
@@ -192,24 +199,40 @@ class BigInt {
         ans.sig = sig;
         return ans.update_zero();
 	}
-    BigInt operator/(const BigInt &b) const {
-        if (!b) { std::cerr << "MATH ERROR!\n"; exit(-1); }
+    BigInt operator/(const BigInt &_b) const {
+        if (!_b) { std::cerr << "MATH ERROR!\n"; exit(-1); }
         if (!*this) return 0;
         // if (b.size() <= 1) return *this / (signed)b;
-        if (sig & b.sig) return (-*this) / (-b);
-        if (sig ^ b.sig) return -(abs() / b.abs());
-        if (*this < b) return 0;
-        BigInt ans, d = BigInt(1) << (size() - b.size() + 1), a = *this;
-        while (a >= b) {
-            BigInt e = d * b;
-            while (a >= e) a -= e, ans += d;
-            d /= 10;
+        if (sig & _b.sig) return (-*this) / (-_b);
+        if (sig ^ _b.sig) return -(abs() / _b.abs());
+        if (*this < _b) return 0;
+        BigInt ans, a = *this, b = _b;
+        if (b.data.back() >= 10) {
+            int t = 1, x = b.data.back();
+            while (x < MOD) t *= 10, x *= 10;
+            b *= t;
+            a *= t;
         }
-        return ans;
+        int e = size() - b.size() + 1;
+        BigInt c = b << e;
+        ans.data.assign(e + 1, 0);
+        int X = b.data.back();
+        while (true) {
+            while (a >= b && a.size() > c.size()) 
+                a -= c * (MOD / 10), ans[e] += MOD / 10;
+            if (a < b) break;
+            int x = 0;
+            while (a.size() == c.size() && (x = a.data.back() / (X + 1))) 
+                a -= c * x, ans[e] += x;
+            while (a >= c) 
+                a -= c, ans[e]++;
+            c >>= 1;
+            e--;
+        }
+        return ans.update_zero();
     }
 
-    template<typename T> BigInt operator%(const T &x) const { return *this - *this / x 
-    * x; }
+    template<typename T> BigInt operator%(const T &x) const { return *this - *this / x * x; }
     template<typename T> BigInt operator%=(const T &x) { return *this -= *this / x * x; }
 
   private:
