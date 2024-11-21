@@ -146,17 +146,17 @@ void main() {
                                 if (j == a[l][0]) {
                                     cout << j << spc;
                                     ans.push_back(j);
-                                    cerr << check(ans) << endl;
+                                    // cerr << check(ans) << endl;
                                     break;
                                 }
                             }
                         }
                         cout << endl;
-                        for (int j : ans) cout << a[j] << endl;
+                        // for (int j : ans) cout << a[j] << endl;
                         exit(0);
                     }
                 }
-                recover(x);
+                recover(i);
             }
         }
         return true;
