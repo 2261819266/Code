@@ -150,7 +150,7 @@ void dfs(int x = 0, int y = 0) {
     if (y == -1 && x == -1) update();
     else {
         // vis = true;
-        
+
         vector<int> v = get(x, y);
         if (!a[x][y]) {
             for (int i = 1; i <= n; i++) {
@@ -220,7 +220,7 @@ void main() {
 
     A.push_back({-1, -1});
     
-    dfs(X, Y);
+    dfs(A.front().first, A.front().second);
     cout << ans << endl;
     cerr << clock();
 }
