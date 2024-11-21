@@ -5,3 +5,4 @@
 1 0 0 1 0 0 0
 0 1 0 0 0 0 1
 0 0 0 1 1 0 1
+#define forlink(i, P) for (int i = P.st; i != P.ed; i = P.a[i])
