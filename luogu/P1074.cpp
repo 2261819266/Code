@@ -9,6 +9,7 @@
 using namespace std;
 
 namespace Problem {
+
 template <typename t>
 ostream &operator<<(ostream &out, const vector<t> &A) {
     for (const t &i : A) out << i << spc;
@@ -125,6 +126,10 @@ void update() {
     if (y > ans) ans = y;
 }
 
+void update(int t) {
+    if (t > ans) ans = t;
+}
+
 vector<int> get(int x, int y) {
     vector<int> vis(n + 1, 0);
     for (int i = 0; i < n; i++) vis[a[x][i]] = vis[a[i][y]] = true;
@@ -139,28 +144,35 @@ vector<int> get(int x, int y) {
 }
 
 int X, Y, vis = 0, Z;
-int T[9][9], I;
+int I;
+vector<vector<int>> T(n, vector<int>(9, 0));
+vector<vector<vector<int>>> S(n, vector<vector<int>>(9, vector<int>(10, 0)));
 vector<PII> A;
 map<PII, int> mp;
 
 PII getnext(int x, int y) { return A[mp[{x, y}] + 1]; }
 
-void dfs(int x = 0, int y = 0) {
+void dfs(int x = 0, int y = 0, int t = 0, const vector<vector<vector<int>>> &P = S) {
     PII nxt = getnext(x, y);
-    if (y == -1 && x == -1) update();
+    if (y == -1 && x == -1) update(t);
     else {
         // vis = true;
-
-        vector<int> v = get(x, y);
         if (!a[x][y]) {
             for (int i = 1; i <= n; i++) {
                 a[x][y] = i;
-                if (!v[i]) {
-                    dfs(nxt.first, nxt.second);
+                if (!P[x][y][i]) {
+                    auto Q = P;
+                    for (int j = 0; j < n; j++) Q[x][j][i] = Q[j][y][i] = true;
+                    for (int j = x / 3 * 3; j < x / 3 * 3 + 3; j++) {
+                        for (int k = y / 3 * 3; k < y / 3 * 3 + 3; k++) {
+                            Q[j][k][i] = true;
+                        }
+                    }
+                    dfs(nxt.first, nxt.second, t + f(x, y) * i, Q);
                 }
             }
         a[x][y] = 0;
-    } else dfs(nxt.first, nxt.second);
+    } else dfs(nxt.first, nxt.second, t, P);
     }
 } 
 
@@ -207,8 +219,12 @@ void main() {
             int t = 0;
             for (int l = 1; l <= n; l++) t += !v[l];
             T[i][j] = t;
+            S[i][j] = v;
+            // cout << T[i][j] << spc;
         }
+        // cout << endl;
     }
+
 
     for (int i = 1; i <= n; i++) {
         for (int j = 0; j < n; j++) {
@@ -218,17 +234,26 @@ void main() {
         }
     }
 
+    int t = 0;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            t += a[i][j] * f(i, j);
+        }
+    }
+
     A.push_back({-1, -1});
     
-    dfs(A.front().first, A.front().second);
+    // cerr << clock() << endl;
+    dfs(A.front().first, A.front().second, t, S);
     cout << ans << endl;
-    cerr << clock();
+    // cerr << clock() << endl;
 }
 }
 
 signed main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
+    // ios::sync_with_stdio(0);
+    // cin.tie(0); cout.tie(0);
     Problem::main();
     return 0;
 }
