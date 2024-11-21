@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+#include <memory>
+#include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
@@ -113,8 +115,8 @@ struct DL {
     Node *head;
     vector<Node*> f;
     vector<Node*> c;
-
-    DL(int N, int M) : n(N), m(M), head(new Node()), f(n + 1, 0), c(m + 1, new Node()) {
+    DL(int N, int M) : n(N), m(M), head(new Node()), f(n + 1, 0), c(m + 1, 0) {
+        for (int i = 1; i <= m; i++) c[i] = new Node();
         head->R = c[1];
         c[1]->L = head;
         head->L = c[m];
@@ -126,17 +128,80 @@ struct DL {
     }
 
     void insert(int x, int y) {
-        if (!f[x]) f[x] = new Node();
+        Node *nd = new Node(x, y);
+        if (!f[x]) f[x] = nd;
         else {
-            f[x]->L->R = new Node(x, y);
-            f[x]->L->R->L = f[x]->L;
-            f[x]->L = f[x]->L->R;
-            f[x]->L->R = f[x];
+            nd->L = f[x]->L;
+            nd->R = f[x];
+            f[x]->L = f[x]->L->R = nd;
         }
-        c[y]->U->D = f[x]->L;
-        c[y]->U->D->U = c[y]->U;
-        c[y]->U = c[y]->U->D;
-        c[y]->U->D = c[y];
+        nd->U = c[y]->U;
+        c[y]->U = c[y]->U->D = nd;
+        nd->D = c[y];
+    }
+
+    void remove(Node *p) {
+        p->D->U = p->U;
+        p->U->D = p->D;
+        p->L->R = p->R;
+        p->R->L = p->L;
+    }
+
+    void recover(Node *p) {
+        p->D->U = p;
+        p->U->D = p;
+        p->L->R = p;
+        p->R->L = p;
+    }
+
+    void dance(stack<int> &s = *(new stack<int>())) {
+        if (head->R == head) {
+            while (!s.empty()) {
+                cout << s.top() << spc;
+            }
+            exit(0);
+        } 
+        if (head->R->D == head->R) return;
+        Node *p = head->R;
+        for (Node *q = p->D; q != p; q = q->D) {
+            stack<Node*> st;
+            vector<int> vis(n + 1, 0);
+            for (Node *i = q; i &&i != i->R; i = i->R) {
+                for (Node *j = i; j != j->U; j = j->U) {
+                    if (!j->x) {
+                        remove(j);
+                        st.push(j);
+                        continue;
+                    }
+                    // if (vis[j->x]) continue;
+                    vis[j->x] = true;
+                    remove(j);
+                    st.push(j);
+                    // for (Node *k = j->R; k != k->R; k = k->R) {
+                    //     remove(k);
+                    //     st.push(k);
+                    //     // if (k == k->R) k->R = k->L = 0;
+                    // }
+                    // remove(j);
+                    // st.push(j);
+                }
+            }
+            for (int i = 1; i <= n; i++) if (vis[i]) {
+                for (Node *j = f[i]->R; j !=j->R; j = j->R) {
+                    remove(j);
+                    st.push(j);
+                }
+                remove(f[i]);
+                st.push(f[i]);
+            }
+            s.push(q->x);
+            dance(s);
+            s.pop();
+            while (!st.empty()) {
+                recover(st.top());
+                st.pop();
+            }
+        }
     }
 };
 
@@ -151,6 +216,8 @@ void main() {
             if (A[i][j]) a.insert(i, j);
         }
     }
+    a.dance();
+    cout << "No Solution!\n";
 }
 }
 
