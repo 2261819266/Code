@@ -89,8 +89,9 @@ const char FACE[5] = "UDLR";
 
 struct DL {
     struct Node {
+        int x, y;
         Node *U, *D, *L, *R;
-        Node() { U = D = L = R = this; }
+        Node(int i = 0, int j = 0) : x(i), y(j) { U = D = L = R = this; }
         Node *&operator[](const char &c) {
             if (c == 'U') return U;
             if (c == 'D') return D;
@@ -105,30 +106,51 @@ struct DL {
             return nullptr;
         }
 
-        Node *operator[](const int &x) const { return (*this)[FACE[x]];}
-        Node *&operator[](const int &x) { return (*this)[FACE[x]];}
+        Node *operator[](const int &X) const { return (*this)[FACE[X]];}
+        Node *&operator[](const int &X) { return (*this)[FACE[X]];}
     };
     int n, m;
-    Node head;
-    vector<Node> fst, c;
-    DL(int N, int M) : n(N), m(M), head(), fst(n + 1), c(m + 1) {
-        head.R = &c[1];
-        c[1].L = &head;
-        head.L = &c[m];
-        c[m].R = &head;
+    Node *head;
+    vector<Node*> f;
+    vector<Node*> c;
+
+    DL(int N, int M) : n(N), m(M), head(new Node()), f(n + 1, 0), c(m + 1, new Node()) {
+        head->R = c[1];
+        c[1]->L = head;
+        head->L = c[m];
+        c[m]->R = head;
         for (int i = 1; i < m; i++) {
-            c[i].R = &c[i + 1];
-            c[i + 1].L = &c[i];
+            c[i]->R = c[i + 1];
+            c[i + 1]->L = c[i];
         }
     }
 
-    
+    void insert(int x, int y) {
+        if (!f[x]) f[x] = new Node();
+        else {
+            f[x]->L->R = new Node(x, y);
+            f[x]->L->R->L = f[x]->L;
+            f[x]->L = f[x]->L->R;
+            f[x]->L->R = f[x];
+        }
+        c[y]->U->D = f[x]->L;
+        c[y]->U->D->U = c[y]->U;
+        c[y]->U = c[y]->U->D;
+        c[y]->U->D = c[y];
+    }
 };
 
 void main() {
     int n, m;
     cin >> n >> m;
-    
+    vector<vector<int>> A(n + 1, vector<int>(m + 1));
+    DL a(n, m);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> A[i][j];
+            if (A[i][j]) a.insert(i, j);
+        }
+    }
 }
 }
 
