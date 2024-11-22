@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
+#include <unordered_map>
 #include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
 #define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
-#define Problem problem
-#define fop fo(problem)
+#define Problem P9437
+#define fop fo(P9437)
 
 using namespace std;
 
@@ -86,58 +87,31 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
 
-int M;
+vector<vector<int>> e;
+vector<unordered_map<int, int>> f;
+vector<int> a;
 
-struct Matrix {
-    vector<vector<int>> a;
+void dfs(int u) {
 
-    Matrix() : a({{1, 1}, {1, 0}}) {}
-
-    Matrix operator*(const Matrix &b) const {
-        Matrix x;
-        int n = a.size();
-        x.a.assign(n, vector<int>(n, 0));
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    (x.a[i][j] += a[i][k] * b.a[k][j]) %= M;
-                }
-            }
-        }
-        return x;
-    }
-
-} one, f;
-
-Matrix pow(const Matrix &x, int n) {
-    if (!n) return one;
-    Matrix y = pow(x, n / 2);
-    y = y * y;
-    if (n % 2) y = y * x;
-    return y;
-}
-
-// int X[] = {1, 1, 2, 4, 6}
-
-int solve() {
-    int n;
-    one.a = {{1, 0}, {0, 1}};
-    cin >> n >> M;
-    if (n == 1) return 1;
-    return ((int)(pow(f, n).a[0][1] * sqrt(5)) + M) % M;
 }
 
 void main() {
-    int T;
-    cin >> T;
-    while(T--) {
-        cout << solve() << endl;
+    int n;
+    cin >> n;
+    a.assign(n + 1,0);
+    e.assign(n + 1, vector<int>());
+    scan(a, 1, n + 1);
+    for (int i = 2; i <= n; i++) {
+        int x;
+        cin >> x;
+        e[i].push_back(x);
+        e[x].push_back(i);
     }
+
 }
 }
 
 signed main() {
-    // fo(math)
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     Problem::main();

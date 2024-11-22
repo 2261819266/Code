@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <memory>
+#include <stack>
 #include <vector>
 #define int long long
 #define endl "\n"
@@ -86,136 +87,105 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 }
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
-
-const char FACE[5] = "UDLR";
+    vector<vector<int>> A;
 
 struct DL {
-    struct Node {
-        int x, y;
-        Node *U, *D, *L, *R;
-        Node(int i = 0, int j = 0) : x(i), y(j) { U = D = L = R = this; }
-        Node *&operator[](const char &c) {
-            if (c == 'U') return U;
-            if (c == 'D') return D;
-            if (c == 'L') return L;
-            return R;
-        }
-        Node *operator[](const char &c) const {
-            if (c == 'U') return U;
-            if (c == 'D') return D;
-            if (c == 'L') return L;
-            if (c == 'R') return R;
-            return nullptr;
-        }
+    int n, m, cnt;
+    static const int maxn = 1e5 + 10;
+    int U[maxn] = {}, D[maxn] = {}, L[maxn] = {}, R[maxn] = {}, f[maxn] = {}, size[maxn] = {}, col[maxn] = {}, row[maxn] = {};
 
-        Node *operator[](const int &X) const { return (*this)[FACE[X]];}
-        Node *&operator[](const int &X) { return (*this)[FACE[X]];}
-    };
-    int n, m;
-    Node *head;
-    vector<Node*> f;
-    vector<Node*> c;
-    DL(int N, int M) : n(N), m(M), head(new Node()), f(n + 1, 0), c(m + 1, 0) {
-        for (int i = 1; i <= m; i++) c[i] = new Node();
-        head->R = c[1];
-        c[1]->L = head;
-        head->L = c[m];
-        c[m]->R = head;
-        for (int i = 1; i < m; i++) {
-            c[i]->R = c[i + 1];
-            c[i + 1]->L = c[i];
+    void build(int N, int M) {
+        n = N, m = M;
+        for (int i = 0; i <= M; i++) {
+            L[i] = i - 1;
+            R[i] = i + 1;
+            U[i] = D[i] = i;
+            col[i] = i;
         }
+        L[0] = M;
+        R[M] = 0;
+        cnt = m + 1;
     }
 
-    void insert(int x, int y) {
-        Node *nd = new Node(x, y);
-        if (!f[x]) f[x] = nd;
-        else {
-            nd->L = f[x]->L;
-            nd->R = f[x];
-            f[x]->L = f[x]->L->R = nd;
+    void insert(int r, int c) {
+        col[cnt] = c;
+        row[cnt] = r;
+        size[c]++;
+        U[cnt] = U[c], D[cnt] = c;
+        U[c] = D[U[c]] = cnt;
+        if (!f[r]) {
+            f[r] = cnt;
+            L[cnt] = R[cnt] = cnt;
+        } else {
+            L[cnt] = L[f[r]], R[cnt] = f[r];
+            L[f[r]] = R[L[f[r]]] = cnt;
         }
-        nd->U = c[y]->U;
-        c[y]->U = c[y]->U->D = nd;
-        nd->D = c[y];
+        cnt++;
     }
 
-    void remove(Node *p) {
-        p->D->U = p->U;
-        p->U->D = p->D;
-        p->L->R = p->R;
-        p->R->L = p->L;
-    }
+    bool remove(int c) {
+        L[R[c]] = L[c], R[L[c]] = R[c];
+        // if (c == D[c]) return true;
+        for (int i = D[c]; i != c; i = D[i]) {
+            for (int j = R[i]; j != i; j = R[j]) {
+                U[D[j]] = U[j], D[U[j]] = D[j], size[col[j]]--;
+            }
+        }
+        return false;
+    } 
 
-    void recover(Node *p) {
-        p->D->U = p;
-        p->U->D = p;
-        p->L->R = p;
-        p->R->L = p;
+    void recover(int c) {
+        for (int i = U[c]; i != c; i = U[i]) {
+            for (int j = L[i]; j != i; j = L[j]) {
+                U[D[j]] = D[U[j]] = j, size[col[j]]++;
+            }
+        }
+        L[R[c]] = R[L[c]] = c;
     }
 
     void dance(stack<int> &s = *(new stack<int>())) {
-        if (head->R == head) {
+        if (!R[0]) {
+            // vector<int> vis(m + 1, 0);
             while (!s.empty()) {
+                // vis += A[s.top()];
                 cout << s.top() << spc;
+                s.pop();
             }
             exit(0);
-        } 
-        if (head->R->D == head->R) return;
-        Node *p = head->R;
-        for (Node *q = p->D; q != p; q = q->D) {
-            stack<Node*> st;
-            vector<int> vis(n + 1, 0);
-            for (Node *i = q; i &&i != i->R; i = i->R) {
-                for (Node *j = i; j != j->U; j = j->U) {
-                    if (!j->x) {
-                        remove(j);
-                        st.push(j);
-                        continue;
-                    }
-                    // if (vis[j->x]) continue;
-                    vis[j->x] = true;
-                    remove(j);
-                    st.push(j);
-                    // for (Node *k = j->R; k != k->R; k = k->R) {
-                    //     remove(k);
-                    //     st.push(k);
-                    //     // if (k == k->R) k->R = k->L = 0;
-                    // }
-                    // remove(j);
-                    // st.push(j);
-                }
-            }
-            for (int i = 1; i <= n; i++) if (vis[i]) {
-                for (Node *j = f[i]->R; j !=j->R; j = j->R) {
-                    remove(j);
-                    st.push(j);
-                }
-                remove(f[i]);
-                st.push(f[i]);
-            }
-            s.push(q->x);
+        }
+        int c = R[0];
+        for (int i = R[0]; i; i = R[i]) if (size[i] < size[c]) c = i;
+        if (remove(c)) return;
+        for (int i = D[c]; i != c; i = D[i]) {
+            s.push(row[i]);
+            for (int j = R[i]; j != i; j = R[j]) remove(col[j]);
+            // print();
             dance(s);
+            for (int j = L[i]; j != i; j = L[j]) recover(col[j]);
             s.pop();
-            while (!st.empty()) {
-                recover(st.top());
-                st.pop();
-            }
+        }
+        recover(c);
+    }
+
+    void print() {
+        for (int i = 0; i <= cnt; i++) {
+            cout << U[i] << spc << D[i] << spc << L[i] << spc << R[i] << endl;
         }
     }
-};
+} a;
 
 void main() {
     int n, m;
     cin >> n >> m;
-    vector<vector<int>> A(n + 1, vector<int>(m + 1));
-    DL a(n, m);
+    a.build(n, m);
+    A.assign(n + 1, vector<int>(m + 1));
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
             cin >> A[i][j];
             if (A[i][j]) a.insert(i, j);
         }
     }
+    // a.print();
     a.dance();
     cout << "No Solution!\n";
 }
