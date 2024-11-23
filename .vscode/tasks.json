@@ -12,7 +12,8 @@
                 "-Wshadow",
                 "-DLOCAL",
                 "-Wall",
-                "-std=c++14"
+                "-std=c++14",
+                "-ftemplate-depth=1000000"
             ],
             "options": {
                 "cwd": "${fileDirname}"
