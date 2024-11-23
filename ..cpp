@@ -124,7 +124,8 @@ int solve() {
     one.a = {{1, 0}, {0, 1}};
     cin >> n >> M;
     if (n == 1) return 1;
-    return ((int)(pow(f, n).a[0][1] * sqrt(5)) + M) % M;
+    Matrix y = (pow(f, n));
+    return ((int)(y.a[1][0] + y.a[1][1] * 2 - (n % 2 == 0)) + M) % M;
 }
 
 void main() {
