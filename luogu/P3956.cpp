@@ -1,71 +1,122 @@
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
+#include <bits/stdc++.h>
+#include <vector>
+#define int long long
+#define endl "\n"
+#define spc " " 
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
+#define Problem P3956
+#define fop fo(P3956)
 
-using std::min;
+using namespace std;
 
-const int maxn = 1e2 + 8, inf = maxn * maxn * maxn;
-unsigned int a[maxn][maxn], dp[maxn][maxn][3], vis[maxn][maxn];
-int m, n;
-
-const int w[4][2] = {1, 0, 0, 1, -1, 0, 0, -1};
-
-void updata(unsigned &x, int y) {
-    x = min(int(x), y);
+namespace Problem {
+template <typename t>
+ostream &operator<<(ostream &out, const vector<t> &A) {
+    for (const t &i : A) out << i << spc;
+    return out;
 }
 
-int dfs(int x, int y, int k = 0) {
-    if (~dp[x][y][k]) return dp[x][y][k];
-    if (!x || !y || x > m || y > m) return dp[x][y][k] = inf;
-    dp[x][y][k] = inf;
-    if (a[x][y]) {
-        for (int i = 0; i < 4; i++) {
-            int xx = x + w[i][0], yy = y + w[i][1];
-            updata(dp[x][y][k], dfs(xx, yy, (!a[xx][yy]) * a[x][y]) + 2 * (!a[xx][yy]) + (a[x][y] != a[xx][yy] && a[xx][yy]));
-        }
-    } else {
-        for (int i = 0; i < 4; i++) {
-            int xx = x + w[i][0], yy = y + w[i][1];
-            if (!a[xx][yy]) continue;
-            updata(dp[x][y][k], dfs(xx, yy) + (k != a[xx][yy]));
-        }
+template <typename t>
+void print(const t &x, int l = 0, int r = 0) {
+    cout << x << spc;
+}
+
+template <typename t>
+void print(const vector<t> &A, int l = 0, int r = 0) {
+    for (int i = l; i < r; i++) {
+    print(A[i], l, r);
     }
-    return dp[x][y][k];
+    cout << endl;
 }
 
-void P3956() {
-    scanf("%d%d", &m, &n);
-    memset(dp, -1, sizeof(dp));
-    dp[m][m][0] = dp[m][m][1] = dp[m][m][2] = 0;
-    for (int i = 0; i < n; i++) {
+template <typename t>
+istream &operator>>(istream &in, vector<t> &A) {
+    for (t &i : A) in >> i;
+    return in;
+}
+
+template<typename t>
+void scan(t &x, int l = 0, int r = 0) {
+    cin >> x;
+}
+
+template<typename t>
+void scan(vector<t> &A, int l = 0, int r = 0) {
+    for (int i = l; i < r; i++) {
+    scan(A[i], l, r);
+    }
+}
+
+template<typename it>
+void assign(vector<int> &a, it p) {
+    a.assign(*p, 0);
+}
+
+template<typename T, typename it>
+void assign(vector<T> &a, it p) {
+    T t;
+    assign(t, p + 1);
+    a.assign(*p, t);
+}
+
+template<typename T>
+void assign(vector<T> &a, const vector<int> &p) {
+    assign(a, p.begin());
+}
+
+using PII = pair<int, int>;
+
+istream &operator>>(istream &in, PII &a) {
+    return in >> a.first >> a.second;
+}
+
+ostream &operator<<(ostream &out, const PII &a) {
+    return out << a.first << spc << a.second << spc;
+}
+
+template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B) {
+    int n = A.size(), m = B.size(), k = max(m, n);
+    vector<T> C(k, 0);
+    for (int i = 0; i < k; i++) {
+        if (i < n) C[i] += A[i];
+        if (i < m) C[i] += B[i];
+    }
+    return C;
+}
+
+template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
+
+int n, m;
+vector<vector<int>> a, f, vis;
+
+const int F[][] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1 }};
+
+int dfs(int x = 1, int y = 1) {
+    if (f[x][y] >= 0) return f[x][y];
+    vis[x][y] = true;
+
+
+
+    vis[x][y] = false;
+}
+
+void main() {
+    cin >> n >> m;
+    a.assign(n + 1, vector<int>(n + 1, -1));
+    f.assign(n + 1, vector<int>(n + 1, -1));
+    vis.assign(n + 1, vector<int>(n + 1, 0));
+    for (int i = 0; i < m; i++) {
         int x, y, c;
-        scanf("%d%d%d", &x, &y, &c);
-        a[x][y] = c + 1;
+        cin >> x >> y >> c;
+        a[x][y] = c; 
     }
-    int ans = dfs(1, 1);
-    if (ans == inf) ans = -1;
-    // for (int i = 1; i <= m; i++) {
-    //     for (int j = 1; j <= m; j++) {
-    //         printf("%d\t", a[i][j]);
-    //     }
-    //     putchar('\n');
-    // }
-    //     putchar('\n');
-    // for (int i = 1; i <= m; i++) {
-    //     for (int j = 1; j <= m; j++) {
-    //         int x = min(dp[i][j][0], min(dp[i][j][1], dp[i][j][2]));
-    //         if (x == inf) x = -1;
-    //         printf("%d\t", x);
-    //     }
-    //     putchar('\n');
-    // }
-    printf("%d", ans);
+
+}
 }
 
-int main() {
-#ifdef LOCAL
-    LOCALfo
-#endif
-    P3956();
+signed main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    Problem::main();
     return 0;
 }

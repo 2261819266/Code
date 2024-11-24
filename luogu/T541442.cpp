@@ -112,16 +112,31 @@ vector<int> Dijkstra(const vector<vector<PII>> &e, int n, int s) {
 vector<vector<PII>> e;
 
 void main() {
-    int n, m, s;
-    cin >> n >> m >> s;
-    e.assign(n + 1, vector<PII>());
-    for (int i = 0; i < m; i++) {
+    int n, q;
+    cin >> n >> q;
+    vector<int> c(n + 1);
+    e.assign(n + 1, {});
+    for (int i = 1; i <= n; i++) cin >> c[i];
+    for (int i = 1; i < n; i++) {
         int u, v, w;
         cin >> u >> v >> w;
         e[u].push_back({v, w});
+        e[v].push_back({u, w});
     }
-    vector<int> dis = Dijkstra(e, n, s);
-    print(dis, 1, n + 1);
+    vector<vector<int>> dis(n + 1);
+    for (int i = 1; i <= n; i++) {
+        dis[i] = Dijkstra(e, n, i);
+    }
+    while (q--) {
+        int u, v;
+        cin >> u >> v;
+        int ans = -1e18;
+        for (int i = 1; i <= n; i++) {
+            int y = c[u] + c[v] + c[i] - dis[u][i] - dis[i][v];
+            if (y > ans) ans = y;
+        }
+        cout << ans << endl;
+    }
 }
 }
 
@@ -129,5 +144,6 @@ signed main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     Problem::main();
+    // cerr << clock() << endl;
     return 0;
 }

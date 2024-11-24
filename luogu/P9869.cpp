@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <queue>
-#include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
@@ -75,110 +73,20 @@ ostream &operator<<(ostream &out, const PII &a) {
     return out << a.first << spc << a.second << spc;
 }
 
-int solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<PII>> e(n + 1);
-    vector<int> p(n + 1), val(n + 1); // TFU 123
-    vector<int> S(n + 1);
-    for (int i = 1; i <= n; i++) p[i] = i, S[i]=i;
-    auto addedge = [&](int u, int v, int w) -> void {
-        e[u].push_back({v, w});
-        e[v].push_back({u, w});
-    };
-
-    auto newnode = [&](int u) -> int {
-        p[u] = e.size();
-        e.push_back(vector<PII>());
-        val.push_back(0);
-        S.push_back(u);
-        return p[u];
-    };
-
-    while (m--) {
-        char c;
-        int u, v;
-        cin >> c >> u;
-        u = newnode(u);
-        if (c == '-' || c == '+') {
-            cin >> v;
-            addedge(u, p[v], c == '-');
-        } else {
-            val[u] = (c == 'T' ? 1 : c == 'F' ? 2 : 3);
-            // if (val[u] == 3) adde
-        }
+template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B) {
+    int n = A.size(), m = B.size(), k = max(m, n);
+    vector<T> C(k, 0);
+    for (int i = 0; i < k; i++) {
+        if (i < n) C[i] += A[i];
+        if (i < m) C[i] += B[i];
     }
-    for (int i = 1; i <= n; i++) addedge(i, p[i], 0);
-    vector<int> f(e.size(), -1), g(e.size(), -1), vis(e.size());
-    int ans = 0;
-
-    auto bfs = [&](int s) -> bool {
-        if (val[s] == 3) return f[s] = true;
-        queue<int> q;
-        q.push(s);
-        vis[s] = 1;
-        g[s] = 0;
-        while (!q.empty()) {
-            int u = q.front();
-            q.pop();
-            // if (vis[u]) continue;
-            // vis[u] = true;
-            for (PII to : e[u]) {
-                int v = to.first, w = to.second;
-                if (!vis[v]) {
-                    vis[v] = true;
-                    g[v] = g[u] ^ w;
-                    q.push(v);
-                } else if (g[v] ^ g[u] ^ w || val[S[v]] == 3) f[s] = true;
-            }
-        }
-        return f[s] == true;
-    };
-
-    vector<int> updvis(e.size());
-
-    auto update = [&](int s) -> void {
-        queue<int> q;
-        q.push(s);
-        while (!q.empty()) {
-            int u = q.front();
-            updvis[u] = true;
-            q.pop();
-            for (PII to : e[u]) {
-                int v = to.first;
-                if (updvis[v]) continue;
-                f[v] = f[s];
-                q.push(v);
-            }
-        }
-    };
-
-    for (int i = 1; i < S.size(); i++) {
-        if (val[i] == 3) {
-            f[i] = bfs(i) | 1;
-            update(i);
-        }
-    }
-
-    for (int i = 1; i <= n; i++) {
-        if (f[i] >= 0) {
-            ans += f[i];
-            continue;
-        }
-        if (val[p[i]] == 3) ans += f[i] = 1;
-        else ans += f[i] = bfs(i);
-        if (f[i] >= 0) update(i);
-    }
-    return ans;
+    return C;
 }
 
+template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
+
 void main() {
-    int c, T;
-    cin >> c >> T;
-    while (T--) {
-        cout << solve() << endl;
-    }
-    return;
+    
 }
 }
 
