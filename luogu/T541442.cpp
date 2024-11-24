@@ -1,25 +1,16 @@
 #include <bits/stdc++.h>
+#include <queue>
 #include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
 #define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
-#define Problem T472989
-#define fop fo(T472989)
+#define Problem T541442
+#define fop fo(T541442)
 
 using namespace std;
 
 namespace Problem {
-using PII = pair<int, int>;
-
-istream &operator>>(istream &in, PII &a) {
-    return in >> a.first >> a.second;
-}
-
-ostream &operator<<(ostream &out, const PII &a) {
-    return out << a.first << spc << a.second << spc;
-}
-
 template <typename t>
 ostream &operator<<(ostream &out, const vector<t> &A) {
     for (const t &i : A) out << i << spc;
@@ -74,6 +65,16 @@ void assign(vector<T> &a, const vector<int> &p) {
     assign(a, p.begin());
 }
 
+using PII = pair<int, int>;
+
+istream &operator>>(istream &in, PII &a) {
+    return in >> a.first >> a.second;
+}
+
+ostream &operator<<(ostream &out, const PII &a) {
+    return out << a.first << spc << a.second << spc;
+}
+
 template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B) {
     int n = A.size(), m = B.size(), k = max(m, n);
     vector<T> C(k, 0);
@@ -86,68 +87,41 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
 
-
-int gcd(int x, int y) { return __gcd(x, y); }
-
-void print(const vector<PII> &a, int k, int ans) {
-    if (ans < k) cout << "No\n";
-    else {
-        cout << "Yes\n";
-        for (PII p : a) {
-            if (p.first % ans) cout << (p.first / ans + 1) * ans << spc;
-            else cout << p.first << spc;
-        }
-        cout << endl;
-    }
-}
-
-struct Data {
-    int l, r, i;
-};
-
-void solve() {
-    int n, k;
-    cin >> n >> k;
-    vector<Data> a(n);
-    int up = 1e9;
-    for (int i = 0; i < n; i++) {
-        cin >> a[i].l >> a[i].r;
-        a[i].i = i;
-        if (a[i].r < up) up = a[i].r;
-    }
-    sort(a.begin(), a.end(), [](const Data &p, const Data &q) { return p.r - p.l < q.r - q.l; });
-    for (int i = k; i <= up; i++) {
-        int K = true;
-        for (const Data &j : a) {
-            int l = j.l, r = j.r;
-            int L = l % i ? l / i * i + i : l;
-            if (L > r) {
-                K = false;
-                break;
+vector<int> Dijkstra(const vector<vector<PII>> &e, int n, int s) {
+    const int inf = 1e18;
+    vector<int> dis(n + 1, inf), vis(n + 1, 0);
+    dis[s] = 0;
+    priority_queue<PII, vector<PII>, greater<PII>> q;
+    q.push({0, s});
+    while (!q.empty()) {
+        int u = q.top().second;
+        q.pop();
+        if (vis[u]) continue;
+        vis[u] = true;
+        for (PII p : e[u]) {
+            int v = p.first, w = p.second;
+            if (dis[u] + w < dis[v]) {
+                dis[v] = dis[u] + w;
+                q.push({dis[v], v});
             }
         }
-        if (K) {
-            vector<int> ans(n);
-            for (const Data &j : a) {
-                int l = j.l;
-                int L = l % i ? l / i * i + i : l;
-                ans[j.i] = L;
-            }
-            cout << "Yes\n" << ans << endl;
-            return;
-        }
     }
-    cout << "No\n";
+    return dis;
 }
+
+vector<vector<PII>> e;
 
 void main() {
-    srand(time(0));
-    int T;
-    cin >> T;
-    while (T--) {
-        solve();
-        
+    int n, m, s;
+    cin >> n >> m >> s;
+    e.assign(n + 1, vector<PII>());
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        e[u].push_back({v, w});
     }
+    vector<int> dis = Dijkstra(e, n, s);
+    print(dis, 1, n + 1);
 }
 }
 

@@ -1,25 +1,14 @@
 #include <bits/stdc++.h>
-#include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
 #define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
-#define Problem T472989
-#define fop fo(T472989)
+#define Problem T541324
+#define fop fo(T541324)
 
 using namespace std;
 
 namespace Problem {
-using PII = pair<int, int>;
-
-istream &operator>>(istream &in, PII &a) {
-    return in >> a.first >> a.second;
-}
-
-ostream &operator<<(ostream &out, const PII &a) {
-    return out << a.first << spc << a.second << spc;
-}
-
 template <typename t>
 ostream &operator<<(ostream &out, const vector<t> &A) {
     for (const t &i : A) out << i << spc;
@@ -74,6 +63,16 @@ void assign(vector<T> &a, const vector<int> &p) {
     assign(a, p.begin());
 }
 
+using PII = pair<int, int>;
+
+istream &operator>>(istream &in, PII &a) {
+    return in >> a.first >> a.second;
+}
+
+ostream &operator<<(ostream &out, const PII &a) {
+    return out << a.first << spc << a.second << spc;
+}
+
 template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B) {
     int n = A.size(), m = B.size(), k = max(m, n);
     vector<T> C(k, 0);
@@ -86,67 +85,51 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
 
-
-int gcd(int x, int y) { return __gcd(x, y); }
-
-void print(const vector<PII> &a, int k, int ans) {
-    if (ans < k) cout << "No\n";
-    else {
-        cout << "Yes\n";
-        for (PII p : a) {
-            if (p.first % ans) cout << (p.first / ans + 1) * ans << spc;
-            else cout << p.first << spc;
-        }
-        cout << endl;
-    }
-}
-
-struct Data {
-    int l, r, i;
-};
-
-void solve() {
-    int n, k;
-    cin >> n >> k;
-    vector<Data> a(n);
-    int up = 1e9;
+int solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    cin >> a;
+    int ans = 0, t = 0, s = 0, p = 0;
     for (int i = 0; i < n; i++) {
-        cin >> a[i].l >> a[i].r;
-        a[i].i = i;
-        if (a[i].r < up) up = a[i].r;
+        t += a[i] / 3;
+        a[i] %= 3;  
+        if (a[i] == 1) s++;
+        else if (a[i] == 2) p++;
     }
-    sort(a.begin(), a.end(), [](const Data &p, const Data &q) { return p.r - p.l < q.r - q.l; });
-    for (int i = k; i <= up; i++) {
-        int K = true;
-        for (const Data &j : a) {
-            int l = j.l, r = j.r;
-            int L = l % i ? l / i * i + i : l;
-            if (L > r) {
-                K = false;
-                break;
-            }
+    if (t <= s) return s + p;
+    else {
+        ans += s;
+        t -= s;
+        s = 0;
+
+        if (t <= p * 2) {
+            return ans + t + p - t / 2;
+        } else {
+            ans += p * 2;
+            t -= p * 2;
         }
-        if (K) {
-            vector<int> ans(n);
-            for (const Data &j : a) {
-                int l = j.l;
-                int L = l % i ? l / i * i + i : l;
-                ans[j.i] = L;
-            }
-            cout << "Yes\n" << ans << endl;
-            return;
+
+
+        ans += t / 4 * 3;
+        t %= 4;
+        if (t == 0) return ans;
+        while (t > s) {
+            t--;
+            s += 3;
         }
+        ans += t + 1;
+        return ans;
     }
-    cout << "No\n";
+    // cout << ans << endl << a << endl;
+
 }
 
 void main() {
-    srand(time(0));
     int T;
     cin >> T;
     while (T--) {
-        solve();
-        
+        cout << solve() << endl;
     }
 }
 }
