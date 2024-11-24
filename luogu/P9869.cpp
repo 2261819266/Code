@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
@@ -85,8 +86,95 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
 
+int solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<PII>> e(n + 1, vector<PII>());
+    vector<int> p(n + 1, 0), U(n + 1, 0);
+    for (int i = 1; i <= n; i++) p[i] = i;
+
+    auto new_node = [&](int x) -> int {
+        p[x] = e.size();
+        e.push_back(vector<PII>());
+        return p[x];
+    };
+
+    auto addedge = [&](int u, int v, int w) {
+        e[u].push_back({v, w});
+        e[v].push_back({u, w});
+    };
+
+    while (m--) {
+        char c;
+        int u, v;
+        cin >> c >> u;
+        if (c < 'A') {
+            cin >> v;
+            if (u == v) {
+                if (c == '-') U[u] = 1;
+                continue;
+            }
+            U[u] = U[v];
+            u = new_node(u), v = p[v];
+            addedge(u, v, c == '-');
+        } else {
+            U[u] = c == 'U';
+            new_node(u);
+        }
+    }
+
+    for (int i = 1; i <= n; i++) addedge(i, p[i], 0);
+
+    vector<int> vis(e.size(), 0), dis(e.size(), 0), vs(e.size(), 0);
+
+    auto dfs = [&](auto &&self, int u) -> bool {
+        vis[u] = true;
+        if (u <= n && U[u]) return false;
+        for (PII P : e[u]) {
+            int v = P.first, w = P.second;
+            if (vis[v]) {
+                if ((dis[u] + w - dis[v]) % 2) return false;
+                continue;
+            }
+            dis[v] = dis[u] + w;
+            if (!self(self, v)) return false;
+        }
+        return true;
+    };
+
+    auto update = [&](auto &&self, int u) -> void {
+        vs[u] = true;
+        for (PII P : e[u]) {
+            int v = P.first;
+            if (v <= n) U[v] = 1;
+            if (vs[v]) continue;
+            self(self, v);
+        }
+    };
+
+    int ans = 0;
+
+    for (int i = 1; i <= n; i++) {
+        if (vis[i] && (!U[i] || vs[i])) continue;
+        if (!dfs(dfs, i) || U[i]) {
+            U[i] = 1;
+            update(update, i);
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        ans += U[i];
+    }
+    return ans;
+}
+
+
 void main() {
-    
+    int c, T;
+    cin >> c >> T;
+    while (T--) {
+        cout << solve() << endl;
+    }
 }
 }
 
