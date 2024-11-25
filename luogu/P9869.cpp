@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <vector>
 #define int long long
 #define endl "\n"
 #define spc " " 
@@ -86,100 +85,74 @@ template<typename T> vector<T> operator+(const vector<T> &A, const vector<T> &B)
 
 template<typename T> vector<T> operator+=(vector<T> &A, const vector<T> &B) { return A = A + B; }
 
+int rev(int x) { return x == 2 ? 2 : !x; }
+
+struct Tribool {
+    bool know;
+    int type, op, base;
+
+    Tribool(int _know = false, int _type = -1, int _op = 1, int _base = 0) :know(_know), type(_type), op(_op), base(_base) {}
+
+    Tribool operator!() {
+        if (know) {
+            return {know, rev(type), op, base};
+        } else {
+            return {know, type, -op, base};
+        }
+    }
+};
+
 int solve() {
     int n, m;
     cin >> n >> m;
-    vector<vector<PII>> e(n + 1, vector<PII>());
-    vector<int> p(n + 1, 0), U(n + 1, 0);
-    for (int i = 1; i <= n; i++) p[i] = i;
-
-    auto new_node = [&](int x) -> int {
-        p[x] = e.size();
-        e.push_back(vector<PII>());
-        U.push_back(0);
-        return p[x];
-    };
-
-    auto addedge = [&](int u, int v, int w) {
-        e[u].push_back({v, w});
-        e[v].push_back({u, w});
-    };
-
+    vector<Tribool> a(n + 1);
+    for (int i = 1; i <= n; i++) {
+        a[i].base = i;
+    }
     while (m--) {
-        char c;
-        int u, v;
-        cin >> c >> u;
-        if (c < 'A') {
-            cin >> v;
-            if (u == v) {
-                if (c == '-') U[u] = 1;
-                continue;
-            }
-            u = new_node(u), v = p[v];
-            U[u] = U[v];
-            addedge(u, v, c == '-');
-        } else if (c == 'U') {
-            // v = new_node(u);
-            u = new_node(u);
-            U[u] = c == 'U';
-            // addedge(u, v, 0);
-            // addedge(u, v, 1);
-        }
+        char op;
+        int x, y;
+        cin >> op >> x;
+        if (op < 'A') cin >> y;
+        if (op == '+') a[x] = a[y];
+        if (op == '-') a[x] = !a[y];
+        if (op == 'T') a[x] = {true, 1, 1, x};
+        if (op == 'F') a[x] = {true, 0, 1, x};
+        if (op == 'U') a[x] = {true, 2, 1, x};
     }
 
-    for (int i = 1; i <= n; i++) if (i != p[i]) addedge(i, p[i], 0);
+    for (int i = 1; i <= n; i++) cout << a[i].know << spc << a[i].type << spc << a[i].op << spc << a[i].base << endl;
+    cout << endl;
 
-    vector<int> vis(e.size(), 0), dis(e.size(), 0), vs(e.size(), 0);
+    vector<int> start(n + 1, -1), vis(n + 1, 0);
 
-    auto dfs = [&](auto &&self, int u) -> bool {
+    auto solve = [&](auto &&self, int u, bool ring = false) -> int {
+        if (ring) {
+            if (start[u] == 2) return 2;
+            start[u] = 2;
+            return self(self, a[u].base, ring);
+        }
+
+        if (start[u] != -1) return start[u];
+        if (vis[u]) return start[u] = 0;
         vis[u] = true;
-        if (U[u]) 
-            return false;
-        for (PII P : e[u]) {
-            int v = P.first, w = P.second;
-            if (vis[v]) {
-                if ((dis[u] + w - dis[v]) % 2) 
-                    return false;
-                continue;
-            }
-            dis[v] = dis[u] + w;
-            if (!self(self, v)) 
-                return false;
+        if (a[u].know) start[u] = a[u].type;
+        else if (a[u].base == u) start[u] = a[u].op == -1 ? 2 : 0;
+        else {
+            int ret = 0;
+            if (a[u].op == -1) ret = rev(self(self, a[u].base));
+            else ret = self(self, a[u].base);
+            if (start[u] != ret && start[u] != -1) start[u] = 2, self(self, a[u].base, true);
+            else start[u] = ret;
         }
-        return true;
-    };
-
-    auto update = [&](auto &&self, int u) -> void {
-        if (vs[u]) return;
-        vs[u] = true;
-        U[u] = true;
-        for (PII P : e[u]) {
-            int v = P.first;
-            // if (v <= n)
-            //  U[v] = 1;
-            // if (vs[v]) continue;
-            self(self, v);
-        }
+        return start[u];
     };
 
     int ans = 0;
 
-    for (int i = 1; i <= n; i++) {
-        if (vis[i] || vs[i]) continue;
-        if (!dfs(dfs, i)) {
-            // U[i] = 1;
-            update(update, i);
-            cerr << i << " ";
-        }
-    }
-
-    for (int i = 1; i <= n; i++) {
-        ans += U[i];
-    }
+    for (int i = 1; i <= n; i++) ans += solve(solve, i) == 2;
     return ans;
-    return 0;
 }
-
 
 void main() {
     int c, T;
