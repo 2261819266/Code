@@ -96,6 +96,7 @@ int solve() {
     auto new_node = [&](int x) -> int {
         p[x] = e.size();
         e.push_back(vector<PII>());
+        U.push_back(0);
         return p[x];
     };
 
@@ -114,40 +115,49 @@ int solve() {
                 if (c == '-') U[u] = 1;
                 continue;
             }
-            U[u] = U[v];
             u = new_node(u), v = p[v];
+            U[u] = U[v];
             addedge(u, v, c == '-');
-        } else {
+        } else if (c == 'U') {
+            // v = new_node(u);
+            u = new_node(u);
             U[u] = c == 'U';
-            new_node(u);
+            // addedge(u, v, 0);
+            // addedge(u, v, 1);
         }
     }
 
-    for (int i = 1; i <= n; i++) addedge(i, p[i], 0);
+    for (int i = 1; i <= n; i++) if (i != p[i]) addedge(i, p[i], 0);
 
     vector<int> vis(e.size(), 0), dis(e.size(), 0), vs(e.size(), 0);
 
     auto dfs = [&](auto &&self, int u) -> bool {
         vis[u] = true;
-        if (u <= n && U[u]) return false;
+        if (U[u]) 
+            return false;
         for (PII P : e[u]) {
             int v = P.first, w = P.second;
             if (vis[v]) {
-                if ((dis[u] + w - dis[v]) % 2) return false;
+                if ((dis[u] + w - dis[v]) % 2) 
+                    return false;
                 continue;
             }
             dis[v] = dis[u] + w;
-            if (!self(self, v)) return false;
+            if (!self(self, v)) 
+                return false;
         }
         return true;
     };
 
     auto update = [&](auto &&self, int u) -> void {
+        if (vs[u]) return;
         vs[u] = true;
+        U[u] = true;
         for (PII P : e[u]) {
             int v = P.first;
-            if (v <= n) U[v] = 1;
-            if (vs[v]) continue;
+            // if (v <= n)
+            //  U[v] = 1;
+            // if (vs[v]) continue;
             self(self, v);
         }
     };
@@ -155,10 +165,11 @@ int solve() {
     int ans = 0;
 
     for (int i = 1; i <= n; i++) {
-        if (vis[i] && (!U[i] || vs[i])) continue;
-        if (!dfs(dfs, i) || U[i]) {
-            U[i] = 1;
+        if (vis[i] || vs[i]) continue;
+        if (!dfs(dfs, i)) {
+            // U[i] = 1;
             update(update, i);
+            cerr << i << " ";
         }
     }
 
@@ -166,6 +177,7 @@ int solve() {
         ans += U[i];
     }
     return ans;
+    return 0;
 }
 
 

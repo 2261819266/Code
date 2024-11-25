@@ -16,9 +16,9 @@ inline ll read() {
 	}
 	return x * f;
 }
-const int N = 8;
-// sz : 第i个节点现在的位置
+const int N = 2e3 + 8;
 int t, n, m, sz[N], cnt;
+// nw : 第i个节点现在的位置
 char pre[N], ept, nw[N];
 bool vis[N];
 struct edge {
@@ -128,6 +128,7 @@ void mian() {
 		cin >> c;
 		if (c == 'T' || c == 'U' || c == 'F') {
 			int x = read();
+			if (c == 'F') c = 'T';
 			sz[x]++, pre[++cnt] = c;
 			id[x].push_back(cnt);
 		} else if (c == '+' || c == '-') {
@@ -155,9 +156,16 @@ void mian() {
 		int mx = 0;
 		if (!vis[i]) {
 			mx = max(mx, bf(i, 'T'));
+			// if (!mx) {
+			// 	for (int j = 1; j <= cnt; j++) cout << (nw[j] > 'A') << " ";
+			// 	cout << "\n";
+			// }
+			if (!mx) cerr << i << " ";
 			rbf(i);
-			// mx = max(mx, bf(i, 'F'));
-			// rbf(i);
+			auto placeholder = bf(i, 'F');
+			if (placeholder != mx && placeholder >= 0) cerr << 1 << endl;
+			// mx = max(mx, placeholder);
+			rbf(i);
 			mx = max(mx, bf(i, 'U'));
 			rbf(i);
 			tag(i);
