@@ -1,0 +1,1 @@
+{"name":"Luogu_P11230","url":"https://www.luogu.com.cn/problem/P11230","memoryLimit":524288,"timeLimit":2000,"tests":[{"input":"1\n3 3 7\n5 1 2 3 4 1\n3 1 2 5\n3 5 1 6\n1 2\n1 4\n2 4\n3 4\n6 6\n1 1\n7 7","output":"1\n0\n1\n0\n1\n0\n0","id":1732607741508}],"group":"luogu","srcPath":"e:\\code\\Luogu_P_11230.cpp"}

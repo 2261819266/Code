@@ -1,6 +1,7 @@
 {
     "clangd.fallbackFlags": [
-        "-Ie:/mingw64/include/c++/12.1.0"
+        // "-Ie:/programs/mingw64/include/c++/14.2.0",
+        "-Ie:/code/programs/CP-template"
     ],
     // "clangd.arguments": ["--completion-style=2"]
 }
