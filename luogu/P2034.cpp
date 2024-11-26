@@ -99,10 +99,10 @@ void main() {
     deque<PII> q;
     q.push_back({0, 0});
     for (int i = 1; i <= n + 1; i++) {
+        while (!q.empty() && i - k - 1 >= 0 && i - k - 1 > q.front().first) q.pop_front(); 
         f[i] = q.front().second + a[i];
-        if (i - k - 1 >= 0 && i - k - 1 >= q.front().first) q.pop_front(); 
-        while (!q.empty() && q.back().second > a[i] && i <= n) q.pop_back();
-        q.push_back({i, a[i]});
+        while (!q.empty() && q.back().second > f[i] && i <= n) q.pop_back();
+        q.push_back({i, f[i]});
         // for (int j = 1; j <= k + 1 && i - j >= 0; j++) {
         //     f[i] = min(f[i], f[i - j] + a[i]);
 
