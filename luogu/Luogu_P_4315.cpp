@@ -25,14 +25,11 @@ vector<int> top, dfn, rnk;
 vector<int> vis1, vis2, w;
 using PII = pair<int, int>;
 vector<vector<PII>> e;
-vector<vector<int>> Fa;
-int Fa_max;
-int cnt = 0, max_dep;
+int cnt = 0;
 
 void dfs1(int u = 1, int depth = 1) {
     vis1[u] = true;
     dep[u] = depth;
-    max_dep = max(max_dep, depth);
     siz[u] = 1;
     int ms = 0;
     son[u] = 0;
@@ -125,22 +122,18 @@ struct SegTree {
 
 int getLCA(int u, int v) {
     if (dep[u] < dep[v]) swap(u, v);
-    if (dep[u] != dep[v]) {
-        for (int i = Fa_max; i >= 0; i--) {
-            if (dep[Fa[u][i]] >= dep[v]) u = Fa[u][i];
-        }
-    }
     if (u == v) return u;
-    for (int i = Fa_max; i >= 0; i--) {
-        if (Fa[u][i] != Fa[v][i]) u = Fa[u][i], v = Fa[v][i];
+    while (top[u] != top[v]) {
+        if (dep[top[u]] < dep[top[v]]) v = fa[top[v]];
+        else u = fa[top[u]];
     }
-    return fa[u];
+    return dep[u] > dep[v] ? v : u;
 }
 
 void solve() {
     int n;
     cin >> n;
-    assign(n + 1, e, w, fa, dep, siz, son, top, dfn, rnk, vis1, vis2, Fa);
+    assign(n + 1, e, w, fa, dep, siz, son, top, dfn, rnk, vis1, vis2);
     fa[1] = 1;
     vector<PII> es(1);
     for (int i = 1; i < n; i++) {
@@ -152,17 +145,6 @@ void solve() {
     }
     dfs1();
     dfs2();
-    // for (int i : top) cout << i << " ";
-
-    for (int i = 1; i <= n; i++) {
-        Fa[i].push_back(fa[i]);
-    }
-    for (int j = 1; (1 << (j)) <= max_dep; j++) {
-        Fa_max = j;
-        for (int i = 1; i <= n; i++) {
-            Fa[i].push_back(Fa[Fa[i][j - 1]][j - 1]);
-        }
-    }
 
     SegTree a(n);
     for (int i = 2; i <= n; i++) {
