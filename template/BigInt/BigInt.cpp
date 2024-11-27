@@ -46,7 +46,7 @@ class BigInt {
         return *this;
     }
   public:
-    BigInt(void) : data(), sig(false) {}
+    BigInt() = default;
     template<typename T> BigInt(const T &x) { *this = x; }
     BigInt(const string &x) { *this = x; }
     BigInt(const char *x) { *this = x; }

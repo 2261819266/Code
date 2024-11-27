@@ -5,12 +5,12 @@
 using namespace std;
 
 template<typename T>
-void assign(int n, vector<T> &x) {
-    x.assign(n, T());
+void assign(int n, T &x) {
+    x.assign(n, {});
 }
 
 template<typename T, typename ...Args>
-void assign(int n, vector<T> &x, vector<Args> &...y) {
+void assign(int n, T &x, Args &...y) {
     assign(n, x);
     assign(n, y...);
 }
@@ -19,8 +19,13 @@ inline void init() {
     return;
 }
 
-void solve() {
+vector<int> dfn, low;
+vector<vector<int>> e, e2;
 
+void solve() {
+    int n, m;
+    cin >>> n >> m;
+    
 }
 
 signed main() {

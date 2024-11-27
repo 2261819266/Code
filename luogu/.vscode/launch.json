@@ -11,9 +11,9 @@
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [
                 "<",
-                "E:\\code\\in.in",
+                "E:\\code\\luogu\\IO\\in.in",
                 ">",
-                "E:\\code\\out.out"
+                "E:\\code\\luogu\\IO\\out.out"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
