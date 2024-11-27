@@ -44,7 +44,7 @@ void dfs1(int u = 1, int depth = 1) {
         fa[v] = u;
         dfs1(v, depth + 1);
         siz[u] += siz[v];
-        if (siz[v] > ms) son[u] = v, ms = siz[v];
+        if (siz[v] > ms) son[u] = v;
     }
 }
 
@@ -54,9 +54,9 @@ void dfs2(int u = 1, int TOP = 1) {
     vis2[u] = true;
     top[u] = TOP;
     if (!son[u]) return;
-    dfs2(son[u], TOP);
+    dfs2(son[u], son[u]);
     for (auto [v, W] : e[u]) {
-        if (v != son[u] && !vis2[v]) dfs2(v, v);
+        if (v != son[u] && !vis2[v]) dfs2(v, TOP);
     }
 }
 
@@ -124,6 +124,7 @@ struct SegTree {
 };
 
 int getLCA(int u, int v) {
+    if (u == v) return u;
     if (dep[u] < dep[v]) swap(u, v);
     if (dep[u] != dep[v]) {
         for (int i = Fa_max; i >= 0; i--) {
@@ -138,21 +139,20 @@ int getLCA(int u, int v) {
 }
 
 void solve() {
-    int n;
-    cin >> n;
+    int n, m, s;
+    cin >> n >> m >> s;
     assign(n + 1, e, w, fa, dep, siz, son, top, dfn, rnk, vis1, vis2, Fa);
-    fa[1] = 1;
+    fa[s] = s;
     vector<PII> es(1);
     for (int i = 1; i < n; i++) {
-        int u, v, W;
-        cin >> u >> v >> W;
+        int u, v, W = 1;
+        cin >> u >> v;
         es.push_back({u, v});
         e[u].push_back({v, W});
         e[v].push_back({u, W});
     }
-    dfs1();
-    dfs2();
-    // for (int i : top) cout << i << " ";
+    dfs1(s);
+    dfs2(s);
 
     for (int i = 1; i <= n; i++) {
         Fa[i].push_back(fa[i]);
@@ -163,64 +163,11 @@ void solve() {
             Fa[i].push_back(Fa[Fa[i][j - 1]][j - 1]);
         }
     }
-
-    SegTree a(n);
-    for (int i = 2; i <= n; i++) {
-        a.modify(1, 1, n, i, w[rnk[i]]);
-    }
-    string s;
-    cin >> s;
-    while (s != "Stop") {
-        int x, y, z;
-        if (s == "Max") {
-            cin >> x >> y;
-            int k = getLCA(x, y);
-            int ans = 0;
-            while (top[x] != top[k]) {
-                ans = max(ans, a.query(1, 1, n, dfn[top[x]], dfn[x]));
-                x = fa[top[x]];
-            }
-            while (top[y] != top[k]) {
-                ans = max(ans, a.query(1, 1, n, dfn[top[y]], dfn[y]));
-                y = fa[top[y]];
-            }
-            if (dep[x] < dep[y]) swap(x, y);
-            ans = max(ans, a.query(1, 1, n, dfn[y] + 1, dfn[x]));
-            cout << ans << endl;
-        } else if (s == "Change") {
-            cin >> x >> y;
-            int u = es[x].first, v = es[x].second;
-            if (dep[u] < dep[v]) swap(u, v);
-            a.modify(1, 1, n, dfn[u], y);
-        } else if (s == "Cover") {
-            cin >> x >> y >> z;
-            int k = getLCA(x, y);
-            while (top[x] != top[k]) {
-                a.modify(1, 1, n, dfn[top[x]], dfn[x], z);
-                x = fa[top[x]];
-            }
-            while (top[y] != top[k]) {
-                a.modify(1, 1, n, dfn[top[y]], dfn[y], z);
-                y = fa[top[y]];
-            }
-            if (dep[x] < dep[y]) swap(x, y);
-            a.modify(1, 1, n, dfn[y] + 1, dfn[x], z);
-        } else if (s == "Add") {
-            
-            cin >> x >> y >> z;
-            int k = getLCA(x, y);
-            while (top[x] != top[k]) {
-                a.add(1, 1, n, dfn[top[x]], dfn[x], z);
-                x = fa[top[x]];
-            }
-            while (top[y] != top[k]) {
-                a.add(1, 1, n, dfn[top[y]], dfn[y], z);
-                y = fa[top[y]];
-            }
-            if (dep[x] < dep[y]) swap(x, y);
-            a.add(1, 1, n, dfn[y] + 1, dfn[x], z);
-        }
-        cin >> s;
+    
+    while (m--) {
+        int u, v;
+        cin >> u >> v;
+        cout << getLCA(u, v) << endl;
     }
 }
 
