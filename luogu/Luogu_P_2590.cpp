@@ -103,10 +103,12 @@ void LCA_init(int n) {
 
 int getLCA(int u, int v) {
     if (dep[u] < dep[v]) swap(u, v);
-    if (dep[u] != dep[v]) for (int i = LCA_max; i >= 0; i--) if (dep[Fa[u][i]] >= dep[v]) u = Fa[u][i];
     if (u == v) return u;
-    for (int i = LCA_max; i >= 0; i--) if (Fa[u][i] != Fa[v][i]) u = Fa[u][i], v = Fa[v][i];
-    return fa[u];
+    while (top[u] != top[v]) {
+        if (dep[top[u]] < dep[top[v]]) v = fa[top[v]];
+        else u = fa[top[u]];
+    }
+    return dep[u] > dep[v] ? v : u;
 }
 
 void solve() {
@@ -143,13 +145,24 @@ void solve() {
         int x, y;
         cin >> s >> x >> y;
         if (s == "CHANGE") a.modify(dfn[x], y);
+        // else {
+        //     int z = getLCA(x, y), K = s == "QMAX";
+        //     int ans = K ? -inf : 0;
+        //     while (top[x] != top[z]) Update(ans, a.query(dfn[top[x]], dfn[x], K), K), x = fa[top[x]];
+        //     while (top[y] != top[z]) Update(ans, a.query(dfn[top[y]], dfn[y], K), K), y = fa[top[y]];
+        //     if (dep[x] > dep[y]) swap(x, y);
+        //     Update(ans, a.query(dfn[x], dfn[y], K), K);
+        //     cout << ans << endl;
+        // }
         else {
-            int z = getLCA(x, y), K = s == "QMAX";
-            int ans = K ? -inf : 0;
-            while (top[x] != top[z]) Update(ans, a.query(dfn[top[x]], dfn[x], K), K), x = fa[top[x]];
-            while (top[y] != top[z]) Update(ans, a.query(dfn[top[y]], dfn[y], K), K), y = fa[top[y]];
+            int K = s == "QMAX", ans = K ? -inf : 0;
+            while (top[x] != top[y]) {
+                if (dep[top[x]] < dep[top[y]]) swap(x, y);
+                Update(ans, a.query(dfn[top[x]], dfn[x], K), K);
+                x = fa[top[x]];
+            }
             if (dep[x] > dep[y]) swap(x, y);
-            Update(ans, a.query(x, y, K), K);
+            Update(ans, a.query(dfn[x], dfn[y], K), K);
             cout << ans << endl;
         }
     }
