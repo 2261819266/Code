@@ -26,12 +26,12 @@ struct SegTree {
 #define Ls ls, l, mid
 #define Rs rs, mid + 1, r
 #define update return a[k] = a[ls] + a[rs], 0;
-#define pushdown do { if (b[k]) a[ls] = a[rs] = a[k], b[k] = 0; } while (0);
+#define pushdown do { if (b[k]) a[ls] = a[rs] = a[k], b[ls] = b[rs] = !(b[k] = 0); } while (0);
     struct Node {
         int sum = 0, lc = 0, rc = 0;
         int operator*() const { return sum; }
         friend bool operator&(const Node &p, const Node &q) { return p.rc == q.lc; }
-        friend Node operator+(const Node &p, const Node &q) { return {*p + *q - (p & q), *p ? p.lc : q.lc, *q ? q.rc : p.rc}; }
+        friend Node operator+(const Node &p, const Node &q) { return {*p + *q - ((p & q) && *p && *q), *p ? p.lc : q.lc, *q ? q.rc : p.rc}; }
         Node() = default;
         Node(int x) : sum(1), lc(x), rc(x) { }
         Node(int x, int y, int z) : sum(x), lc(y), rc(z) {} 
