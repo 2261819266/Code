@@ -1,0 +1,1 @@
+{"name":"Luogu_P11361","url":"https://www.luogu.com.cn/problem/P11361","memoryLimit":null,"timeLimit":null,"tests":[{"id":1732971109599,"input":"3\n2 1 2\n1 1\n2 2 2\n1 1\n2 2\n2 2 2\n1 1\n1 2\n","output":"4\n3\n0\n"}],"group":"luogu","srcPath":"e:\\code\\luogu\\Luogu_P_11361.cpp"}
