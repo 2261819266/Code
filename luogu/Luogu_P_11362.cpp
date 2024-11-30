@@ -4,6 +4,7 @@
 #include <unordered_map>
 #define int long long
 #define endl "\n"
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
 
 using namespace std;
 
@@ -72,6 +73,7 @@ int solve() {
 }
 
 signed main() {
+    fo(assign)
     cin.tie()->sync_with_stdio(0);
     init();
 

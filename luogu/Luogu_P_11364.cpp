@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #define int long long
 #define endl "\n"
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
 
 using namespace std;
 
@@ -21,6 +22,8 @@ inline void init() {
     return;
 }
 
+   static const int inf = 0x3fffffffffffffff;
+
 struct SegTree {
 #define ls (k << 1)
 #define rs (ls | 1)
@@ -30,9 +33,8 @@ struct SegTree {
 #define update return a[k] = max(a[ls], a[rs]), b[k] = min(b[ls], b[rs]);
     int n;
     vector<int> a, b;
-    static const int inf = 0x3fffffffffffffff;
     SegTree(int N) : n(N), a(n << 2), b(n << 2, inf) {}
-    SegTree(const vector<int> &data) : n(data.size() - 1), a(n << 2), b(n << 2, -inf) { build(1, 1, n, data); }
+    SegTree(const vector<int> &data) : n(data.size() - 1), a(n << 2), b(n << 2, inf) { build(1, 1, n, data); }
 
     int build(int k, int l, int r, const vector<int> &data) {
         if (l == r) return a[k] = b[k] = data[l];
@@ -53,7 +55,7 @@ struct SegTree {
     }
 
     int querymin(int k, int l, int r, int L, int R) {
-        if (l > R || L > r) return inf;
+        if (l > R || L > r || L > R) return inf;
         if (l >= L && r <= R) return b[k];
         return min(querymin(Ls, L, R), querymin(Rs, L, R));
     }
@@ -123,13 +125,17 @@ void solvesmall() {
 }
 
 void solveB() {
-    SegTree a(n);
+    SegTree a(n), b(dep);
     for (int i = 1; i < n; i++) a.modify(1, 1, n, i, dep[LCA(i, i + 1)]);
     while (q--) {
         int l, r, k;
         cin >> l >> r >> k;
         int ans = a.querymin(1, 1, n, l, r - 1);
-        for (int i = l; i + k - 2 <= r; i++) {
+        if (k == 1) {
+            cout << b.querymax(1, 1, n, l, r) << endl;
+            continue;
+        }
+        for (int i = l; i + k - 1 <= r; i++) {
             ans = max(ans, a.querymin(1, 1, n, i, i + k - 2));
         }
         cout << ans << endl;
@@ -153,6 +159,7 @@ void solve() {
 }
 
 signed main() {
+    fo(query)
     cin.tie()->sync_with_stdio(0);
     init();
 

@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 #define int long long
 #define endl "\n"
+#define fo(x) freopen(#x".in", "r", stdin); freopen(#x".out", "w", stdout);
 
 using namespace std;
 
@@ -99,6 +100,7 @@ int solve() {
 }
 
 signed main() {
+    fo(edit)
     cin.tie()->sync_with_stdio(0);
     init();
 
