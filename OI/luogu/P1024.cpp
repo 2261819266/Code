@@ -33,8 +33,8 @@ void find(double first, double last) {
 
 int main() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	scanf("%lf%lf%lf%lf", &a, &b, &c, &d);
 	find(-100, 100);

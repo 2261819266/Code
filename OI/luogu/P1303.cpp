@@ -145,8 +145,8 @@ high operator*=(high &a, high b) { return a = a * b; }
 int main() {
     high a, b, he;
 #ifdef LOCAL
-    freopen("E:\\code\\in.in", "r", stdin);
-    freopen("E:\\code\\out.out", "w", stdout);
+    freopen("D:\\code\\in.in", "r", stdin);
+    freopen("D:\\code\\out.out", "w", stdout);
 #endif
     int c, d, e;
     char *str = new char;

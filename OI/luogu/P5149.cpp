@@ -75,7 +75,7 @@ int main(int argc, char const *argv[]) {
 // #include <cstdio>
 
 // int main() {
-// 	freopen("E:\\code\\in.in", "w", stdout);
+// 	freopen("D:\\code\\in.in", "w", stdout);
 // 	printf("100000\n");
 // 	for (int i = 100000; i > 0; i--)
 // 		printf("%d ", i);

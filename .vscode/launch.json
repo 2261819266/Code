@@ -11,9 +11,9 @@
             "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
             "args": [
                 "<",
-                "E:/code/IO/in.in",
+                "${workspaceFolder}/IO/in.in",
                 ">",
-                "E:/code/IO/out.out"
+                "${workspaceFolder}/IO/out.out"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

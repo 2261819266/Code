@@ -374,8 +374,8 @@ queue<node *> q, k;
 
 inline void read() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	scanf("%d%d", &n, &m);
 	for (int c = 1; c <= n; c++) {

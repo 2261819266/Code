@@ -17,8 +17,8 @@ int find(int l, int r, int k) {
 
 int main() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	int n, m, num = 0;
 	scanf("%d%d", &n, &m);

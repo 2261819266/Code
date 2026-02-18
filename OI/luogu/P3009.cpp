@@ -24,8 +24,8 @@ void init() { memset(dp, 0xfe, sizeof(dp)); }
 
 int main() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	scanf("%d", &n);
 	init();

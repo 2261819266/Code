@@ -15,7 +15,7 @@
                 "-std=c++17",
                 "-ftemplate-depth=1000000",
                 "-I/media/yuxinhao/data/code/programs/CP-template",
-                "-IE:/code/programs/CP-template",
+                "-I${workspaceFolder}/programs/CP-template",
                 // "-Wl,--stack= 100000000"
             ],
             "options": {

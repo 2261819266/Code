@@ -45,8 +45,8 @@ void solve(int x) {
 
 int main() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	// freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	// freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	int x;
 	scanf("%d", &x);

@@ -19,8 +19,8 @@ char oper[5][3] = {">=", ">", "\0", "<", "<="};
 
 int main(int argc, const char *argv[]) {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	int n;
 	scanf("%d %c", &n, &name);

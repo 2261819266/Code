@@ -46,8 +46,8 @@ int solve() {
 
 int main(int argc, char const *argv[]) {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	while (read())
 		printf("%d\n", solve());

@@ -146,8 +146,8 @@ int main() {
     high a, b, he;
     he = 0;
 #ifdef LOCAL
-    freopen("E:\\code\\in.in", "r", stdin);
-    freopen("E:\\code\\out.out", "w", stdout);
+    freopen("D:\\code\\in.in", "r", stdin);
+    freopen("D:\\code\\out.out", "w", stdout);
 #endif
     int c, d, e, n, f;
     scanf("%d", &n);

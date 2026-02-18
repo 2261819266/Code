@@ -29,8 +29,8 @@ int dfs(int x, int y, int k, int q = 0) {
 
 int main() {
 #ifdef LOCAL
-    freopen("E:\\code\\in.in", "r", stdin);
-    freopen("E:\\code\\out.out", "w", stdout);
+    freopen("D:\\code\\in.in", "r", stdin);
+    freopen("D:\\code\\out.out", "w", stdout);
 #endif
     char s[maxn];
     scanf("%d%d", &n, &m);

@@ -18,8 +18,8 @@ int dfs(int x, int v) {
 
 int main() {
 #ifdef LOCAL
-	freopen("E:\\code\\in.in", "r", stdin);
-	freopen("E:\\code\\out.out", "w", stdout);
+	freopen("D:\\code\\in.in", "r", stdin);
+	freopen("D:\\code\\out.out", "w", stdout);
 #endif
 	int e;
 	scanf("%d%d", &e, &n);
