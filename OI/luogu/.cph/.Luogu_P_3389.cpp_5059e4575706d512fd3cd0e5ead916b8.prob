@@ -1,0 +1,1 @@
+{"name":"Luogu_P3389","url":"https://www.luogu.com.cn/problem/P3389","memoryLimit":512000,"timeLimit":1000,"tests":[{"id":1732802670885,"input":"3\n1 3 4 5\n1 4 7 3\n9 3 2 2","output":"-0.97\n5.18\n-2.39"}],"group":"luogu","srcPath":"e:\\code\\luogu\\Luogu_P_3389.cpp"}

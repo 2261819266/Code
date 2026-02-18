@@ -1,0 +1,1 @@
+{"name":"Luogu_P4315","url":"https://www.luogu.com.cn/problem/P4315","memoryLimit":131072,"timeLimit":1000,"tests":[{"id":1732756911558,"input":"4\n1 2 8\n1 3 7\n3 4 9\nMax 2 4\nCover 2 4 5\nAdd 1 4 10\nChange 1 16\nMax 2 4\nStop","output":"9\n16"}],"group":"luogu","srcPath":"e:\\code\\luogu\\Luogu_P_4315.cpp"}

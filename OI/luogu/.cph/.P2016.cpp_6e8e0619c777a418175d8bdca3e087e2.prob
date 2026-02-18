@@ -1,0 +1,1 @@
+{"name":"Local: P2016","url":"e:\\code\\luogu\\P2016.cpp","tests":[{"id":1732610132008,"input":"4\n0 1 1\n1 2 2 3\n2 0\n3 0","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\luogu\\P2016.cpp","group":"local","local":true}
